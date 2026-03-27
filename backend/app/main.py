@@ -6,6 +6,9 @@ from .core.config import get_settings
 from .core.errors import AppError, app_error_handler
 from .core.response import http_exception_handler
 from .api.v1.endpoints.health import router as health_router
+from .api.v1.endpoints.projects import router as projects_router
+from .api.v1.endpoints.tasks import router as tasks_router
+from .api.v1.endpoints.energy import router as energy_router
 
 settings = get_settings()
 
@@ -26,6 +29,9 @@ app.add_exception_handler(Exception, http_exception_handler)
 
 # 路由
 app.include_router(health_router, prefix="/api/v1")
+app.include_router(projects_router, prefix="/api/v1")
+app.include_router(tasks_router, prefix="/api/v1")
+app.include_router(energy_router, prefix="/api/v1")
 
 
 # 便于 "uvicorn backend.app.main:app --reload" 启动
