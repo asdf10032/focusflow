@@ -7,5 +7,10 @@ class Base(DeclarativeBase):
     pass
 
 
-# 注意：Alembic 环境中会 import 本模块，从而递归导入所有 models
-# 后续在此导入 models.* 以注册到元数据（Phase 1 中待补充具体模型文件）。
+# Alembic 环境会 import 本模块，从而递归导入所有 models 以注册元数据
+# 注意：保持导入在文件底部，避免循环依赖
+try:
+    from .. import models  # noqa: F401  # 导入以注册模型
+except Exception:
+    # 在某些工具静态分析/早期导入阶段，models 可能不存在，忽略即可
+    pass
