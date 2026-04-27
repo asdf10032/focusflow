@@ -1,37 +1,117 @@
-# ROADMAP.md
+# Roadmap: FocusFlow Intelligent Energy Scheduler
 
- 本文件给出从「底座」到「闭环」的分阶段推进方案，并映射 REQ-IDs。
+## Overview
 
-## Phase 0 — 开工准备（1 天）
-- 建仓库、确定目录结构、最小 README（参考仓库已具备）。
+V1.0 delivers a local web MVP for turning tasks, energy templates, and blocked time into executable daily schedules. The roadmap keeps the scope tight: first stabilize the foundation, then complete the scheduling loop, then wire the user-facing flow.
 
-## Phase 1 — 底座打通（P0）
-- 后端：FastAPI 骨架、SQLAlchemy/SQLite、Alembic、统一响应（NFR-API）
-- 数据：projects/tasks/task_dependencies/energy_templates/energy_template_slots/blocked_times/schedule_plans/schedule_items 迁移
-- 接口：/projects、/tasks、/energy/templates、/blocked-times
-- 对应：REQ-PROJ-CRUD、REQ-TASK-CRUD、REQ-ENERGY、REQ-BLOCKED、REQ-DEFAULT-SEEDS
+## Phases
 
-## Phase 2 — 调度最小闭环（P0）
-- 引擎：槽生成、依赖校验、优先级评分、不可拆分放置、三方案生成、风险提示
-- 接口：/schedules/generate、/schedules/select
-- 对应：REQ-SCHEDULE-3PLANS、REQ-SCHEDULE-SELECT、NFR-TEST（核心单测）
+**Phase Numbering:**
+- Integer phases (1, 2, 3): Planned milestone work
+- Decimal phases (2.1, 2.2): Urgent insertions
 
-## Phase 3 — 前端主流程（P0）
-- 页面：任务列表、日历（FullCalendar）、方案切换/选择
-- 对应：REQ-CALENDAR-VIEW、REQ-TASK-CRUD、REQ-SCHEDULE-SELECT
+- [x] **Phase 1: Foundation** - FastAPI, database, CRUD, seeds, frontend shell, and verification baseline
+- [x] **Phase 2: Scheduling MVP** - Slot generation, dependency checks, scoring, placement, and selectable three-plan output
+- [x] **Phase 3: Frontend Main Flow** - Task creation/editing, calendar display, plan switching, and plan selection
+- [x] **Phase 03.1: Bilingual UI Toggle (INSERTED)** - Add Chinese/English UI language switching before Phase 4 expands the frontend
+- [x] **Phase 4: Usability Enhancements** - Validate move, reoptimize, execution feedback, and AI task parse shell
+- [ ] **Phase 5: Demo Polish** - Demo data, docs, smoke tests, and presentation-ready flow
 
-## Phase 4 — 可用性增强（P1）
-- 引擎/接口：validate-move、reoptimize、可拆分放置
-- 前端：今日执行页、冲突/风险提示、AI 输入组件
-- 对应：REQ-SCHEDULE-VALIDATE、REQ-SCHEDULE-REOPT、REQ-EXECUTION、REQ-AI-PARSE
+## Phase Details
 
-## Phase 5 — 打磨与演示（P1）
-- 测试：联调流程覆盖、演示数据、README 补全
-- 对应：NFR-TEST、NFR-UX
+### Phase 1: Foundation
+**Goal**: Backend and frontend foundations are runnable, tested, and consistent with the Phase 1 API contract.
+**Depends on**: Nothing (first phase)
+**Requirements**: [REQ-PROJ-CRUD, REQ-TASK-CRUD, REQ-ENERGY, REQ-BLOCKED, REQ-DEFAULT-SEEDS, NFR-API, NFR-VALIDATION]
+**Success Criteria** (what must be TRUE):
+  1. Backend app imports and health returns a success envelope.
+  2. Projects, tasks, energy templates, and blocked times use the unified response envelope.
+  3. Alembic reports the initial migration at head.
+  4. Default energy templates can be seeded with 48 slots for weekday/weekend variants.
+  5. Frontend production build succeeds.
+**Plans**: 1 plan
 
-## 里程碑（Milestones）
-- M1：数据层完成（README 验收项）
-- M2：排期核心完成（可返回 3 方案）
-- M3：前端闭环完成（日历展示 + 方案选择）
-- M4：执行反馈完成（今日执行页可提交）
-- M5：演示版完成（AI 任务输入 + demo 数据）
+Plans:
+- [x] 01-01: Stabilize Phase 1 API contract and verification baseline
+
+### Phase 2: Scheduling MVP
+**Goal**: Users can request three daily schedule variants from real task, energy, and blocked-time data.
+**Depends on**: Phase 1
+**Requirements**: [REQ-SCHEDULE-3PLANS, REQ-SCHEDULE-SELECT, NFR-TEST]
+**Success Criteria** (what must be TRUE):
+  1. Generate returns conservative, balanced, and aggressive plans.
+  2. Plans respect blocked slots and task duration.
+  3. Unplaced tasks are reported explicitly.
+  4. Selecting a plan persists selected state for later frontend reads.
+**Plans**: 2 plans
+
+Plans:
+- [x] 02-01: Persist generated plans and selected state
+- [x] 02-02: Add dependency validation, scoring checks, and risk/unplaced coverage
+
+### Phase 3: Frontend Main Flow
+**Goal**: Users can manage tasks and view/select generated plans through the web UI.
+**Depends on**: Phase 2
+**Requirements**: [REQ-CALENDAR-VIEW, REQ-TASK-CRUD, REQ-SCHEDULE-SELECT]
+**Success Criteria** (what must be TRUE):
+  1. Task list supports create, edit, delete, and status visibility.
+  2. Calendar page renders generated plan items.
+  3. User can switch among three plan variants.
+  4. User can select a plan from the frontend.
+**Plans**: 1 plan
+
+Plans:
+- [x] 03-01: Implement task management and calendar plan selection UI
+
+### Phase 03.1: Bilingual UI Toggle (INSERTED)
+
+**Goal:** Users can switch the web UI between Chinese and English without changing backend behavior.
+**Requirements**: [NFR-UX]
+**Depends on:** Phase 3
+**Plans:** 1 plan
+
+Plans:
+- [x] 03.1-01: Add lightweight Chinese/English UI toggle
+
+### Phase 4: Usability Enhancements
+**Goal**: The MVP becomes usable for live demos through feedback, conflict handling, and AI-assisted input shells.
+**Depends on**: Phase 03.1
+**Requirements**: [REQ-SCHEDULE-VALIDATE, REQ-SCHEDULE-REOPT, REQ-EXECUTION, REQ-AI-PARSE]
+**Success Criteria** (what must be TRUE):
+  1. Validate-move reports conflicts clearly.
+  2. Reoptimize can regenerate plans after changes.
+  3. Today execution flow can display selected work and submit feedback.
+  4. AI parse endpoint returns structured task draft data.
+**Plans**: 2 plans
+
+Plans:
+- [x] 04-01: Backend usability APIs
+- [x] 04-02: Frontend usability flows
+
+### Phase 5: Demo Polish
+**Goal**: The project is ready for a local demo or review session.
+**Depends on**: Phase 4
+**Requirements**: [NFR-TEST, NFR-UX]
+**Success Criteria** (what must be TRUE):
+  1. Demo data can be loaded repeatably.
+  2. README startup and smoke-test instructions are accurate.
+  3. Core backend tests and frontend build pass from clean commands.
+  4. Demo path is documented end to end.
+**Plans**: TBD
+
+Plans:
+- [ ] 05-01: Add demo data, docs, and final smoke checks
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 1 -> 2 -> 3 -> 03.1 -> 4 -> 5
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Foundation | 1/1 | Complete | 2026-04-26 |
+| 2. Scheduling MVP | 2/2 | Complete | 2026-04-26 |
+| 3. Frontend Main Flow | 1/1 | Complete | 2026-04-26 |
+| 03.1 Bilingual UI Toggle | 1/1 | Complete | 2026-04-26 |
+| 4. Usability Enhancements | 2/2 | Complete | 2026-04-26 |
+| 5. Demo Polish | 0/TBD | Not started | - |
