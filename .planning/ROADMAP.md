@@ -15,7 +15,7 @@ V1.0 delivers a local web MVP for turning tasks, energy templates, and blocked t
 - [x] **Phase 3: Frontend Main Flow** - Task creation/editing, calendar display, plan switching, and plan selection
 - [x] **Phase 03.1: Bilingual UI Toggle (INSERTED)** - Add Chinese/English UI language switching before Phase 4 expands the frontend
 - [x] **Phase 4: Usability Enhancements** - Validate move, reoptimize, execution feedback, and AI task parse shell
-- [ ] **Phase 5: Demo Polish** - Demo data, docs, smoke tests, and presentation-ready flow
+- [x] **Phase 5: Demo Polish** - Demo data, docs, smoke tests, and presentation-ready flow
 
 ## Phase Details
 
@@ -97,10 +97,11 @@ Plans:
   2. README startup and smoke-test instructions are accurate.
   3. Core backend tests and frontend build pass from clean commands.
   4. Demo path is documented end to end.
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Add demo data, docs, and final smoke checks
+- [x] 05-01: Demo data and smoke test
+- [x] 05-02: README and final verification
 
 ## Progress
 
@@ -114,4 +115,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 03.1 -> 4 -> 5
 | 3. Frontend Main Flow | 1/1 | Complete | 2026-04-26 |
 | 03.1 Bilingual UI Toggle | 1/1 | Complete | 2026-04-26 |
 | 4. Usability Enhancements | 2/2 | Complete | 2026-04-26 |
-| 5. Demo Polish | 0/TBD | Not started | - |
+| 5. Demo Polish | 2/2 | Complete | 2026-04-27 |

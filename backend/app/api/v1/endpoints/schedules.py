@@ -22,38 +22,9 @@ from ....schemas.schedule import (
     ValidateMoveRequest,
 )
 from ....services.scheduler.engine import generate_plans
+from ....services.scheduler.persistence import replace_persisted_plans
 
 router = APIRouter()
-
-
-def _replace_persisted_plans(db: Session, d: dt_date, response: GenerateResponse) -> None:
-    existing = db.query(SchedulePlan).filter(SchedulePlan.date == d).all()
-    for plan in existing:
-        db.delete(plan)
-    db.flush()
-
-    for plan_out in response.plans:
-        plan = SchedulePlan(
-            date=d,
-            plan_type=plan_out.plan_type,
-            score=plan_out.score,
-            risk_level=plan_out.risk_level,
-            selected=False,
-        )
-        db.add(plan)
-        db.flush()
-
-        for item_out in plan_out.items:
-            plan.items.append(
-                ScheduleItem(
-                    task_id=item_out.task_id,
-                    start_datetime=item_out.start_datetime,
-                    end_datetime=item_out.end_datetime,
-                    segment_index=item_out.segment_index or 0,
-                    warning=item_out.warning,
-                )
-            )
-    db.commit()
 
 
 def _overlaps(start: datetime, end: datetime, other_start: datetime, other_end: datetime) -> bool:
@@ -82,7 +53,7 @@ def schedules_generate(payload: GenerateRequest, db: Session = Depends(get_db)) 
     except ValueError as exc:
         raise AppError(code="invalid_schedule_input", message=str(exc), status_code=400) from exc
     response = GenerateResponse(plans=plans, unplaced=unplaced, warnings=warnings)
-    _replace_persisted_plans(db, d, response)
+    replace_persisted_plans(db, d, response)
     return success(response.model_dump(mode="json"))
 
 
@@ -156,7 +127,7 @@ def schedules_reoptimize(payload: ReoptimizeRequest, db: Session = Depends(get_d
     except ValueError as exc:
         raise AppError(code="invalid_schedule_input", message=str(exc), status_code=400) from exc
     response = GenerateResponse(plans=plans, unplaced=unplaced, warnings=warnings)
-    _replace_persisted_plans(db, payload.date, response)
+    replace_persisted_plans(db, payload.date, response)
     return success(response.model_dump(mode="json"))
 
 

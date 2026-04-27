@@ -1,3 +1,53 @@
+## 快速启动与本地演示
+
+这是一个本地 Web MVP：录入任务，生成三套今日排期方案，选择方案，然后在今日执行页提交反馈。下面命令默认从仓库根目录运行。
+
+### 后端
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install fastapi uvicorn sqlalchemy alembic pydantic pydantic-settings pytest
+alembic upgrade head
+python -m backend.app.services.seeds.energy_templates
+python -m backend.app.services.seeds.demo_data
+python -m backend.app.services.seeds.demo_data --date 2026-04-27
+python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+```
+
+`demo_data` 是可重复、非破坏性的演示种子：它会补齐默认精力模板、创建/更新一个演示项目和任务、写入演示日期的 blocked time、生成三套排期，并默认选择 balanced 方案。它不会清空已有数据。
+
+### 前端
+
+```powershell
+cd frontend
+npm install
+npm.cmd run dev
+npm.cmd run build
+```
+
+开发服务默认访问 `http://127.0.0.1:5173/`。
+
+### 验证
+
+```powershell
+python -m pytest tests/test_demo_flow.py -q -p no:cacheprovider
+python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_demo_flow.py tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py tests/test_scheduler_engine.py -q -p no:cacheprovider
+python -m compileall backend alembic
+cd frontend
+npm.cmd run build
+```
+
+### 演示路径
+
+1. Tasks：查看或添加任务，也可以用文本解析填充任务表单。
+2. Calendar：生成排期，查看 conservative / balanced / aggressive 三套方案。
+3. Select Plan：选择 balanced 或当前想演示的方案。
+4. Today：查看今日选中工作流。
+5. Feedback：把一项任务标记为完成或其他状态，确认任务状态更新。
+
+---
+
 **可执行的开发任务清单 + 优先级表**，按你的项目现状拆成：
 
 1. **第一版 MVP 开发任务清单**
