@@ -1,50 +1,82 @@
 # PROJECT.md
 
-> 本文件基于仓库现有两份文档（README.md、FocusFlow技术方案与项目结构.md）进行归纳，作为后续规划与实施的统一入口。
+## Current State
 
-## 1. 项目是什么（What This Is）
-- 面向单人效率的「智能精力排期系统」（FocusFlow）。
-- 目标：在 1–2 周内实现 V1.0 可演示的完整闭环。
-- 闭环：待办录入 → 生成 3 套今日排期方案 → 选择方案 → 日历查看 → 执行反馈。
+- **Shipped version:** v1.0 MVP on 2026-04-27.
+- **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, and blocked time into executable daily schedules.
+- **Core value:** Reduce manual scheduling effort by producing three practical, explainable daily plans that account for time constraints and cognitive load.
+- **Current focus:** V1.0 is complete and UAT-verified. The next step is to define v1.1 with `$gsd-new-milestone`.
 
-## 2. 核心价值（Core Value）
-- 在有限时间与精力曲线下，给出今日最可执行且可解释的安排，显著降低手动排期成本。
+## Shipped V1.0 Loop
 
-## 3. 范围与优先级（Scope & Priorities）
-- 以 README 的 P0/P1 列表为裁剪依据：
-  - P0：底座初始化、数据模型、基础 CRUD、调度核心（槽生成/依赖/评分/不可拆分放置/三方案/风险）、前端（任务列表/日历/方案选择）、精力模板与 blocked time。
-  - P1：可拆分放置、重新优化、冲突校验、执行反馈、AI 任务输入、基础测试与演示数据。
-  - P2+：延后。
+Tasks -> Calendar -> Select Plan -> Today -> Feedback
 
-## 4. 目标架构（Target Architecture）
-- 前端：React + TypeScript + Vite + Router + Zustand + Tailwind + FullCalendar + ECharts + RHF/Zod。
-- 后端：FastAPI + SQLAlchemy 2 + Pydantic v2 + SQLite（MVP）+ Alembic；NetworkX、NumPy 用于调度。
-- 服务边界：后端提供 REST API；调度引擎作为后端的独立模块由服务层编排。
+The MVP supports task/project CRUD, default energy templates, blocked time, dependency-aware scheduling, three plan variants, selected-plan persistence, calendar viewing, bilingual UI switching, validate-move, reoptimization, Today execution, task feedback, deterministic task parsing, repeatable demo seed data, and README demo instructions.
 
-## 5. 核心数据模型（Domain Models）
-- projects、tasks、task_dependencies、energy_templates、energy_template_slots、blocked_times、schedule_plans、schedule_items、execution_logs。
-- 关键字段见 README：任务时长、认知负荷、截止时间、依赖、是否可拆、最早开始/固定开始等。
+## Validated Requirements
 
-## 6. 关键接口（APIs 概览）
-- CRUD：/projects、/tasks、/energy/templates、/blocked-times。
-- 排期：/schedules/generate（一次 3 方案）、/schedules/select、/schedules/reoptimize、/schedules/validate-move。
-- 执行：/execution/logs、/execution/today。
+- ✓ Project CRUD with priority — v1.0
+- ✓ Task CRUD with dependencies, deadlines, split settings, and status — v1.0
+- ✓ Default weekday/weekend energy templates — v1.0
+- ✓ Blocked time configuration — v1.0
+- ✓ Three daily schedule variants — v1.0
+- ✓ Schedule selection and selected-state retrieval — v1.0
+- ✓ Calendar plan display and variant switching — v1.0
+- ✓ Bilingual Chinese/English UI toggle — v1.0
+- ✓ Validate-move conflict detection — v1.0
+- ✓ Same-day reoptimization — v1.0
+- ✓ Today execution flow and status feedback — v1.0
+- ✓ Local deterministic task parsing — v1.0
+- ✓ Repeatable non-destructive demo data and smoke coverage — v1.0
 
-## 7. 调度引擎（概要）
-- 输入：待办、能量曲线、blocked、day type。
-- 步骤：依赖校验 → 48 槽生成 → 任务优先级排序 → 放置（先不可拆，后可拆 ≤3 段）→ 风险/warnings → 三方案（conservative/balanced/aggressive）。
-- 评分：匹配度 + 紧迫度 + 连续性 − 超时与碎片化惩罚。
+## Active Requirements
 
-## 8. 成功标准（Success Criteria）
-- 通过 README 的 M1–M5 里程碑验收标准。
-- 本地可运行、能生成 3 方案并选择、前端能展示并提交执行反馈。
+No active requirements. Start v1.1 with `$gsd-new-milestone`.
 
-## 9. 非目标（Out of Scope for V1）
-- 登录/多用户/云同步、第三方日历与任务同步、复杂学习型算法、桌面端。
+## Out Of Scope
 
-## 10. 风险与约束（Risks & Constraints）
-- 单人/短周期：避免过早优化与复杂算法；先跑通闭环。
-- 可视化依赖：FullCalendar/ECharts 的集成复杂度需预留缓冲。
+- Login, multi-user support, and cloud sync.
+- Third-party calendar/task integrations.
+- Learning-based scheduling and advanced optimization algorithms.
+- Desktop packaging.
+- External LLM dependency for task parsing.
 
-## 11. 下一步（Next）
-- 依据 ROADMAP 分阶段推进：先完成 P0 底座与核心闭环，再做 P1 提升。
+## Architecture
+
+- Frontend: React, TypeScript, Vite, Router, Zustand, Tailwind.
+- Backend: FastAPI, SQLAlchemy, Pydantic v2, SQLite, Alembic.
+- Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, and selected-plan state.
+- Demo tooling: local seed services for energy templates and repeatable demo data.
+
+## Key Decisions
+
+| Decision | Outcome |
+|----------|---------|
+| Keep V1.0 local-first with SQLite | ✓ Good for fast demo and simple setup |
+| Use unified `status/data/error/meta` envelopes | ✓ Good for consistent API/client handling |
+| Persist generated schedule plans before selection | ✓ Good for Today execution flow |
+| Implement bilingual UI with lightweight local dictionaries | ✓ Good enough for MVP without i18n framework overhead |
+| Keep AI parse local and deterministic | ✓ Good for no-network demo reliability |
+| Treat feedback as task status updates in v1.0 | ✓ Good MVP tradeoff; history can be v1.1+ |
+| Add non-destructive demo seed instead of reset-by-default | ✓ Good for protecting local user data |
+
+## Known Gaps And Tech Debt
+
+- No formal `v1.0-MILESTONE-AUDIT.md` was produced before completion; Phase 5 UAT passed 4/4 and the user approved proceeding.
+- Execution feedback has no history table yet.
+- Task parsing is heuristic, not a real AI integration.
+- Advanced task filtering, history views, export, weekly planning, and learning-based optimization remain future work.
+
+## Next Milestone Candidates
+
+- Better onboarding and empty states.
+- Search/filter and richer task management.
+- Execution history and completion analytics.
+- Risk explanation text and schedule rationale.
+- JSON/CSV export.
+- Weekly planning or partial replan.
+
+---
+
+*Last updated: 2026-04-27 after v1.0 milestone*
+
