@@ -9,6 +9,9 @@ from .api.v1.endpoints.health import router as health_router
 from .api.v1.endpoints.projects import router as projects_router
 from .api.v1.endpoints.tasks import router as tasks_router
 from .api.v1.endpoints.energy import router as energy_router
+from .api.v1.endpoints.schedules import router as schedules_router
+from .api.v1.endpoints.execution import router as execution_router
+from .api.v1.endpoints.ai import router as ai_router
 
 settings = get_settings()
 
@@ -32,6 +35,9 @@ app.include_router(health_router, prefix="/api/v1")
 app.include_router(projects_router, prefix="/api/v1")
 app.include_router(tasks_router, prefix="/api/v1")
 app.include_router(energy_router, prefix="/api/v1")
+app.include_router(schedules_router, prefix="/api/v1")
+app.include_router(execution_router, prefix="/api/v1")
+app.include_router(ai_router, prefix="/api/v1")
 
 
 # 便于 "uvicorn backend.app.main:app --reload" 启动
