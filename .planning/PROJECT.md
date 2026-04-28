@@ -5,7 +5,19 @@
 - **Shipped version:** v1.0 MVP on 2026-04-27.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, and blocked time into executable daily schedules.
 - **Core value:** Reduce manual scheduling effort by producing three practical, explainable daily plans that account for time constraints and cognitive load.
-- **Current focus:** V1.0 is complete and UAT-verified. The next step is to define v1.1 with `$gsd-new-milestone`.
+- **Current focus:** V1.1 Execution Insights is being defined.
+
+## Current Milestone: v1.1 Execution Insights
+
+**Goal:** Turn FocusFlow from a one-day scheduling demo into a tool that records execution history, shows completion/estimation patterns, and helps users understand what happened after following a plan.
+
+**Target features:**
+- Execution feedback history instead of status-only feedback.
+- Today progress and completion metrics.
+- Estimated-vs-actual duration tracking.
+- Daily review page with completed, missed, skipped, and delayed work.
+- Human-readable schedule risk and plan rationale.
+- Basic task filtering so growing history remains usable.
 
 ## Shipped V1.0 Loop
 
@@ -31,7 +43,11 @@ The MVP supports task/project CRUD, default energy templates, blocked time, depe
 
 ## Active Requirements
 
-No active requirements. Start v1.1 with `$gsd-new-milestone`.
+- [ ] V1.1 captures execution feedback as historical records.
+- [ ] V1.1 summarizes daily progress and completion outcomes.
+- [ ] V1.1 compares estimated and actual task duration.
+- [ ] V1.1 explains schedule risk and plan tradeoffs in user-facing language.
+- [ ] V1.1 adds basic filtering for task/history-heavy workflows.
 
 ## Out Of Scope
 
@@ -78,5 +94,4 @@ No active requirements. Start v1.1 with `$gsd-new-milestone`.
 
 ---
 
-*Last updated: 2026-04-27 after v1.0 milestone*
-
+*Last updated: 2026-04-28 after starting v1.1 milestone*

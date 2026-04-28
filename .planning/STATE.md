@@ -1,30 +1,30 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: MVP
-status: shipped
-last_updated: "2026-04-27T19:45:00+08:00"
+milestone: v1.1
+milestone_name: Execution Insights
+status: defining_requirements
+last_updated: "2026-04-28T00:00:00+08:00"
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 9
-  completed_plans: 9
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # STATE.md
 
-- Current goal: V1.0 MVP shipped.
-- Current position: Milestone v1.0 is complete and archived.
-- Last completed: Phase 5 UAT and v1.0 milestone completion on 2026-04-27.
-- Focus: start a fresh v1.1 milestone when ready.
-- Next action: run `$gsd-new-milestone`.
+- Current goal: Define v1.1 Execution Insights.
+- Current position: Phase not started; defining requirements.
+- Last completed: v1.0 milestone completion on 2026-04-27.
+- Focus: execution history, progress metrics, daily review, estimate accuracy, and risk explanations.
+- Next action: create `.planning/REQUIREMENTS.md` and `.planning/ROADMAP.md` for v1.1.
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-04-27).
+See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 **Core value:** reduce manual scheduling effort with practical, explainable daily plans.
-**Current focus:** planning the next milestone.
+**Current focus:** defining v1.1 Execution Insights.
 
 ## Recent Decisions
 
@@ -33,6 +33,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-27).
 - UI localization remains lightweight with local dictionaries.
 - AI parse remains local and deterministic for demo reliability.
 - Demo seeding is repeatable and non-destructive.
+- V1.1 should extend execution feedback into historical records before attempting learning-based scheduling.
 
 ## Accumulated Context
 
@@ -45,9 +46,15 @@ See: `.planning/PROJECT.md` (updated 2026-04-27).
 
 - None known.
 
+## Current Position
+
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-28 — Milestone v1.1 Execution Insights started
+
 ## Verification Baseline
 
 - `python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_demo_flow.py tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py tests/test_scheduler_engine.py -q -p no:cacheprovider`
 - `python -m compileall backend alembic`
 - `npm.cmd run build`
-
