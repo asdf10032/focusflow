@@ -8,3 +8,4 @@ from . import energy_template_slot  # noqa: F401
 from . import blocked_time  # noqa: F401
 from . import schedule_plan  # noqa: F401
 from . import schedule_item  # noqa: F401
+from . import execution_log  # noqa: F401

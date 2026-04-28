@@ -7,9 +7,9 @@
 
 ### Execution History
 
-- [ ] **HIST-01**: User feedback creates an execution history record instead of only updating task status.
-- [ ] **HIST-02**: User can record feedback status, actual duration, and an optional note.
-- [ ] **HIST-03**: User can query execution history for a selected date.
+- [x] **HIST-01**: User feedback creates an execution history record instead of only updating task status.
+- [x] **HIST-02**: User can record feedback status, actual duration, and an optional note.
+- [x] **HIST-03**: User can query execution history for a selected date.
 
 ### Today Progress
 
@@ -21,7 +21,7 @@
 
 - [ ] **EST-01**: User can compare estimated task duration with actual duration.
 - [ ] **EST-02**: User can see daily estimate variance summary.
-- [ ] **EST-03**: Execution history stores the estimated duration at feedback time so later task edits do not rewrite historical review data.
+- [x] **EST-03**: Execution history stores the estimated duration at feedback time so later task edits do not rewrite historical review data.
 
 ### Daily Review
 
@@ -43,7 +43,7 @@
 
 ### Nonfunctional
 
-- [ ] **NFR-01**: Existing API success envelope remains unchanged.
+- [x] **NFR-01**: Existing API success envelope remains unchanged.
 - [ ] **NFR-02**: Backend API, frontend helper/i18n, build, and smoke tests cover v1.1 behavior.
 - [ ] **NFR-03**: v1.1 does not introduce login, cloud sync, external LLM, or third-party calendar integration.
 
@@ -77,15 +77,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HIST-01 | Phase 6 | Pending |
-| HIST-02 | Phase 6 | Pending |
-| HIST-03 | Phase 6 | Pending |
+| HIST-01 | Phase 6 | Complete |
+| HIST-02 | Phase 6 | Complete |
+| HIST-03 | Phase 6 | Complete |
 | PROG-01 | Phase 7 | Pending |
 | PROG-02 | Phase 7 | Pending |
 | PROG-03 | Phase 7 | Pending |
 | EST-01 | Phase 7 | Pending |
 | EST-02 | Phase 7 | Pending |
-| EST-03 | Phase 6 | Pending |
+| EST-03 | Phase 6 | Complete |
 | REV-01 | Phase 7 | Pending |
 | REV-02 | Phase 7 | Pending |
 | REV-03 | Phase 9 | Pending |
@@ -95,7 +95,7 @@
 | FILT-01 | Phase 8 | Pending |
 | FILT-02 | Phase 8 | Pending |
 | FILT-03 | Phase 7 | Pending |
-| NFR-01 | Phase 6 | Pending |
+| NFR-01 | Phase 6 | Complete |
 | NFR-02 | Phase 9 | Pending |
 | NFR-03 | Phase 8 | Pending |
 
@@ -106,4 +106,4 @@
 
 ---
 *Requirements defined: 2026-04-28*
-*Last updated: 2026-04-28 after roadmap creation*
+*Last updated: 2026-04-28 after Phase 6 completion*
