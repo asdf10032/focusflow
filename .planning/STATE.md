@@ -6,18 +6,18 @@ status: roadmap_created
 last_updated: "2026-04-28T00:00:00+08:00"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 7
-  completed_plans: 0
+  completed_plans: 2
 ---
 
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 6 (Execution History Foundation) is next.
-- Last completed: v1.0 milestone completion on 2026-04-27.
-- Focus: execution history, progress metrics, daily review, estimate accuracy, and risk explanations.
-- Next action: run `$gsd-discuss-phase 6` or `$gsd-plan-phase 6 --skip-research`.
+- Current position: Phase 7 (Today Progress and Daily Review) is next.
+- Last completed: Phase 6 / Plans 01-02 on 2026-04-28.
+- Focus: Today progress metrics, daily review, estimate accuracy, and review date filtering.
+- Next action: run `$gsd-discuss-phase 7` or `$gsd-plan-phase 7 --skip-research`.
 
 ## Project Reference
 
@@ -34,6 +34,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 - AI parse remains local and deterministic for demo reliability.
 - Demo seeding is repeatable and non-destructive.
 - V1.1 should extend execution feedback into historical records before attempting learning-based scheduling.
+- Phase 6 added durable execution history logs, feedback status normalization, and a date-filtered history API.
 
 ## Accumulated Context
 
@@ -48,10 +49,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 ## Current Position
 
-Phase: 6 (Execution History Foundation)
+Phase: 7 (Today Progress and Daily Review)
 Plan: —
-Status: Roadmap created; ready for phase planning
-Last activity: 2026-04-28 — Milestone v1.1 roadmap created
+Status: Ready for phase planning
+Last activity: 2026-04-28 — Phase 6 completed
 
 ## Verification Baseline
 
