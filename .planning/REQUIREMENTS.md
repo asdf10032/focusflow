@@ -77,34 +77,33 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HIST-01 | TBD | Pending |
-| HIST-02 | TBD | Pending |
-| HIST-03 | TBD | Pending |
-| PROG-01 | TBD | Pending |
-| PROG-02 | TBD | Pending |
-| PROG-03 | TBD | Pending |
-| EST-01 | TBD | Pending |
-| EST-02 | TBD | Pending |
-| EST-03 | TBD | Pending |
-| REV-01 | TBD | Pending |
-| REV-02 | TBD | Pending |
-| REV-03 | TBD | Pending |
-| EXPL-01 | TBD | Pending |
-| EXPL-02 | TBD | Pending |
-| EXPL-03 | TBD | Pending |
-| FILT-01 | TBD | Pending |
-| FILT-02 | TBD | Pending |
-| FILT-03 | TBD | Pending |
-| NFR-01 | TBD | Pending |
-| NFR-02 | TBD | Pending |
-| NFR-03 | TBD | Pending |
+| HIST-01 | Phase 6 | Pending |
+| HIST-02 | Phase 6 | Pending |
+| HIST-03 | Phase 6 | Pending |
+| PROG-01 | Phase 7 | Pending |
+| PROG-02 | Phase 7 | Pending |
+| PROG-03 | Phase 7 | Pending |
+| EST-01 | Phase 7 | Pending |
+| EST-02 | Phase 7 | Pending |
+| EST-03 | Phase 6 | Pending |
+| REV-01 | Phase 7 | Pending |
+| REV-02 | Phase 7 | Pending |
+| REV-03 | Phase 9 | Pending |
+| EXPL-01 | Phase 8 | Pending |
+| EXPL-02 | Phase 8 | Pending |
+| EXPL-03 | Phase 8 | Pending |
+| FILT-01 | Phase 8 | Pending |
+| FILT-02 | Phase 8 | Pending |
+| FILT-03 | Phase 7 | Pending |
+| NFR-01 | Phase 6 | Pending |
+| NFR-02 | Phase 9 | Pending |
+| NFR-03 | Phase 8 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21
+- Mapped to phases: 21
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-28*
-*Last updated: 2026-04-28 after v1.1 scope confirmation*
-
+*Last updated: 2026-04-28 after roadmap creation*

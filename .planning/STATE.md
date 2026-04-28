@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Execution Insights
-status: defining_requirements
+status: roadmap_created
 last_updated: "2026-04-28T00:00:00+08:00"
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
-  total_plans: 0
+  total_plans: 7
   completed_plans: 0
 ---
 
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase not started; defining requirements.
+- Current position: Phase 6 (Execution History Foundation) is next.
 - Last completed: v1.0 milestone completion on 2026-04-27.
 - Focus: execution history, progress metrics, daily review, estimate accuracy, and risk explanations.
-- Next action: create `.planning/REQUIREMENTS.md` and `.planning/ROADMAP.md` for v1.1.
+- Next action: run `$gsd-discuss-phase 6` or `$gsd-plan-phase 6 --skip-research`.
 
 ## Project Reference
 
@@ -48,10 +48,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 6 (Execution History Foundation)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-28 — Milestone v1.1 Execution Insights started
+Status: Roadmap created; ready for phase planning
+Last activity: 2026-04-28 — Milestone v1.1 roadmap created
 
 ## Verification Baseline
 
