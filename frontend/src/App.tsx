@@ -1,6 +1,7 @@
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { LANGUAGES, t, type Language } from "./lib/i18n";
 import Calendar from "./pages/Calendar";
+import DailyReview from "./pages/DailyReview";
 import Tasks from "./pages/Tasks";
 import Today from "./pages/Today";
 import { useAppStore } from "./state/store";
@@ -53,6 +54,18 @@ export default function App() {
               >
                 {t(language, "nav.today")}
               </NavLink>
+              <NavLink
+                to="/review"
+                className={({ isActive }) =>
+                  `rounded px-3 py-2 ${
+                    isActive
+                      ? "bg-slate-950 text-white"
+                      : "text-slate-600 hover:bg-white hover:text-slate-950"
+                  }`
+                }
+              >
+                {t(language, "nav.review")}
+              </NavLink>
             </nav>
             <label className="sr-only" htmlFor="language">
               {t(language, "language.label")}
@@ -79,6 +92,7 @@ export default function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/today" element={<Today />} />
+          <Route path="/review" element={<DailyReview />} />
         </Routes>
       </main>
     </div>

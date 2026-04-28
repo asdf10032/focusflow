@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Execution Insights
-status: phase_planned
+status: phase_complete
 last_updated: "2026-04-28T00:00:00+08:00"
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 2
+  completed_plans: 4
 ---
 
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 7 (Today Progress and Daily Review) is planned and ready to execute.
-- Last completed: Phase 6 / Plans 01-02 on 2026-04-28.
-- Focus: Today progress metrics, daily review, estimate accuracy, and review date filtering.
-- Next action: run `$gsd-execute-phase 7`.
+- Current position: Phase 8 (Explanations and Filtering) is next.
+- Last completed: Phase 7 / Plans 01-02 on 2026-04-28.
+- Focus: plan explanations, task filters, history filters, and clearer schedule risk text.
+- Next action: run `$gsd-plan-phase 8 --skip-research`.
 
 ## Project Reference
 
@@ -35,6 +35,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 - Demo seeding is repeatable and non-destructive.
 - V1.1 should extend execution feedback into historical records before attempting learning-based scheduling.
 - Phase 6 added durable execution history logs, feedback status normalization, and a date-filtered history API.
+- Phase 7 added Today progress metrics, daily review APIs, and a Daily Review UI.
 
 ## Accumulated Context
 
@@ -49,10 +50,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 ## Current Position
 
-Phase: 7 (Today Progress and Daily Review)
-Plan: 07-01 and 07-02
-Status: Ready for execution
-Last activity: 2026-04-28 - Phase 7 planned
+Phase: 8 (Explanations and Filtering)
+Plan: -
+Status: Ready for phase planning
+Last activity: 2026-04-28 - Phase 7 completed
 
 ## Verification Baseline
 

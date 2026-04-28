@@ -1,6 +1,8 @@
 import type { PlanType, ScheduleItem } from "./scheduleView";
 
 export type TaskStatus = "todo" | "in_progress" | "done" | "canceled";
+export type FeedbackStatus = TaskStatus | "skipped" | "incomplete";
+export type ExecutionHistoryStatus = "done" | "skipped" | "incomplete" | "canceled";
 
 export type Task = {
   id: number;
@@ -74,6 +76,41 @@ export type TodayExecution = {
     selected: boolean;
   } | null;
   items: TodayExecutionItem[];
+};
+
+export type ExecutionProgress = {
+  date: string;
+  selected_plan: TodayExecution["selected_plan"];
+  planned_count: number;
+  completed_count: number;
+  skipped_incomplete_count: number;
+  completion_rate: number;
+};
+
+export type ExecutionReviewSummary = ExecutionProgress & {
+  planned_minutes: number;
+  actual_minutes: number;
+  estimate_variance_minutes: number | null;
+};
+
+export type ExecutionReviewItem = {
+  id: number;
+  task_id: number;
+  task_title_snapshot: string;
+  estimated_minutes_snapshot: number;
+  date: string;
+  status: ExecutionHistoryStatus;
+  actual_minutes: number | null;
+  note: string | null;
+  created_at: string;
+  estimate_variance_minutes: number | null;
+};
+
+export type ExecutionReview = {
+  date: string;
+  selected_plan: TodayExecution["selected_plan"];
+  summary: ExecutionReviewSummary;
+  items: ExecutionReviewItem[];
 };
 
 type ApiEnvelope<T> = {
@@ -170,10 +207,22 @@ export function getTodayExecution(date: string): Promise<TodayExecution> {
   return requestJson<TodayExecution>(`/execution/today?date=${encodeURIComponent(date)}`);
 }
 
-export function submitExecutionFeedback(taskId: number, status: TaskStatus): Promise<Task> {
+export function getExecutionProgress(date: string): Promise<ExecutionProgress> {
+  return requestJson<ExecutionProgress>(`/execution/progress?date=${encodeURIComponent(date)}`);
+}
+
+export function getExecutionReview(date: string): Promise<ExecutionReview> {
+  return requestJson<ExecutionReview>(`/execution/review?date=${encodeURIComponent(date)}`);
+}
+
+export function submitExecutionFeedback(
+  taskId: number,
+  status: FeedbackStatus,
+  options?: { date?: string; actual_minutes?: number | null; note?: string | null },
+): Promise<Task> {
   return requestJson<Task>("/execution/feedback", {
     method: "POST",
-    body: JSON.stringify({ task_id: taskId, status }),
+    body: JSON.stringify({ task_id: taskId, status, ...(options ?? {}) }),
   });
 }
 

@@ -13,20 +13,20 @@
 
 ### Today Progress
 
-- [ ] **PROG-01**: User can see total planned items, completed count, skipped/incomplete count, and completion rate on Today.
-- [ ] **PROG-02**: Today progress metrics refresh after feedback submission.
-- [ ] **PROG-03**: Today shows a clear empty state when no plan is selected.
+- [x] **PROG-01**: User can see total planned items, completed count, skipped/incomplete count, and completion rate on Today.
+- [x] **PROG-02**: Today progress metrics refresh after feedback submission.
+- [x] **PROG-03**: Today shows a clear empty state when no plan is selected.
 
 ### Estimate Accuracy
 
-- [ ] **EST-01**: User can compare estimated task duration with actual duration.
-- [ ] **EST-02**: User can see daily estimate variance summary.
+- [x] **EST-01**: User can compare estimated task duration with actual duration.
+- [x] **EST-02**: User can see daily estimate variance summary.
 - [x] **EST-03**: Execution history stores the estimated duration at feedback time so later task edits do not rewrite historical review data.
 
 ### Daily Review
 
-- [ ] **REV-01**: User can open a daily review page for a selected date.
-- [ ] **REV-02**: Daily review shows completed, incomplete, skipped work, completion rate, planned duration, actual duration, and estimate variance.
+- [x] **REV-01**: User can open a daily review page for a selected date.
+- [x] **REV-02**: Daily review shows completed, incomplete, skipped work, completion rate, planned duration, actual duration, and estimate variance.
 - [ ] **REV-03**: Daily review can be demonstrated from seeded/demo data and covered by a smoke test.
 
 ### Schedule Explanation
@@ -39,7 +39,7 @@
 
 - [ ] **FILT-01**: User can filter tasks by status.
 - [ ] **FILT-02**: User can filter tasks by project.
-- [ ] **FILT-03**: User can filter history/review records by date.
+- [x] **FILT-03**: User can filter history/review records by date.
 
 ### Nonfunctional
 
@@ -80,21 +80,21 @@
 | HIST-01 | Phase 6 | Complete |
 | HIST-02 | Phase 6 | Complete |
 | HIST-03 | Phase 6 | Complete |
-| PROG-01 | Phase 7 | Pending |
-| PROG-02 | Phase 7 | Pending |
-| PROG-03 | Phase 7 | Pending |
-| EST-01 | Phase 7 | Pending |
-| EST-02 | Phase 7 | Pending |
+| PROG-01 | Phase 7 | Complete |
+| PROG-02 | Phase 7 | Complete |
+| PROG-03 | Phase 7 | Complete |
+| EST-01 | Phase 7 | Complete |
+| EST-02 | Phase 7 | Complete |
 | EST-03 | Phase 6 | Complete |
-| REV-01 | Phase 7 | Pending |
-| REV-02 | Phase 7 | Pending |
+| REV-01 | Phase 7 | Complete |
+| REV-02 | Phase 7 | Complete |
 | REV-03 | Phase 9 | Pending |
 | EXPL-01 | Phase 8 | Pending |
 | EXPL-02 | Phase 8 | Pending |
 | EXPL-03 | Phase 8 | Pending |
 | FILT-01 | Phase 8 | Pending |
 | FILT-02 | Phase 8 | Pending |
-| FILT-03 | Phase 7 | Pending |
+| FILT-03 | Phase 7 | Complete |
 | NFR-01 | Phase 6 | Complete |
 | NFR-02 | Phase 9 | Pending |
 | NFR-03 | Phase 8 | Pending |
@@ -106,4 +106,4 @@
 
 ---
 *Requirements defined: 2026-04-28*
-*Last updated: 2026-04-28 after Phase 6 completion*
+*Last updated: 2026-04-28 after Phase 7 completion*
