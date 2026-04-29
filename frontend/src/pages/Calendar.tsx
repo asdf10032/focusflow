@@ -308,9 +308,42 @@ export default function Calendar() {
                 </div>
               ) : null}
 
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded border border-slate-200 bg-[#faf9f4] p-4">
+                  <h3 className="text-sm font-black uppercase text-slate-600">
+                    {t(language, "calendar.explanation.title")}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold text-slate-700">
+                    {activePlan.summary}
+                  </p>
+                </div>
+                <div className="rounded border border-slate-200 bg-[#faf9f4] p-4">
+                  <h3 className="text-sm font-black uppercase text-slate-600">
+                    {t(language, "calendar.explanation.risk")}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold text-slate-700">
+                    {activePlan.risk_explanation}
+                  </p>
+                </div>
+              </div>
+
               {schedule?.unplaced.length ? (
                 <div className="rounded border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-800">
                   {t(language, "calendar.unplaced")}: {schedule.unplaced.join(", ")}
+                  {schedule.unplaced_reasons.length ? (
+                    <div className="mt-2">
+                      <div className="font-black">
+                        {t(language, "calendar.unplacedReasons")}
+                      </div>
+                      <ul className="mt-1 list-disc pl-5">
+                        {schedule.unplaced_reasons.map((reason) => (
+                          <li key={`${reason.task_id}-${reason.reason}`}>
+                            #{reason.task_id}: {reason.message}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
 

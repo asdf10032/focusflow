@@ -18,6 +18,12 @@ export type Task = {
   project_id: number | null;
 };
 
+export type Project = {
+  id: number;
+  name: string;
+  priority: number;
+};
+
 export type TaskPayload = {
   title: string;
   estimated_minutes: number;
@@ -34,12 +40,21 @@ export type SchedulePlan = {
   plan_type: PlanType;
   score: number | null;
   risk_level: string | null;
+  summary: string;
+  risk_explanation: string;
   items: ScheduleItem[];
+};
+
+export type UnplacedReason = {
+  task_id: number;
+  reason: string;
+  message: string;
 };
 
 export type GenerateScheduleResult = {
   plans: SchedulePlan[];
   unplaced: number[];
+  unplaced_reasons: UnplacedReason[];
   warnings: string[];
 };
 
@@ -143,6 +158,10 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 
 export function listTasks(): Promise<Task[]> {
   return requestJson<Task[]>("/tasks");
+}
+
+export function listProjects(): Promise<Project[]> {
+  return requestJson<Project[]>("/projects");
 }
 
 export function createTask(payload: TaskPayload): Promise<Task> {

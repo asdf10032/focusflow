@@ -19,6 +19,7 @@ from ....schemas.schedule import (
     GenerateResponse,
     ReoptimizeRequest,
     SelectRequest,
+    UnplacedReasonOut,
     ValidateMoveRequest,
 )
 from ....services.scheduler.engine import generate_plans
@@ -45,6 +46,22 @@ def _item_data(item: ScheduleItem) -> dict[str, Any]:
     }
 
 
+def _unplaced_reasons_for_response(plans: list[Any], unplaced: list[int]) -> list[UnplacedReasonOut]:
+    if not unplaced:
+        return []
+    no_items = all(len(plan.items) == 0 for plan in plans)
+    reason = "blocked_time" if no_items else "no_capacity"
+    message = (
+        "Task could not be scheduled because the day has no open time."
+        if no_items
+        else "Task could not be scheduled because there was not enough open time."
+    )
+    return [
+        UnplacedReasonOut(task_id=task_id, reason=reason, message=message)
+        for task_id in sorted(unplaced)
+    ]
+
+
 @router.post("/schedules/generate", summary="Generate three daily schedule plans")
 def schedules_generate(payload: GenerateRequest, db: Session = Depends(get_db)) -> Dict[str, Any]:
     d: dt_date = payload.date or dt_date.today()
@@ -52,7 +69,12 @@ def schedules_generate(payload: GenerateRequest, db: Session = Depends(get_db)) 
         plans, unplaced, warnings = generate_plans(db, d)
     except ValueError as exc:
         raise AppError(code="invalid_schedule_input", message=str(exc), status_code=400) from exc
-    response = GenerateResponse(plans=plans, unplaced=unplaced, warnings=warnings)
+    response = GenerateResponse(
+        plans=plans,
+        unplaced=unplaced,
+        unplaced_reasons=_unplaced_reasons_for_response(plans, unplaced),
+        warnings=warnings,
+    )
     replace_persisted_plans(db, d, response)
     return success(response.model_dump(mode="json"))
 
@@ -126,7 +148,12 @@ def schedules_reoptimize(payload: ReoptimizeRequest, db: Session = Depends(get_d
         plans, unplaced, warnings = generate_plans(db, payload.date)
     except ValueError as exc:
         raise AppError(code="invalid_schedule_input", message=str(exc), status_code=400) from exc
-    response = GenerateResponse(plans=plans, unplaced=unplaced, warnings=warnings)
+    response = GenerateResponse(
+        plans=plans,
+        unplaced=unplaced,
+        unplaced_reasons=_unplaced_reasons_for_response(plans, unplaced),
+        warnings=warnings,
+    )
     replace_persisted_plans(db, payload.date, response)
     return success(response.model_dump(mode="json"))
 

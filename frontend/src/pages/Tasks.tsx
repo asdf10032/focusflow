@@ -2,8 +2,10 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   createTask,
   deleteTask,
+  listProjects,
   listTasks,
   parseTaskDraft,
+  type Project,
   type Task,
   type TaskPayload,
   type TaskStatus,
@@ -72,6 +74,9 @@ export default function Tasks() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [parserText, setParserText] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
+  const [projectFilter, setProjectFilter] = useState("all");
 
   async function refreshTasks() {
     setLoading(true);
@@ -88,6 +93,9 @@ export default function Tasks() {
 
   useEffect(() => {
     void refreshTasks();
+    listProjects()
+      .then(setProjects)
+      .catch(() => setProjects([]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -101,6 +109,19 @@ export default function Tasks() {
         { todo: 0, in_progress: 0, done: 0, canceled: 0 },
       ),
     [tasks],
+  );
+
+  const filteredTasks = useMemo(
+    () =>
+      tasks.filter((task) => {
+        const statusMatches = statusFilter === "all" || task.status === statusFilter;
+        const projectMatches =
+          projectFilter === "all" ||
+          (projectFilter === "none" && task.project_id === null) ||
+          String(task.project_id) === projectFilter;
+        return statusMatches && projectMatches;
+      }),
+    [projectFilter, statusFilter, tasks],
   );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -388,8 +409,53 @@ export default function Tasks() {
           ))}
         </div>
 
+        <div className="rounded border border-slate-300 bg-white p-4">
+          <div className="text-sm font-black text-slate-950">
+            {t(language, "tasks.filters.title")}
+          </div>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <label className="block">
+              <span className="text-sm font-bold text-slate-700">
+                {t(language, "tasks.filters.status")}
+              </span>
+              <select
+                value={statusFilter}
+                onChange={(event) =>
+                  setStatusFilter(event.target.value as TaskStatus | "all")
+                }
+                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 outline-none focus:border-amber-600"
+              >
+                <option value="all">{t(language, "tasks.filters.allStatuses")}</option>
+                {STATUS_OPTIONS.map((status) => (
+                  <option key={status} value={status}>
+                    {getStatusLabel(language, status)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              <span className="text-sm font-bold text-slate-700">
+                {t(language, "tasks.filters.project")}
+              </span>
+              <select
+                value={projectFilter}
+                onChange={(event) => setProjectFilter(event.target.value)}
+                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 outline-none focus:border-amber-600"
+              >
+                <option value="all">{t(language, "tasks.filters.allProjects")}</option>
+                <option value="none">{t(language, "tasks.filters.noProject")}</option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </div>
+
         <ul className="space-y-3">
-          {tasks.map((task) => (
+          {filteredTasks.map((task) => (
             <li key={task.id} className="rounded border border-slate-300 bg-white p-4 shadow-sm">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
@@ -426,7 +492,7 @@ export default function Tasks() {
           ))}
         </ul>
 
-        {tasks.length === 0 && (
+        {filteredTasks.length === 0 && (
           <div className="rounded border border-dashed border-slate-300 bg-white p-8 text-center text-sm font-semibold text-slate-500">
             {t(language, "tasks.empty")}
           </div>
