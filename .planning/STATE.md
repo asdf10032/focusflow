@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Execution Insights
-status: phase_complete
-last_updated: "2026-04-28T00:00:00+08:00"
+status: phase_planned
+last_updated: "2026-04-29T00:00:00+08:00"
 progress:
   total_phases: 4
   completed_phases: 2
@@ -14,10 +14,10 @@ progress:
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 8 (Explanations and Filtering) is next.
+- Current position: Phase 8 (Explanations and Filtering) is planned and ready to execute.
 - Last completed: Phase 7 / Plans 01-02 on 2026-04-28.
 - Focus: plan explanations, task filters, history filters, and clearer schedule risk text.
-- Next action: run `$gsd-plan-phase 8 --skip-research`.
+- Next action: run `$gsd-execute-phase 8`.
 
 ## Project Reference
 
@@ -51,9 +51,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 ## Current Position
 
 Phase: 8 (Explanations and Filtering)
-Plan: -
-Status: Ready for phase planning
-Last activity: 2026-04-28 - Phase 7 completed
+Plan: 08-01 and 08-02
+Status: Ready for execution
+Last activity: 2026-04-29 - Phase 8 planned
 
 ## Verification Baseline
 

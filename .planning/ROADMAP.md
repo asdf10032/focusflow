@@ -106,5 +106,5 @@ Plans:
 | 5. Demo Polish | v1.0 | 2/2 | Complete | 2026-04-27 |
 | 6. Execution History Foundation | v1.1 | 2/2 | Complete | 2026-04-28 |
 | 7. Today Progress and Daily Review | v1.1 | 2/2 | Complete | 2026-04-28 |
-| 8. Explanations and Filtering | v1.1 | 0/2 | Not started | - |
+| 8. Explanations and Filtering | v1.1 | 0/2 | Planned | - |
 | 9. Execution Insights Demo Polish | v1.1 | 0/1 | Not started | - |
