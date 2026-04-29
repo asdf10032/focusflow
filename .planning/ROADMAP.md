@@ -24,7 +24,7 @@
 V1.1 turns the MVP feedback loop into durable execution insight: history records, progress metrics, daily review, plan explanations, filters, and demo verification.
 
 - [x] **Phase 6: Execution History Foundation** - Persist feedback history and expose date-based history APIs.
-- [ ] **Phase 7: Today Progress and Daily Review** - Add progress metrics, estimate variance, and daily review UI/API.
+- [x] **Phase 7: Today Progress and Daily Review** - Add progress metrics, estimate variance, and daily review UI/API.
 - [ ] **Phase 8: Explanations and Filtering** - Add plan/risk explanations and task/history filters.
 - [ ] **Phase 9: Execution Insights Demo Polish** - Seed reviewable history, document the v1.1 demo path, and add smoke coverage.
 
@@ -59,8 +59,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01: Add progress/review backend aggregation APIs
-- [ ] 07-02: Add Today metrics and Daily Review frontend flow
+- [x] 07-01: Add progress/review backend aggregation APIs
+- [x] 07-02: Add Today metrics and Daily Review frontend flow
 
 ### Phase 8: Explanations and Filtering
 
@@ -105,6 +105,6 @@ Plans:
 | 4. Usability Enhancements | v1.0 | 2/2 | Complete | 2026-04-26 |
 | 5. Demo Polish | v1.0 | 2/2 | Complete | 2026-04-27 |
 | 6. Execution History Foundation | v1.1 | 2/2 | Complete | 2026-04-28 |
-| 7. Today Progress and Daily Review | v1.1 | 0/2 | Planned | - |
+| 7. Today Progress and Daily Review | v1.1 | 2/2 | Complete | 2026-04-28 |
 | 8. Explanations and Filtering | v1.1 | 0/2 | Not started | - |
 | 9. Execution Insights Demo Polish | v1.1 | 0/1 | Not started | - |

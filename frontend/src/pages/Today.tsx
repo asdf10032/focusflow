@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import {
+  getExecutionProgress,
   getTodayExecution,
   submitExecutionFeedback,
+  type ExecutionProgress,
   type TaskStatus,
   type TodayExecution,
 } from "../lib/api";
@@ -21,6 +23,7 @@ export default function Today() {
   const { language } = useAppStore();
   const [date, setDate] = useState(todayInputValue());
   const [execution, setExecution] = useState<TodayExecution | null>(null);
+  const [progress, setProgress] = useState<ExecutionProgress | null>(null);
   const [feedbackByTaskId, setFeedbackByTaskId] = useState<Record<number, TaskStatus>>({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -29,13 +32,18 @@ export default function Today() {
     setLoading(true);
     setMessage(null);
     try {
-      const payload = await getTodayExecution(targetDate);
+      const [payload, progressPayload] = await Promise.all([
+        getTodayExecution(targetDate),
+        getExecutionProgress(targetDate),
+      ]);
       setExecution(payload);
+      setProgress(progressPayload);
       setFeedbackByTaskId(
         Object.fromEntries(payload.items.map((item) => [item.task.id, item.task.status])),
       );
     } catch (error) {
       setExecution(null);
+      setProgress(null);
       setMessage(error instanceof Error ? error.message : t(language, "today.message.loadFailed"));
     } finally {
       setLoading(false);
@@ -101,6 +109,44 @@ export default function Today() {
       </section>
 
       {message && <p className="text-sm font-semibold text-amber-800">{message}</p>}
+
+      {progress && (
+        <section className="space-y-3">
+          <h2 className="text-sm font-black uppercase text-slate-600">
+            {t(language, "today.metrics.title")}
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded border border-slate-300 bg-white p-4">
+              <p className="text-xs font-black uppercase text-slate-500">
+                {t(language, "today.metrics.planned")}
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-950">{progress.planned_count}</p>
+            </div>
+            <div className="rounded border border-slate-300 bg-white p-4">
+              <p className="text-xs font-black uppercase text-slate-500">
+                {t(language, "today.metrics.completed")}
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-950">{progress.completed_count}</p>
+            </div>
+            <div className="rounded border border-slate-300 bg-white p-4">
+              <p className="text-xs font-black uppercase text-slate-500">
+                {t(language, "today.metrics.skippedIncomplete")}
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-950">
+                {progress.skipped_incomplete_count}
+              </p>
+            </div>
+            <div className="rounded border border-slate-300 bg-white p-4">
+              <p className="text-xs font-black uppercase text-slate-500">
+                {t(language, "today.metrics.completionRate")}
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-950">
+                {Math.round(progress.completion_rate * 100)}%
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {execution?.selected_plan ? (
         <section className="space-y-4">

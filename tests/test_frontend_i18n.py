@@ -119,3 +119,31 @@ def test_phase4_usability_labels_are_localized():
     assert result["en"]["tasks.parser.action"] == "Parse Draft"
     assert result["en"]["calendar.action.reoptimize"] == "Reoptimize"
     assert result["en"]["today.message.feedbackSaved"] == "Feedback saved"
+
+
+def test_phase7_review_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase7Keys = [
+          "nav.review",
+          "today.metrics.title",
+          "today.metrics.planned",
+          "today.metrics.completed",
+          "today.metrics.skippedIncomplete",
+          "today.metrics.completionRate",
+          "review.title",
+          "review.summary.actualMinutes",
+          "review.summary.variance",
+          "review.emptyTitle",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase7Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase7Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["nav.review"] == "Review"
+    assert result["en"]["today.metrics.completionRate"] == "Completion"
+    assert result["en"]["review.summary.variance"] == "Estimate variance"
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())

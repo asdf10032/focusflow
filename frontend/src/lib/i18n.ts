@@ -1,5 +1,5 @@
 import type { PlanType } from "./scheduleView";
-import type { TaskStatus } from "./api";
+import type { ExecutionHistoryStatus, TaskStatus } from "./api";
 
 export const LANGUAGES = ["zh-CN", "en"] as const;
 export type Language = (typeof LANGUAGES)[number];
@@ -12,6 +12,7 @@ export type TranslationKey =
   | "nav.tasks"
   | "nav.calendar"
   | "nav.today"
+  | "nav.review"
   | "language.zh"
   | "language.en"
   | "language.label"
@@ -99,10 +100,38 @@ export type TranslationKey =
   | "today.message.loadFailed"
   | "today.message.feedbackSaved"
   | "today.message.feedbackFailed"
+  | "today.metrics.title"
+  | "today.metrics.planned"
+  | "today.metrics.completed"
+  | "today.metrics.skippedIncomplete"
+  | "today.metrics.completionRate"
+  | "review.eyebrow"
+  | "review.title"
+  | "review.date"
+  | "review.action.refresh"
+  | "review.emptyTitle"
+  | "review.emptyDescription"
+  | "review.message.loadFailed"
+  | "review.summary.title"
+  | "review.summary.planned"
+  | "review.summary.completed"
+  | "review.summary.skippedIncomplete"
+  | "review.summary.completionRate"
+  | "review.summary.plannedMinutes"
+  | "review.summary.actualMinutes"
+  | "review.summary.variance"
+  | "review.table.task"
+  | "review.table.outcome"
+  | "review.table.estimate"
+  | "review.table.actual"
+  | "review.table.variance"
+  | "review.table.note"
   | "status.todo"
   | "status.in_progress"
   | "status.done"
   | "status.canceled"
+  | "status.skipped"
+  | "status.incomplete"
   | "plan.conservative"
   | "plan.balanced"
   | "plan.aggressive"
@@ -116,6 +145,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "nav.tasks": "任务",
     "nav.calendar": "日历",
     "nav.today": "今日",
+    "nav.review": "复盘",
     "language.zh": "中文",
     "language.en": "English",
     "language.label": "语言",
@@ -203,10 +233,38 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "today.message.loadFailed": "加载今日任务失败",
     "today.message.feedbackSaved": "反馈已提交",
     "today.message.feedbackFailed": "提交反馈失败",
+    "today.metrics.title": "今日进度",
+    "today.metrics.planned": "计划",
+    "today.metrics.completed": "完成",
+    "today.metrics.skippedIncomplete": "未完成",
+    "today.metrics.completionRate": "完成率",
+    "review.eyebrow": "每日复盘",
+    "review.title": "查看一天的执行结果",
+    "review.date": "日期",
+    "review.action.refresh": "刷新复盘",
+    "review.emptyTitle": "这一天还没有执行记录",
+    "review.emptyDescription": "先在今日页提交反馈，或选择已有历史的日期。",
+    "review.message.loadFailed": "加载复盘失败",
+    "review.summary.title": "复盘摘要",
+    "review.summary.planned": "计划任务",
+    "review.summary.completed": "完成",
+    "review.summary.skippedIncomplete": "未完成",
+    "review.summary.completionRate": "完成率",
+    "review.summary.plannedMinutes": "估算分钟",
+    "review.summary.actualMinutes": "实际分钟",
+    "review.summary.variance": "估算偏差",
+    "review.table.task": "任务",
+    "review.table.outcome": "结果",
+    "review.table.estimate": "估算",
+    "review.table.actual": "实际",
+    "review.table.variance": "偏差",
+    "review.table.note": "备注",
     "status.todo": "待办",
     "status.in_progress": "进行中",
     "status.done": "完成",
     "status.canceled": "取消",
+    "status.skipped": "跳过",
+    "status.incomplete": "未完成",
     "plan.conservative": "保守",
     "plan.balanced": "平衡",
     "plan.aggressive": "激进",
@@ -219,6 +277,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "nav.tasks": "Tasks",
     "nav.calendar": "Calendar",
     "nav.today": "Today",
+    "nav.review": "Review",
     "language.zh": "中文",
     "language.en": "English",
     "language.label": "Language",
@@ -306,10 +365,38 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "today.message.loadFailed": "Failed to load today",
     "today.message.feedbackSaved": "Feedback saved",
     "today.message.feedbackFailed": "Feedback failed",
+    "today.metrics.title": "Today Progress",
+    "today.metrics.planned": "Planned",
+    "today.metrics.completed": "Completed",
+    "today.metrics.skippedIncomplete": "Skipped/incomplete",
+    "today.metrics.completionRate": "Completion",
+    "review.eyebrow": "Daily Review",
+    "review.title": "Review a day of execution",
+    "review.date": "Date",
+    "review.action.refresh": "Refresh Review",
+    "review.emptyTitle": "No execution records for this day",
+    "review.emptyDescription": "Submit feedback on Today, or choose a date with history.",
+    "review.message.loadFailed": "Failed to load review",
+    "review.summary.title": "Review Summary",
+    "review.summary.planned": "Planned tasks",
+    "review.summary.completed": "Completed",
+    "review.summary.skippedIncomplete": "Skipped/incomplete",
+    "review.summary.completionRate": "Completion rate",
+    "review.summary.plannedMinutes": "Estimated minutes",
+    "review.summary.actualMinutes": "Actual minutes",
+    "review.summary.variance": "Estimate variance",
+    "review.table.task": "Task",
+    "review.table.outcome": "Outcome",
+    "review.table.estimate": "Estimate",
+    "review.table.actual": "Actual",
+    "review.table.variance": "Variance",
+    "review.table.note": "Note",
     "status.todo": "Todo",
     "status.in_progress": "In progress",
     "status.done": "Done",
     "status.canceled": "Canceled",
+    "status.skipped": "Skipped",
+    "status.incomplete": "Incomplete",
     "plan.conservative": "Conservative",
     "plan.balanced": "Balanced",
     "plan.aggressive": "Aggressive",
@@ -346,7 +433,7 @@ export function t(language: Language, key: TranslationKey): string {
   return translations[language][key];
 }
 
-export function getStatusLabel(language: Language, status: TaskStatus): string {
+export function getStatusLabel(language: Language, status: TaskStatus | ExecutionHistoryStatus): string {
   return t(language, `status.${status}`);
 }
 
