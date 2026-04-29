@@ -2,30 +2,20 @@
 
 ## Current State
 
-- **Shipped version:** v1.0 MVP on 2026-04-27.
-- **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, and blocked time into executable daily schedules.
-- **Core value:** Reduce manual scheduling effort by producing three practical, explainable daily plans that account for time constraints and cognitive load.
-- **Current focus:** V1.1 Execution Insights is being defined.
+- **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30.
+- **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
+- **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
+- **Current focus:** No active milestone; next milestone requirements should be defined fresh.
 
-## Current Milestone: v1.1 Execution Insights
+## Shipped Product Loop
 
-**Goal:** Turn FocusFlow from a one-day scheduling demo into a tool that records execution history, shows completion/estimation patterns, and helps users understand what happened after following a plan.
+Tasks -> Calendar -> Select Plan -> Today -> Feedback -> Daily Review
 
-**Target features:**
-- Execution feedback history instead of status-only feedback.
-- Today progress and completion metrics.
-- Estimated-vs-actual duration tracking.
-- Daily review page with completed, missed, skipped, and delayed work.
-- Human-readable schedule risk and plan rationale.
-- Basic task filtering so growing history remains usable.
-
-## Shipped V1.0 Loop
-
-Tasks -> Calendar -> Select Plan -> Today -> Feedback
-
-The MVP supports task/project CRUD, default energy templates, blocked time, dependency-aware scheduling, three plan variants, selected-plan persistence, calendar viewing, bilingual UI switching, validate-move, reoptimization, Today execution, task feedback, deterministic task parsing, repeatable demo seed data, and README demo instructions.
+The app supports task/project CRUD, default energy templates, blocked time, dependency-aware scheduling, three plan variants, selected-plan persistence, calendar viewing, bilingual UI switching, validate-move, reoptimization, Today execution, durable feedback history, progress metrics, Daily Review, deterministic task parsing, deterministic plan explanations, task filters, repeatable demo seed data, and README demo instructions.
 
 ## Validated Requirements
+
+### v1.0 MVP
 
 - ✓ Project CRUD with priority — v1.0
 - ✓ Task CRUD with dependencies, deadlines, split settings, and status — v1.0
@@ -41,28 +31,44 @@ The MVP supports task/project CRUD, default energy templates, blocked time, depe
 - ✓ Local deterministic task parsing — v1.0
 - ✓ Repeatable non-destructive demo data and smoke coverage — v1.0
 
+### v1.1 Execution Insights
+
+- ✓ Durable execution feedback history — v1.1
+- ✓ Feedback status, actual duration, and optional notes — v1.1
+- ✓ Date-filtered execution history — v1.1
+- ✓ Today progress metrics and refresh-after-feedback behavior — v1.1
+- ✓ Estimated-vs-actual duration tracking — v1.1
+- ✓ Daily Review page and API — v1.1
+- ✓ Deterministic schedule summaries, risk explanations, and unplaced reasons — v1.1
+- ✓ Task status and project filters — v1.1
+- ✓ Repeatable v1.1 demo history and smoke coverage — v1.1
+
 ## Active Requirements
 
-- [ ] V1.1 captures execution feedback as historical records.
-- [ ] V1.1 summarizes daily progress and completion outcomes.
-- [ ] V1.1 compares estimated and actual task duration.
-- [ ] V1.1 explains schedule risk and plan tradeoffs in user-facing language.
-- [ ] V1.1 adds basic filtering for task/history-heavy workflows.
+- None. Run `$gsd-new-milestone` to define the next milestone.
+
+## Future Candidates
+
+- Learning-based duration suggestions from execution history.
+- Export tasks, history, and review summaries as JSON/CSV.
+- Weekly planning and partial replan.
+- Richer task search and filtering.
+- Better onboarding and empty states.
 
 ## Out Of Scope
 
 - Login, multi-user support, and cloud sync.
 - Third-party calendar/task integrations.
-- Learning-based scheduling and advanced optimization algorithms.
+- External LLM dependency for task parsing or explanations.
 - Desktop packaging.
-- External LLM dependency for task parsing.
 
 ## Architecture
 
 - Frontend: React, TypeScript, Vite, Router, Zustand, Tailwind.
 - Backend: FastAPI, SQLAlchemy, Pydantic v2, SQLite, Alembic.
-- Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, and selected-plan state.
-- Demo tooling: local seed services for energy templates and repeatable demo data.
+- Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, selected-plan state, and deterministic explanations.
+- Execution insights: execution logs store task snapshots, status, actual minutes, notes, and date-based review data.
+- Demo tooling: local seed services for energy templates, tasks, schedule plans, selected balanced plan, and repeatable execution history.
 
 ## Key Decisions
 
@@ -73,25 +79,26 @@ The MVP supports task/project CRUD, default energy templates, blocked time, depe
 | Persist generated schedule plans before selection | ✓ Good for Today execution flow |
 | Implement bilingual UI with lightweight local dictionaries | ✓ Good enough for MVP without i18n framework overhead |
 | Keep AI parse local and deterministic | ✓ Good for no-network demo reliability |
-| Treat feedback as task status updates in v1.0 | ✓ Good MVP tradeoff; history can be v1.1+ |
+| Add durable execution logs in v1.1 | ✓ Good foundation for review and future learning |
+| Snapshot task title and estimated minutes in history | ✓ Preserves historical truth after task edits |
+| Keep plan explanations deterministic | ✓ Matches local-first/no-network constraint |
 | Add non-destructive demo seed instead of reset-by-default | ✓ Good for protecting local user data |
 
 ## Known Gaps And Tech Debt
 
-- No formal `v1.0-MILESTONE-AUDIT.md` was produced before completion; Phase 5 UAT passed 4/4 and the user approved proceeding.
-- Execution feedback has no history table yet.
-- Task parsing is heuristic, not a real AI integration.
-- Advanced task filtering, history views, export, weekly planning, and learning-based optimization remain future work.
+- No learning-based scheduler yet.
+- No export workflow yet.
+- No weekly planning or partial replan yet.
+- Phase audit noted artifact naming drift: recent phases use `VALIDATION` plus summaries/UAT rather than per-phase `VERIFICATION.md`.
 
-## Next Milestone Candidates
+## Archives
 
-- Better onboarding and empty states.
-- Search/filter and richer task management.
-- Execution history and completion analytics.
-- Risk explanation text and schedule rationale.
-- JSON/CSV export.
-- Weekly planning or partial replan.
+- v1.0 roadmap: `.planning/milestones/v1.0-ROADMAP.md`
+- v1.0 requirements: `.planning/milestones/v1.0-REQUIREMENTS.md`
+- v1.1 roadmap: `.planning/milestones/v1.1-ROADMAP.md`
+- v1.1 requirements: `.planning/milestones/v1.1-REQUIREMENTS.md`
+- v1.1 audit: `.planning/v1.1-MILESTONE-AUDIT.md`
 
 ---
 
-*Last updated: 2026-04-28 after starting v1.1 milestone*
+*Last updated: 2026-04-30 after v1.1 milestone*

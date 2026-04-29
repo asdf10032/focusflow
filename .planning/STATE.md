@@ -1,50 +1,47 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Execution Insights
-status: phase_complete
-last_updated: "2026-04-29T16:25:00+08:00"
+milestone: none
+milestone_name: none
+status: milestone_complete
+last_updated: "2026-04-30T00:20:00+08:00"
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # STATE.md
 
-- Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 9 (Execution Insights Demo Polish) is complete.
-- Last completed: Phase 9 / Plan 09-01 on 2026-04-29.
-- Focus: v1.1 verification, UAT, and milestone completion.
-- Next action: run `$gsd-verify-work`.
+- Current goal: Start the next milestone when ready.
+- Current position: v1.1 Execution Insights shipped and archived.
+- Last completed: v1.1 milestone on 2026-04-30.
+- Focus: milestone transition.
+- Next action: run `$gsd-new-milestone`.
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-04-28).
+See: `.planning/PROJECT.md` (updated 2026-04-30).
 
-**Core value:** reduce manual scheduling effort with practical, explainable daily plans.
-**Current focus:** defining v1.1 Execution Insights.
+**Core value:** reduce manual scheduling effort with practical, explainable daily plans and execution insight.
+**Current focus:** no active milestone.
 
 ## Recent Decisions
 
-- V1.0 is local-first and demo-focused.
-- Schedule generation persists same-day plans and selected state for Today execution.
-- UI localization remains lightweight with local dictionaries.
-- AI parse remains local and deterministic for demo reliability.
-- Demo seeding is repeatable and non-destructive.
-- V1.1 should extend execution feedback into historical records before attempting learning-based scheduling.
-- Phase 6 added durable execution history logs, feedback status normalization, and a date-filtered history API.
-- Phase 7 added Today progress metrics, daily review APIs, and a Daily Review UI.
-- Phase 8 added deterministic schedule explanations, unplaced reason text, Calendar explanation display, and task status/project filters.
-- Phase 9 added repeatable v1.1 demo history, expanded smoke coverage, and README demo instructions.
+- V1.0 shipped the local-first scheduling MVP.
+- V1.1 shipped durable execution history, Today progress, Daily Review, plan explanations, task filters, and repeatable v1.1 demo verification.
+- Demo seeding remains repeatable and non-destructive.
+- AI parse and schedule explanations remain local and deterministic.
+- Next milestone requirements should be freshly defined with `$gsd-new-milestone`.
 
 ## Accumulated Context
 
 - Full v1.0 roadmap is archived at `.planning/milestones/v1.0-ROADMAP.md`.
 - Full v1.0 requirements are archived at `.planning/milestones/v1.0-REQUIREMENTS.md`.
-- Phase execution history remains under `.planning/phases/`.
-- Phase 5 UAT passed 4/4 with 0 issues.
+- Full v1.1 roadmap is archived at `.planning/milestones/v1.1-ROADMAP.md`.
+- Full v1.1 requirements are archived at `.planning/milestones/v1.1-REQUIREMENTS.md`.
+- v1.1 milestone audit passed at `.planning/v1.1-MILESTONE-AUDIT.md`.
+- Phase 9 UAT passed 4/4 with 0 issues.
 
 ## Blockers
 
@@ -52,10 +49,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 ## Current Position
 
-Phase: 9 (Execution Insights Demo Polish)
-Plan: 09-01
-Status: Complete; ready for UAT
-Last activity: 2026-04-29 - Phase 9 completed
+Phase: -
+Plan: -
+Status: Ready for next milestone definition
+Last activity: 2026-04-30 - v1.1 milestone completed
 
 ## Verification Baseline
 

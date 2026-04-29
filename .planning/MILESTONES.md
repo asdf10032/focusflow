@@ -30,3 +30,33 @@
 
 ---
 
+## v1.1 Execution Insights (Shipped: 2026-04-30)
+
+**Phases completed:** 4 phases, 7 plans
+
+**Scope:** durable execution history and reviewable daily execution insights on top of the v1.0 scheduling loop.
+
+**Key accomplishments:**
+- Added execution logs with snapshot fields and date-filtered history APIs.
+- Added Today progress metrics and a Daily Review page/API with actual duration and estimate variance.
+- Added deterministic plan summaries, risk explanations, unplaced task reason text, and task status/project filters.
+- Added repeatable v1.1 demo seed data with reviewable execution history.
+- Expanded smoke coverage and README instructions for the full v1.1 demo path.
+
+**Validation:**
+- Milestone audit: passed, 21/21 requirements satisfied.
+- Phase 9 UAT: 4 passed, 0 issues.
+- Backend/frontend verification: 39 relevant tests passed.
+- `python -m compileall backend alembic` passed.
+- `npm.cmd run build` passed.
+
+**Known gaps accepted:**
+- Learning-based duration suggestions, export, weekly planning, and partial replan remain future work.
+- Phase artifacts use `VALIDATION` plus summaries/UAT rather than per-phase `VERIFICATION.md`; audit evidence is recorded in `.planning/v1.1-MILESTONE-AUDIT.md`.
+
+**Archives:**
+- Roadmap: `.planning/milestones/v1.1-ROADMAP.md`
+- Requirements: `.planning/milestones/v1.1-REQUIREMENTS.md`
+- Audit: `.planning/v1.1-MILESTONE-AUDIT.md`
+
+---
