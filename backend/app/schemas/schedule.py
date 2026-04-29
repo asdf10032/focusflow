@@ -21,7 +21,15 @@ class SchedulePlanOut(BaseModel):
     plan_type: str  # conservative/balanced/aggressive
     score: Optional[float] = None
     risk_level: Optional[str] = None
+    summary: str = ""
+    risk_explanation: str = ""
     items: List[ScheduleItemOut] = Field(default_factory=list)
+
+
+class UnplacedReasonOut(BaseModel):
+    task_id: int
+    reason: str
+    message: str
 
 
 class GenerateRequest(BaseModel):
@@ -32,6 +40,7 @@ class GenerateRequest(BaseModel):
 class GenerateResponse(BaseModel):
     plans: List[SchedulePlanOut]
     unplaced: List[int] = Field(default_factory=list)
+    unplaced_reasons: List[UnplacedReasonOut] = Field(default_factory=list)
     warnings: List[str] = Field(default_factory=list)
 
 

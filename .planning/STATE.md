@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Execution Insights
-status: phase_planned
-last_updated: "2026-04-29T00:00:00+08:00"
+status: phase_complete
+last_updated: "2026-04-29T15:40:00+08:00"
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 6
 ---
 
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 8 (Explanations and Filtering) is planned and ready to execute.
-- Last completed: Phase 7 / Plans 01-02 on 2026-04-28.
-- Focus: plan explanations, task filters, history filters, and clearer schedule risk text.
-- Next action: run `$gsd-execute-phase 8`.
+- Current position: Phase 8 (Explanations and Filtering) is complete.
+- Last completed: Phase 8 / Plans 01-02 on 2026-04-29.
+- Focus: v1.1 demo polish, seeded review history, smoke coverage, and README demo path.
+- Next action: run `$gsd-plan-phase 9 --skip-research`.
 
 ## Project Reference
 
@@ -36,6 +36,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 - V1.1 should extend execution feedback into historical records before attempting learning-based scheduling.
 - Phase 6 added durable execution history logs, feedback status normalization, and a date-filtered history API.
 - Phase 7 added Today progress metrics, daily review APIs, and a Daily Review UI.
+- Phase 8 added deterministic schedule explanations, unplaced reason text, Calendar explanation display, and task status/project filters.
 
 ## Accumulated Context
 
@@ -50,10 +51,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 
 ## Current Position
 
-Phase: 8 (Explanations and Filtering)
-Plan: 08-01 and 08-02
-Status: Ready for execution
-Last activity: 2026-04-29 - Phase 8 planned
+Phase: 9 (Execution Insights Demo Polish)
+Plan: -
+Status: Ready for phase planning
+Last activity: 2026-04-29 - Phase 8 completed
 
 ## Verification Baseline
 

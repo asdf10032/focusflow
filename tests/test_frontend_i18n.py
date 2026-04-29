@@ -147,3 +147,30 @@ def test_phase7_review_labels_are_localized():
     assert result["en"]["today.metrics.completionRate"] == "Completion"
     assert result["en"]["review.summary.variance"] == "Estimate variance"
     assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase8_explanation_and_filter_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase8Keys = [
+          "calendar.explanation.title",
+          "calendar.explanation.risk",
+          "calendar.unplacedReasons",
+          "tasks.filters.title",
+          "tasks.filters.status",
+          "tasks.filters.project",
+          "tasks.filters.allStatuses",
+          "tasks.filters.allProjects",
+          "tasks.filters.noProject",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase8Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase8Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["calendar.explanation.title"] == "Plan explanation"
+    assert result["en"]["tasks.filters.allStatuses"] == "All statuses"
+    assert result["en"]["tasks.filters.noProject"] == "No project"
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())

@@ -31,21 +31,21 @@
 
 ### Schedule Explanation
 
-- [ ] **EXPL-01**: Generated schedules include a user-readable plan summary.
-- [ ] **EXPL-02**: Risks and unplaced tasks include clearer reason text.
-- [ ] **EXPL-03**: Calendar or Today displays plan summaries and risk explanations without requiring an external AI service.
+- [x] **EXPL-01**: Generated schedules include a user-readable plan summary.
+- [x] **EXPL-02**: Risks and unplaced tasks include clearer reason text.
+- [x] **EXPL-03**: Calendar or Today displays plan summaries and risk explanations without requiring an external AI service.
 
 ### Filtering
 
-- [ ] **FILT-01**: User can filter tasks by status.
-- [ ] **FILT-02**: User can filter tasks by project.
+- [x] **FILT-01**: User can filter tasks by status.
+- [x] **FILT-02**: User can filter tasks by project.
 - [x] **FILT-03**: User can filter history/review records by date.
 
 ### Nonfunctional
 
 - [x] **NFR-01**: Existing API success envelope remains unchanged.
 - [ ] **NFR-02**: Backend API, frontend helper/i18n, build, and smoke tests cover v1.1 behavior.
-- [ ] **NFR-03**: v1.1 does not introduce login, cloud sync, external LLM, or third-party calendar integration.
+- [x] **NFR-03**: v1.1 does not introduce login, cloud sync, external LLM, or third-party calendar integration.
 
 ## Future Requirements
 
@@ -89,15 +89,15 @@
 | REV-01 | Phase 7 | Complete |
 | REV-02 | Phase 7 | Complete |
 | REV-03 | Phase 9 | Pending |
-| EXPL-01 | Phase 8 | Pending |
-| EXPL-02 | Phase 8 | Pending |
-| EXPL-03 | Phase 8 | Pending |
-| FILT-01 | Phase 8 | Pending |
-| FILT-02 | Phase 8 | Pending |
+| EXPL-01 | Phase 8 | Complete |
+| EXPL-02 | Phase 8 | Complete |
+| EXPL-03 | Phase 8 | Complete |
+| FILT-01 | Phase 8 | Complete |
+| FILT-02 | Phase 8 | Complete |
 | FILT-03 | Phase 7 | Complete |
 | NFR-01 | Phase 6 | Complete |
 | NFR-02 | Phase 9 | Pending |
-| NFR-03 | Phase 8 | Pending |
+| NFR-03 | Phase 8 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 21 total
@@ -106,4 +106,4 @@
 
 ---
 *Requirements defined: 2026-04-28*
-*Last updated: 2026-04-28 after Phase 7 completion*
+*Last updated: 2026-04-29 after Phase 8 completion*

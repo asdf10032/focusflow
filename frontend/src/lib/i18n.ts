@@ -44,6 +44,12 @@ export type TranslationKey =
   | "tasks.parser.action"
   | "tasks.parser.applied"
   | "tasks.parser.failed"
+  | "tasks.filters.title"
+  | "tasks.filters.status"
+  | "tasks.filters.project"
+  | "tasks.filters.allStatuses"
+  | "tasks.filters.allProjects"
+  | "tasks.filters.noProject"
   | "tasks.queue.eyebrow"
   | "tasks.queue.title"
   | "tasks.empty"
@@ -75,6 +81,9 @@ export type TranslationKey =
   | "calendar.metric.risk"
   | "calendar.badge.selected"
   | "calendar.unplaced"
+  | "calendar.unplacedReasons"
+  | "calendar.explanation.title"
+  | "calendar.explanation.risk"
   | "calendar.taskPrefix"
   | "calendar.segment"
   | "calendar.emptyPlanItems"
@@ -177,6 +186,12 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.parser.action": "解析为任务草稿",
     "tasks.parser.applied": "已填入任务草稿",
     "tasks.parser.failed": "解析任务失败",
+    "tasks.filters.title": "筛选",
+    "tasks.filters.status": "状态",
+    "tasks.filters.project": "项目",
+    "tasks.filters.allStatuses": "全部状态",
+    "tasks.filters.allProjects": "全部项目",
+    "tasks.filters.noProject": "无项目",
     "tasks.queue.eyebrow": "队列",
     "tasks.queue.title": "任务",
     "tasks.empty": "还没有任务。",
@@ -208,6 +223,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.metric.risk": "风险",
     "calendar.badge.selected": "已选",
     "calendar.unplaced": "未排入任务",
+    "calendar.unplacedReasons": "未排入原因",
+    "calendar.explanation.title": "方案说明",
+    "calendar.explanation.risk": "风险说明",
     "calendar.taskPrefix": "任务",
     "calendar.segment": "片段",
     "calendar.emptyPlanItems": "这个方案没有排入任务。",
@@ -309,6 +327,12 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.parser.action": "Parse Draft",
     "tasks.parser.applied": "Draft applied to the form",
     "tasks.parser.failed": "Task parse failed",
+    "tasks.filters.title": "Filters",
+    "tasks.filters.status": "Status",
+    "tasks.filters.project": "Project",
+    "tasks.filters.allStatuses": "All statuses",
+    "tasks.filters.allProjects": "All projects",
+    "tasks.filters.noProject": "No project",
     "tasks.queue.eyebrow": "Queue",
     "tasks.queue.title": "Tasks",
     "tasks.empty": "No tasks yet.",
@@ -340,6 +364,9 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.metric.risk": "risk",
     "calendar.badge.selected": "selected",
     "calendar.unplaced": "Unplaced tasks",
+    "calendar.unplacedReasons": "Unplaced reasons",
+    "calendar.explanation.title": "Plan explanation",
+    "calendar.explanation.risk": "Risk explanation",
     "calendar.taskPrefix": "Task",
     "calendar.segment": "segment",
     "calendar.emptyPlanItems": "This plan has no scheduled items.",
