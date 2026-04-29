@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Execution Insights
-status: phase_complete
-last_updated: "2026-04-29T15:40:00+08:00"
+status: phase_planned
+last_updated: "2026-04-29T16:05:00+08:00"
 progress:
   total_phases: 4
   completed_phases: 3
@@ -14,10 +14,10 @@ progress:
 # STATE.md
 
 - Current goal: Define v1.1 Execution Insights.
-- Current position: Phase 8 (Explanations and Filtering) is complete.
+- Current position: Phase 9 (Execution Insights Demo Polish) is planned and ready to execute.
 - Last completed: Phase 8 / Plans 01-02 on 2026-04-29.
 - Focus: v1.1 demo polish, seeded review history, smoke coverage, and README demo path.
-- Next action: run `$gsd-plan-phase 9 --skip-research`.
+- Next action: run `$gsd-execute-phase 9`.
 
 ## Project Reference
 
@@ -52,9 +52,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-28).
 ## Current Position
 
 Phase: 9 (Execution Insights Demo Polish)
-Plan: -
-Status: Ready for phase planning
-Last activity: 2026-04-29 - Phase 8 completed
+Plan: 09-01
+Status: Ready for execution
+Last activity: 2026-04-29 - Phase 9 planned
 
 ## Verification Baseline
 
