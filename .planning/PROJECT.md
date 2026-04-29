@@ -5,7 +5,16 @@
 - **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
 - **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
-- **Current focus:** No active milestone; next milestone requirements should be defined fresh.
+- **Current focus:** v1.2 Learning Duration Suggestions.
+
+## Current Milestone: v1.2 Learning Duration Suggestions
+
+**Goal:** Use durable execution history to suggest better task duration estimates while keeping the workflow local, deterministic, explainable, and manually overridable.
+
+**Target features:**
+- Backend duration suggestion service and API based on execution history snapshots.
+- Task creation/editing and parse-task flows can surface suggested minutes with confidence and explanation.
+- Demo seed, tests, and README updates show how execution history improves future estimates.
 
 ## Shipped Product Loop
 
@@ -17,49 +26,54 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 
 ### v1.0 MVP
 
-- ✓ Project CRUD with priority — v1.0
-- ✓ Task CRUD with dependencies, deadlines, split settings, and status — v1.0
-- ✓ Default weekday/weekend energy templates — v1.0
-- ✓ Blocked time configuration — v1.0
-- ✓ Three daily schedule variants — v1.0
-- ✓ Schedule selection and selected-state retrieval — v1.0
-- ✓ Calendar plan display and variant switching — v1.0
-- ✓ Bilingual Chinese/English UI toggle — v1.0
-- ✓ Validate-move conflict detection — v1.0
-- ✓ Same-day reoptimization — v1.0
-- ✓ Today execution flow and status feedback — v1.0
-- ✓ Local deterministic task parsing — v1.0
-- ✓ Repeatable non-destructive demo data and smoke coverage — v1.0
+- Project CRUD with priority - v1.0
+- Task CRUD with dependencies, deadlines, split settings, and status - v1.0
+- Default weekday/weekend energy templates - v1.0
+- Blocked time configuration - v1.0
+- Three daily schedule variants - v1.0
+- Schedule selection and selected-state retrieval - v1.0
+- Calendar plan display and variant switching - v1.0
+- Bilingual Chinese/English UI toggle - v1.0
+- Validate-move conflict detection - v1.0
+- Same-day reoptimization - v1.0
+- Today execution flow and status feedback - v1.0
+- Local deterministic task parsing - v1.0
+- Repeatable non-destructive demo data and smoke coverage - v1.0
 
 ### v1.1 Execution Insights
 
-- ✓ Durable execution feedback history — v1.1
-- ✓ Feedback status, actual duration, and optional notes — v1.1
-- ✓ Date-filtered execution history — v1.1
-- ✓ Today progress metrics and refresh-after-feedback behavior — v1.1
-- ✓ Estimated-vs-actual duration tracking — v1.1
-- ✓ Daily Review page and API — v1.1
-- ✓ Deterministic schedule summaries, risk explanations, and unplaced reasons — v1.1
-- ✓ Task status and project filters — v1.1
-- ✓ Repeatable v1.1 demo history and smoke coverage — v1.1
+- Durable execution feedback history - v1.1
+- Feedback status, actual duration, and optional notes - v1.1
+- Date-filtered execution history - v1.1
+- Today progress metrics and refresh-after-feedback behavior - v1.1
+- Estimated-vs-actual duration tracking - v1.1
+- Daily Review page and API - v1.1
+- Deterministic schedule summaries, risk explanations, and unplaced reasons - v1.1
+- Task status and project filters - v1.1
+- Repeatable v1.1 demo history and smoke coverage - v1.1
 
 ## Active Requirements
 
-- None. Run `$gsd-new-milestone` to define the next milestone.
+- Duration suggestions from execution history.
+- Suggestion confidence, sample count, and reason text.
+- Manual accept/override behavior in task workflows.
+- Parse-task integration with duration suggestions.
+- Repeatable demo and verification for learned estimates.
 
 ## Future Candidates
 
-- Learning-based duration suggestions from execution history.
 - Export tasks, history, and review summaries as JSON/CSV.
 - Weekly planning and partial replan.
 - Richer task search and filtering.
 - Better onboarding and empty states.
+- Adaptive priority or schedule scoring beyond duration estimation.
 
 ## Out Of Scope
 
 - Login, multi-user support, and cloud sync.
 - Third-party calendar/task integrations.
-- External LLM dependency for task parsing or explanations.
+- External LLM dependency for task parsing, explanations, or duration suggestions.
+- Automatically rewriting existing task estimates without explicit user action.
 - Desktop packaging.
 
 ## Architecture
@@ -68,27 +82,29 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - Backend: FastAPI, SQLAlchemy, Pydantic v2, SQLite, Alembic.
 - Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, selected-plan state, and deterministic explanations.
 - Execution insights: execution logs store task snapshots, status, actual minutes, notes, and date-based review data.
-- Demo tooling: local seed services for energy templates, tasks, schedule plans, selected balanced plan, and repeatable execution history.
+- Duration learning: v1.2 will derive local deterministic suggestions from execution history snapshots and expose explanation metadata rather than calling an external model.
+- Demo tooling: local seed services for energy templates, tasks, schedule plans, selected balanced plan, repeatable execution history, and v1.2 suggestion examples.
 
 ## Key Decisions
 
 | Decision | Outcome |
 |----------|---------|
-| Keep V1.0 local-first with SQLite | ✓ Good for fast demo and simple setup |
-| Use unified `status/data/error/meta` envelopes | ✓ Good for consistent API/client handling |
-| Persist generated schedule plans before selection | ✓ Good for Today execution flow |
-| Implement bilingual UI with lightweight local dictionaries | ✓ Good enough for MVP without i18n framework overhead |
-| Keep AI parse local and deterministic | ✓ Good for no-network demo reliability |
-| Add durable execution logs in v1.1 | ✓ Good foundation for review and future learning |
-| Snapshot task title and estimated minutes in history | ✓ Preserves historical truth after task edits |
-| Keep plan explanations deterministic | ✓ Matches local-first/no-network constraint |
-| Add non-destructive demo seed instead of reset-by-default | ✓ Good for protecting local user data |
+| Keep V1.0 local-first with SQLite | Good for fast demo and simple setup |
+| Use unified `status/data/error/meta` envelopes | Good for consistent API/client handling |
+| Persist generated schedule plans before selection | Good for Today execution flow |
+| Implement bilingual UI with lightweight local dictionaries | Good enough for MVP without i18n framework overhead |
+| Keep AI parse local and deterministic | Good for no-network demo reliability |
+| Add durable execution logs in v1.1 | Good foundation for review and future learning |
+| Snapshot task title and estimated minutes in history | Preserves historical truth after task edits |
+| Keep plan explanations deterministic | Matches local-first/no-network constraint |
+| Add non-destructive demo seed instead of reset-by-default | Good for protecting local user data |
+| Scope v1.2 learning to duration suggestions | Keeps learning useful, testable, and explainable before changing schedule scoring |
 
 ## Known Gaps And Tech Debt
 
-- No learning-based scheduler yet.
 - No export workflow yet.
 - No weekly planning or partial replan yet.
+- No adaptive scheduler scoring beyond duration suggestions yet.
 - Phase audit noted artifact naming drift: recent phases use `VALIDATION` plus summaries/UAT rather than per-phase `VERIFICATION.md`.
 
 ## Archives
@@ -101,4 +117,4 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 
 ---
 
-*Last updated: 2026-04-30 after v1.1 milestone*
+*Last updated: 2026-04-30 after starting v1.2 milestone*
