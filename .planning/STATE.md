@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learning Duration Suggestions
-status: defining_requirements
-last_updated: "2026-04-30T00:45:00+08:00"
+status: in_progress
+last_updated: "2026-04-30T01:15:00+08:00"
 progress:
   total_phases: 3
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  completed_phases: 1
+  total_plans: 2
+  completed_plans: 2
 ---
 
 # STATE.md
 
-- Current goal: Define and execute v1.2 Learning Duration Suggestions.
-- Current position: v1.2 milestone initialized; requirements and roadmap ready for Phase 10 planning.
-- Last completed: v1.1 milestone on 2026-04-30.
-- Focus: learning duration estimates from execution history.
-- Next action: run `$gsd-plan-phase 10 --skip-research`.
+- Current goal: Execute v1.2 Learning Duration Suggestions.
+- Current position: Phase 10 complete; ready to plan Phase 11.
+- Last completed: Phase 10 Duration Suggestion Backend on 2026-04-30.
+- Focus: task suggestion UX and parse-task integration next.
+- Next action: run `$gsd-plan-phase 11 --skip-research`.
 
 ## Project Reference
 
@@ -30,10 +30,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 - V1.0 shipped the local-first scheduling MVP.
 - V1.1 shipped durable execution history, Today progress, Daily Review, plan explanations, task filters, and repeatable v1.1 demo verification.
-- V1.2 will use execution history for local deterministic duration suggestions before attempting broader schedule learning.
-- Duration suggestions must be explainable and manually overridable.
+- V1.2 uses execution history for local deterministic duration suggestions before attempting broader schedule learning.
+- Phase 10 added project and cognitive-load snapshots to execution logs.
+- Duration suggestions are advisory, explainable, manually overridable, and local-only.
 - Demo seeding remains repeatable and non-destructive.
-- AI parse, schedule explanations, and duration suggestions remain local and deterministic.
 
 ## Accumulated Context
 
@@ -43,6 +43,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 - Full v1.1 requirements are archived at `.planning/milestones/v1.1-REQUIREMENTS.md`.
 - v1.1 milestone audit passed at `.planning/v1.1-MILESTONE-AUDIT.md`.
 - Phase 9 UAT passed 4/4 with 0 issues.
+- Phase 10 backend duration suggestion tests passed.
 
 ## Blockers
 
@@ -50,13 +51,13 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 ## Current Position
 
-Phase: Not started
-Plan: -
-Status: Ready to plan Phase 10
-Last activity: 2026-04-30 - v1.2 milestone started
+Phase: 11
+Plan: Not started
+Status: Ready to plan Phase 11
+Last activity: 2026-04-30 - Phase 10 completed
 
 ## Verification Baseline
 
-- `python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_demo_flow.py tests/test_phase6_execution_history.py tests/test_phase7_execution_review.py tests/test_phase8_explanations.py tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py tests/test_scheduler_engine.py -q -p no:cacheprovider`
+- `python -m pytest tests/test_phase6_execution_history.py tests/test_phase10_duration_suggestions.py -q -p no:cacheprovider`
+- `python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_phase6_execution_history.py tests/test_phase7_execution_review.py tests/test_phase8_explanations.py tests/test_phase10_duration_suggestions.py -q -p no:cacheprovider`
 - `python -m compileall backend alembic`
-- `npm.cmd run build`

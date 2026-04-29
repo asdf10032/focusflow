@@ -7,21 +7,21 @@
 
 ### Duration Suggestions
 
-- [ ] **DSUG-01**: User can request a suggested duration for a task draft using title, project, cognitive load, and optional current estimate.
-- [ ] **DSUG-02**: User can see suggested minutes, confidence, sample count, and reason text for a duration suggestion.
+- [x] **DSUG-01**: User can request a suggested duration for a task draft using title, project, cognitive load, and optional current estimate.
+- [x] **DSUG-02**: User can see suggested minutes, confidence, sample count, and reason text for a duration suggestion.
 - [ ] **DSUG-03**: User can accept a duration suggestion in the task form without losing the ability to manually override the estimate.
 - [ ] **DSUG-04**: User can receive duration suggestion metadata when parsing plain task text into a draft.
 
 ### Learning Data
 
-- [ ] **LERN-01**: User duration suggestions are derived from durable execution history snapshots rather than mutable current task fields.
-- [ ] **LERN-02**: User receives safe fallback behavior when there is not enough relevant execution history.
+- [x] **LERN-01**: User duration suggestions are derived from durable execution history snapshots rather than mutable current task fields.
+- [x] **LERN-02**: User receives safe fallback behavior when there is not enough relevant execution history.
 - [ ] **LERN-03**: Demo data includes enough execution history to show both confident and fallback duration suggestions.
 
 ### Usability And Quality
 
 - [ ] **UX-01**: User can use duration suggestions from the Tasks page in both Chinese and English.
-- [ ] **NFR-01**: Backend duration suggestion behavior is local, deterministic, and covered by focused tests.
+- [x] **NFR-01**: Backend duration suggestion behavior is local, deterministic, and covered by focused tests.
 - [ ] **NFR-02**: The v1.2 demo path, README, smoke tests, compile checks, and frontend build remain repeatable.
 
 ## Future Requirements
@@ -55,11 +55,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DSUG-01 | Phase 10 | Pending |
-| DSUG-02 | Phase 10 | Pending |
-| LERN-01 | Phase 10 | Pending |
-| LERN-02 | Phase 10 | Pending |
-| NFR-01 | Phase 10 | Pending |
+| DSUG-01 | Phase 10 | Complete |
+| DSUG-02 | Phase 10 | Complete |
+| LERN-01 | Phase 10 | Complete |
+| LERN-02 | Phase 10 | Complete |
+| NFR-01 | Phase 10 | Complete |
 | DSUG-03 | Phase 11 | Pending |
 | DSUG-04 | Phase 11 | Pending |
 | UX-01 | Phase 11 | Pending |
@@ -73,4 +73,4 @@
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 after v1.2 milestone initialization*
+*Last updated: 2026-04-30 after Phase 10 completion*

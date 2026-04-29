@@ -4,10 +4,13 @@ from __future__ import annotations
 import re
 from typing import Any, Dict
 
-from fastapi import APIRouter
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
 from ....core.response import success
+from ....db.session import get_db
+from ....schemas.ai import DurationSuggestionOut, DurationSuggestionRequest, ParseTaskRequest
+from ....services.duration_suggestions import DurationSuggestionInput, suggest_duration
 
 router = APIRouter()
 
@@ -16,10 +19,6 @@ _DURATION_PATTERN = re.compile(
     re.IGNORECASE,
 )
 _LOAD_PATTERN = re.compile(r"\b(?P<load>low|medium|high)\b", re.IGNORECASE)
-
-
-class ParseTaskRequest(BaseModel):
-    text: str = Field(min_length=1, max_length=1000)
 
 
 def _parse_duration(text: str) -> tuple[int, str]:
@@ -62,3 +61,17 @@ def parse_task(payload: ParseTaskRequest) -> Dict[str, Any]:
             "status": "todo",
         }
     )
+
+
+@router.post("/ai/suggest-duration", summary="Suggest task duration locally")
+def suggest_task_duration(payload: DurationSuggestionRequest, db: Session = Depends(get_db)) -> Dict[str, Any]:
+    suggestion = suggest_duration(
+        db,
+        DurationSuggestionInput(
+            title=payload.title,
+            project_id=payload.project_id,
+            cognitive_load=payload.cognitive_load,
+            estimated_minutes=payload.estimated_minutes,
+        ),
+    )
+    return success(DurationSuggestionOut(**suggestion.__dict__).model_dump(mode="json"))

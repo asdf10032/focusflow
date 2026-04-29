@@ -16,6 +16,8 @@ class ExecutionLog(Base):
     task_id: Mapped[int] = mapped_column(Integer, nullable=False)
     task_title_snapshot: Mapped[str] = mapped_column(String(300), nullable=False)
     estimated_minutes_snapshot: Mapped[int] = mapped_column(Integer, nullable=False)
+    task_project_id_snapshot: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    cognitive_load_snapshot: Mapped[int | None] = mapped_column(Integer, nullable=True)
     date: Mapped[date] = mapped_column(Date, nullable=False)
     status: Mapped[str] = mapped_column(String(20), nullable=False)
     actual_minutes: Mapped[int | None] = mapped_column(Integer, nullable=True)
