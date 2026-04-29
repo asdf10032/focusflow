@@ -5,13 +5,18 @@ import {
   listProjects,
   listTasks,
   parseTaskDraft,
+  suggestTaskDuration,
+  type DurationSuggestion,
+  type DurationSuggestionConfidence,
+  type DurationSuggestionRequest,
+  type DurationSuggestionSource,
   type Project,
   type Task,
   type TaskPayload,
   type TaskStatus,
   updateTask,
 } from "../lib/api";
-import { getStatusLabel, t } from "../lib/i18n";
+import { getStatusLabel, getSuggestionReasonLabel, t, type TranslationKey } from "../lib/i18n";
 import { useAppStore } from "../state/store";
 
 const STATUS_OPTIONS: TaskStatus[] = ["todo", "in_progress", "done", "canceled"];
@@ -60,6 +65,34 @@ function formToPayload(form: TaskForm): TaskPayload {
   };
 }
 
+function optionalInt(value: string, min: number, max: number): number | null {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= min && parsed <= max ? parsed : null;
+}
+
+function suggestionPayloadFromForm(form: TaskForm): DurationSuggestionRequest | null {
+  const title = form.title.trim();
+  if (!title) {
+    return null;
+  }
+
+  const cognitiveLoad = optionalInt(form.cognitive_load, 1, 10);
+  const estimatedMinutes = optionalInt(form.estimated_minutes, 1, 480);
+  return {
+    title,
+    ...(cognitiveLoad === null ? {} : { cognitive_load: cognitiveLoad }),
+    ...(estimatedMinutes === null ? {} : { estimated_minutes: estimatedMinutes }),
+  };
+}
+
+function confidenceKey(confidence: DurationSuggestionConfidence): TranslationKey {
+  return `tasks.suggestion.confidence.${confidence}`;
+}
+
+function sourceKey(source: DurationSuggestionSource): TranslationKey {
+  return `tasks.suggestion.source.${source}`;
+}
+
 function formatDue(value: string | null, noDueLabel: string): string {
   if (!value) {
     return noDueLabel;
@@ -74,6 +107,8 @@ export default function Tasks() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [parserText, setParserText] = useState("");
+  const [suggestion, setSuggestion] = useState<DurationSuggestion | null>(null);
+  const [suggestionLoading, setSuggestionLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const [projectFilter, setProjectFilter] = useState("all");
@@ -124,6 +159,47 @@ export default function Tasks() {
     [projectFilter, statusFilter, tasks],
   );
 
+  function updateForm(changes: Partial<TaskForm>) {
+    setForm((current) => ({ ...current, ...changes }));
+    setSuggestion(null);
+  }
+
+  async function fetchSuggestionForForm(nextForm: TaskForm): Promise<DurationSuggestion> {
+    const payload = suggestionPayloadFromForm(nextForm);
+    if (payload === null) {
+      throw new Error(t(language, "tasks.suggestion.needsTitle"));
+    }
+
+    setSuggestionLoading(true);
+    try {
+      const nextSuggestion = await suggestTaskDuration(payload);
+      setSuggestion(nextSuggestion);
+      return nextSuggestion;
+    } finally {
+      setSuggestionLoading(false);
+    }
+  }
+
+  async function handleSuggestDuration() {
+    setMessage(null);
+    try {
+      await fetchSuggestionForForm(form);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : t(language, "tasks.suggestion.failed"));
+    }
+  }
+
+  function handleAcceptSuggestion() {
+    if (suggestion === null) {
+      return;
+    }
+    setForm((current) => ({
+      ...current,
+      estimated_minutes: String(suggestion.suggested_minutes),
+    }));
+    setMessage(t(language, "tasks.suggestion.accepted"));
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const payload = formToPayload(form);
@@ -144,6 +220,7 @@ export default function Tasks() {
       }
       setForm(EMPTY_FORM);
       setEditingId(null);
+      setSuggestion(null);
       setTasks(await listTasks());
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t(language, "tasks.message.saveFailed"));
@@ -161,9 +238,10 @@ export default function Tasks() {
 
     setLoading(true);
     setMessage(null);
+    setSuggestion(null);
     try {
       const draft = await parseTaskDraft(text);
-      setForm({
+      const nextForm = {
         title: draft.title,
         estimated_minutes: String(draft.estimated_minutes),
         cognitive_load: String(draft.cognitive_load),
@@ -171,8 +249,14 @@ export default function Tasks() {
         is_splittable: draft.is_splittable ?? false,
         max_split_count: String(draft.max_split_count ?? 1),
         status: draft.status ?? "todo",
-      });
-      setMessage(t(language, "tasks.parser.applied"));
+      };
+      setForm(nextForm);
+      try {
+        await fetchSuggestionForForm(nextForm);
+        setMessage(t(language, "tasks.parser.applied"));
+      } catch {
+        setMessage(`${t(language, "tasks.parser.applied")} ${t(language, "tasks.suggestion.failed")}`);
+      }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t(language, "tasks.parser.failed"));
     } finally {
@@ -189,6 +273,7 @@ export default function Tasks() {
       if (editingId === taskId) {
         setEditingId(null);
         setForm(EMPTY_FORM);
+        setSuggestion(null);
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t(language, "tasks.message.deleteFailed"));
@@ -200,12 +285,14 @@ export default function Tasks() {
   function beginEdit(task: Task) {
     setEditingId(task.id);
     setForm(taskToForm(task));
+    setSuggestion(null);
     setMessage(null);
   }
 
   function cancelEdit() {
     setEditingId(null);
     setForm(EMPTY_FORM);
+    setSuggestion(null);
     setMessage(null);
   }
 
@@ -254,7 +341,7 @@ export default function Tasks() {
             </span>
             <input
               value={form.title}
-              onChange={(event) => setForm({ ...form, title: event.target.value })}
+              onChange={(event) => updateForm({ title: event.target.value })}
               className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
               placeholder={t(language, "tasks.form.titlePlaceholder")}
             />
@@ -271,7 +358,7 @@ export default function Tasks() {
                 max={480}
                 value={form.estimated_minutes}
                 onChange={(event) =>
-                  setForm({ ...form, estimated_minutes: event.target.value })
+                  updateForm({ estimated_minutes: event.target.value })
                 }
                 className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
               />
@@ -285,10 +372,74 @@ export default function Tasks() {
                 min={1}
                 max={10}
                 value={form.cognitive_load}
-                onChange={(event) => setForm({ ...form, cognitive_load: event.target.value })}
+                onChange={(event) => updateForm({ cognitive_load: event.target.value })}
                 className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
               />
             </label>
+          </div>
+
+          <div className="rounded border border-slate-200 bg-slate-50 p-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h2 className="text-sm font-black text-slate-950">
+                  {t(language, "tasks.suggestion.title")}
+                </h2>
+                {!suggestion && (
+                  <p className="mt-1 text-sm text-slate-600">
+                    {t(language, "tasks.suggestion.empty")}
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => void handleSuggestDuration()}
+                disabled={loading || suggestionLoading}
+                className="rounded border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-700 disabled:opacity-50"
+              >
+                {suggestionLoading
+                  ? t(language, "common.loading")
+                  : t(language, "tasks.suggestion.action")}
+              </button>
+            </div>
+            {suggestion && (
+              <div className="mt-3 space-y-3">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="rounded border border-slate-200 bg-white p-2">
+                    <div className="text-xs font-bold uppercase text-slate-500">
+                      {t(language, "tasks.suggestion.suggestedMinutes")}
+                    </div>
+                    <div className="mt-1 text-lg font-black text-slate-950">
+                      {suggestion.suggested_minutes} {t(language, "common.minutes")}
+                    </div>
+                  </div>
+                  <div className="rounded border border-slate-200 bg-white p-2">
+                    <div className="text-xs font-bold uppercase text-slate-500">
+                      {t(language, "tasks.suggestion.confidence")}
+                    </div>
+                    <div className="mt-1 text-lg font-black text-slate-950">
+                      {t(language, confidenceKey(suggestion.confidence))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-slate-700">
+                  {t(language, "tasks.suggestion.source")}:{" "}
+                  <span className="font-bold">{t(language, sourceKey(suggestion.source))}</span>
+                  {" · "}
+                  {t(language, "tasks.suggestion.samples")}:{" "}
+                  <span className="font-bold">{suggestion.sample_count}</span>
+                </p>
+                <p className="text-sm text-slate-600">
+                  {getSuggestionReasonLabel(language, suggestion.reason_code, suggestion.reason)}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleAcceptSuggestion}
+                  className="rounded bg-slate-950 px-3 py-2 text-sm font-black text-white"
+                >
+                  {t(language, "tasks.suggestion.accept")}
+                </button>
+              </div>
+            )}
           </div>
 
           <label className="block">
@@ -298,7 +449,7 @@ export default function Tasks() {
             <input
               type="datetime-local"
               value={form.due_at}
-              onChange={(event) => setForm({ ...form, due_at: event.target.value })}
+              onChange={(event) => updateForm({ due_at: event.target.value })}
               className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
             />
           </label>
@@ -311,7 +462,7 @@ export default function Tasks() {
               <select
                 value={form.status}
                 onChange={(event) =>
-                  setForm({ ...form, status: event.target.value as TaskStatus })
+                  updateForm({ status: event.target.value as TaskStatus })
                 }
                 className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
               >
@@ -332,7 +483,7 @@ export default function Tasks() {
                 max={3}
                 value={form.max_split_count}
                 disabled={!form.is_splittable}
-                onChange={(event) => setForm({ ...form, max_split_count: event.target.value })}
+                onChange={(event) => updateForm({ max_split_count: event.target.value })}
                 className="mt-1 w-full rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600 disabled:bg-slate-100"
               />
             </label>
@@ -343,8 +494,7 @@ export default function Tasks() {
               type="checkbox"
               checked={form.is_splittable}
               onChange={(event) =>
-                setForm({
-                  ...form,
+                updateForm({
                   is_splittable: event.target.checked,
                   max_split_count: event.target.checked ? form.max_split_count : "1",
                 })

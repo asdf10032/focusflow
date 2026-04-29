@@ -9,8 +9,8 @@
 
 - [x] **DSUG-01**: User can request a suggested duration for a task draft using title, project, cognitive load, and optional current estimate.
 - [x] **DSUG-02**: User can see suggested minutes, confidence, sample count, and reason text for a duration suggestion.
-- [ ] **DSUG-03**: User can accept a duration suggestion in the task form without losing the ability to manually override the estimate.
-- [ ] **DSUG-04**: User can receive duration suggestion metadata when parsing plain task text into a draft.
+- [x] **DSUG-03**: User can accept a duration suggestion in the task form without losing the ability to manually override the estimate.
+- [x] **DSUG-04**: User can receive duration suggestion metadata when parsing plain task text into a draft.
 
 ### Learning Data
 
@@ -20,7 +20,7 @@
 
 ### Usability And Quality
 
-- [ ] **UX-01**: User can use duration suggestions from the Tasks page in both Chinese and English.
+- [x] **UX-01**: User can use duration suggestions from the Tasks page in both Chinese and English.
 - [x] **NFR-01**: Backend duration suggestion behavior is local, deterministic, and covered by focused tests.
 - [ ] **NFR-02**: The v1.2 demo path, README, smoke tests, compile checks, and frontend build remain repeatable.
 
@@ -60,9 +60,9 @@
 | LERN-01 | Phase 10 | Complete |
 | LERN-02 | Phase 10 | Complete |
 | NFR-01 | Phase 10 | Complete |
-| DSUG-03 | Phase 11 | Pending |
-| DSUG-04 | Phase 11 | Pending |
-| UX-01 | Phase 11 | Pending |
+| DSUG-03 | Phase 11 | Complete |
+| DSUG-04 | Phase 11 | Complete |
+| UX-01 | Phase 11 | Complete |
 | LERN-03 | Phase 12 | Pending |
 | NFR-02 | Phase 12 | Pending |
 
@@ -73,4 +73,4 @@
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 after Phase 10 completion*
+*Last updated: 2026-04-30 after Phase 11 completion*

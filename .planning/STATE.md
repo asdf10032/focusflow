@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learning Duration Suggestions
-status: phase_planned
-last_updated: "2026-04-30T01:35:00+08:00"
+status: in_progress
+last_updated: "2026-04-30T02:10:00+08:00"
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 4
 ---
 
 # STATE.md
 
 - Current goal: Execute v1.2 Learning Duration Suggestions.
-- Current position: Phase 11 planned; ready to execute.
-- Last completed: Phase 10 Duration Suggestion Backend on 2026-04-30.
-- Focus: task suggestion UX and parse-task integration next.
-- Next action: run `$gsd-execute-phase 11`.
+- Current position: Phase 11 complete; ready to plan Phase 12.
+- Last completed: Phase 11 Task Suggestion UX on 2026-04-30.
+- Focus: learning demo polish, seeded suggestion history, and repeatable v1.2 verification next.
+- Next action: run `$gsd-plan-phase 12 --skip-research`.
 
 ## Project Reference
 
@@ -33,6 +33,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 - V1.2 uses execution history for local deterministic duration suggestions before attempting broader schedule learning.
 - Phase 10 added project and cognitive-load snapshots to execution logs.
 - Duration suggestions are advisory, explainable, manually overridable, and local-only.
+- Phase 11 surfaces duration suggestions in Tasks and Quick Parse without automatic estimate overwrite.
 - Demo seeding remains repeatable and non-destructive.
 
 ## Accumulated Context
@@ -44,6 +45,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 - v1.1 milestone audit passed at `.planning/v1.1-MILESTONE-AUDIT.md`.
 - Phase 9 UAT passed 4/4 with 0 issues.
 - Phase 10 backend duration suggestion tests passed.
+- Phase 11 frontend i18n/helper tests and frontend production build passed.
 
 ## Blockers
 
@@ -52,12 +54,14 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 ## Current Position
 
 Phase: 11
-Plan: 11-01 and 11-02 planned
-Status: Ready to execute Phase 11
-Last activity: 2026-04-30 - Phase 11 planned
+Plan: 11-01 and 11-02 complete
+Status: Ready to plan Phase 12
+Last activity: 2026-04-30 - Phase 11 completed
 
 ## Verification Baseline
 
 - `python -m pytest tests/test_phase6_execution_history.py tests/test_phase10_duration_suggestions.py -q -p no:cacheprovider`
 - `python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_phase6_execution_history.py tests/test_phase7_execution_review.py tests/test_phase8_explanations.py tests/test_phase10_duration_suggestions.py -q -p no:cacheprovider`
 - `python -m compileall backend alembic`
+- `python -m pytest tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py -q -p no:cacheprovider`
+- `npm.cmd run build` from `frontend/`

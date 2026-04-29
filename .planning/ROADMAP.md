@@ -37,7 +37,7 @@
 | Phase | Name | Goal | Requirements | Status |
 |-------|------|------|--------------|--------|
 | 10 | Duration Suggestion Backend | Add deterministic suggestion service/API from execution history snapshots. | DSUG-01, DSUG-02, LERN-01, LERN-02, NFR-01 | Complete |
-| 11 | Task Suggestion UX | Surface suggestions in task and parse flows with accept/manual override behavior and bilingual copy. | DSUG-03, DSUG-04, UX-01 | Planned |
+| 11 | Task Suggestion UX | Surface suggestions in task and parse flows with accept/manual override behavior and bilingual copy. | DSUG-03, DSUG-04, UX-01 | Complete |
 | 12 | Learning Demo Polish | Seed demonstrable history, document the v1.2 path, and verify the full loop. | LERN-03, NFR-02 | Planned |
 
 ## Phase Details
@@ -68,6 +68,8 @@
 3. Parse-task flow can surface suggestion metadata alongside the draft.
 4. Chinese and English UI strings cover all new suggestion states.
 
+**Status:** Complete on 2026-04-30.
+
 ### Phase 12: Learning Demo Polish
 
 **Goal:** Make v1.2 repeatable to test and demo locally.
@@ -86,12 +88,12 @@
 |-------------|-------|--------|
 | DSUG-01 | Phase 10 | Complete |
 | DSUG-02 | Phase 10 | Complete |
-| DSUG-03 | Phase 11 | Pending |
-| DSUG-04 | Phase 11 | Pending |
+| DSUG-03 | Phase 11 | Complete |
+| DSUG-04 | Phase 11 | Complete |
 | LERN-01 | Phase 10 | Complete |
 | LERN-02 | Phase 10 | Complete |
 | LERN-03 | Phase 12 | Pending |
-| UX-01 | Phase 11 | Pending |
+| UX-01 | Phase 11 | Complete |
 | NFR-01 | Phase 10 | Complete |
 | NFR-02 | Phase 12 | Pending |
 
@@ -103,5 +105,5 @@
 ## Next Up
 
 ```bash
-$gsd-plan-phase 11 --skip-research
+$gsd-plan-phase 12 --skip-research
 ```

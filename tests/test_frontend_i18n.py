@@ -174,3 +174,55 @@ def test_phase8_explanation_and_filter_labels_are_localized():
     assert result["en"]["tasks.filters.allStatuses"] == "All statuses"
     assert result["en"]["tasks.filters.noProject"] == "No project"
     assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase11_duration_suggestion_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase11Keys = [
+          "tasks.suggestion.title",
+          "tasks.suggestion.action",
+          "tasks.suggestion.accept",
+          "tasks.suggestion.empty",
+          "tasks.suggestion.suggestedMinutes",
+          "tasks.suggestion.confidence",
+          "tasks.suggestion.confidence.high",
+          "tasks.suggestion.confidence.medium",
+          "tasks.suggestion.confidence.low",
+          "tasks.suggestion.samples",
+          "tasks.suggestion.source",
+          "tasks.suggestion.source.history",
+          "tasks.suggestion.source.fallback",
+          "tasks.suggestion.failed",
+          "tasks.suggestion.accepted",
+          "tasks.suggestion.needsTitle",
+          "tasks.suggestion.reason.history_project_load_match",
+          "tasks.suggestion.reason.history_project_match",
+          "tasks.suggestion.reason.history_load_match",
+          "tasks.suggestion.reason.history_title_match",
+          "tasks.suggestion.reason.fallback_current_estimate",
+          "tasks.suggestion.reason.fallback_low_load",
+          "tasks.suggestion.reason.fallback_medium_load",
+          "tasks.suggestion.reason.fallback_high_load",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase11Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase11Keys.map((key) => [key, i18n.t("en", key)])),
+          knownReason: i18n.getSuggestionReasonLabel(
+            "en",
+            "history_project_load_match",
+            "backend reason",
+          ),
+          unknownReason: i18n.getSuggestionReasonLabel("en", "new_backend_code", "backend reason"),
+        }));
+        """
+    )
+
+    assert result["en"]["tasks.suggestion.title"] == "Duration suggestion"
+    assert result["en"]["tasks.suggestion.action"] == "Suggest duration"
+    assert result["en"]["tasks.suggestion.accept"] == "Use suggestion"
+    assert result["en"]["tasks.suggestion.source.history"] == "history"
+    assert result["en"]["tasks.suggestion.source.fallback"] == "fallback"
+    assert result["knownReason"] == "Similar completed tasks with matching project and load"
+    assert result["unknownReason"] == "backend reason"
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())

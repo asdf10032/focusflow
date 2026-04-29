@@ -44,6 +44,30 @@ export type TranslationKey =
   | "tasks.parser.action"
   | "tasks.parser.applied"
   | "tasks.parser.failed"
+  | "tasks.suggestion.title"
+  | "tasks.suggestion.action"
+  | "tasks.suggestion.accept"
+  | "tasks.suggestion.empty"
+  | "tasks.suggestion.suggestedMinutes"
+  | "tasks.suggestion.confidence"
+  | "tasks.suggestion.confidence.high"
+  | "tasks.suggestion.confidence.medium"
+  | "tasks.suggestion.confidence.low"
+  | "tasks.suggestion.samples"
+  | "tasks.suggestion.source"
+  | "tasks.suggestion.source.history"
+  | "tasks.suggestion.source.fallback"
+  | "tasks.suggestion.failed"
+  | "tasks.suggestion.accepted"
+  | "tasks.suggestion.needsTitle"
+  | "tasks.suggestion.reason.history_project_load_match"
+  | "tasks.suggestion.reason.history_project_match"
+  | "tasks.suggestion.reason.history_load_match"
+  | "tasks.suggestion.reason.history_title_match"
+  | "tasks.suggestion.reason.fallback_current_estimate"
+  | "tasks.suggestion.reason.fallback_low_load"
+  | "tasks.suggestion.reason.fallback_medium_load"
+  | "tasks.suggestion.reason.fallback_high_load"
   | "tasks.filters.title"
   | "tasks.filters.status"
   | "tasks.filters.project"
@@ -186,6 +210,30 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.parser.action": "解析为任务草稿",
     "tasks.parser.applied": "已填入任务草稿",
     "tasks.parser.failed": "解析任务失败",
+    "tasks.suggestion.title": "时长建议",
+    "tasks.suggestion.action": "建议时长",
+    "tasks.suggestion.accept": "使用建议",
+    "tasks.suggestion.empty": "输入标题后获取基于历史或负荷的建议。",
+    "tasks.suggestion.suggestedMinutes": "建议时长",
+    "tasks.suggestion.confidence": "置信度",
+    "tasks.suggestion.confidence.high": "高",
+    "tasks.suggestion.confidence.medium": "中",
+    "tasks.suggestion.confidence.low": "低",
+    "tasks.suggestion.samples": "样本",
+    "tasks.suggestion.source": "来源",
+    "tasks.suggestion.source.history": "历史",
+    "tasks.suggestion.source.fallback": "兜底",
+    "tasks.suggestion.failed": "获取时长建议失败",
+    "tasks.suggestion.accepted": "已使用时长建议",
+    "tasks.suggestion.needsTitle": "先输入任务标题再获取建议",
+    "tasks.suggestion.reason.history_project_load_match": "相似已完成任务，且项目和负荷匹配",
+    "tasks.suggestion.reason.history_project_match": "相似已完成任务，且项目匹配",
+    "tasks.suggestion.reason.history_load_match": "相似已完成任务，且负荷匹配",
+    "tasks.suggestion.reason.history_title_match": "基于相似已完成任务",
+    "tasks.suggestion.reason.fallback_current_estimate": "使用当前填写的估算",
+    "tasks.suggestion.reason.fallback_low_load": "基于低负荷默认值",
+    "tasks.suggestion.reason.fallback_medium_load": "基于中等负荷默认值",
+    "tasks.suggestion.reason.fallback_high_load": "基于高负荷默认值",
     "tasks.filters.title": "筛选",
     "tasks.filters.status": "状态",
     "tasks.filters.project": "项目",
@@ -327,6 +375,30 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.parser.action": "Parse Draft",
     "tasks.parser.applied": "Draft applied to the form",
     "tasks.parser.failed": "Task parse failed",
+    "tasks.suggestion.title": "Duration suggestion",
+    "tasks.suggestion.action": "Suggest duration",
+    "tasks.suggestion.accept": "Use suggestion",
+    "tasks.suggestion.empty": "Enter a title to get a suggestion from history or load.",
+    "tasks.suggestion.suggestedMinutes": "Suggested minutes",
+    "tasks.suggestion.confidence": "Confidence",
+    "tasks.suggestion.confidence.high": "high",
+    "tasks.suggestion.confidence.medium": "medium",
+    "tasks.suggestion.confidence.low": "low",
+    "tasks.suggestion.samples": "samples",
+    "tasks.suggestion.source": "source",
+    "tasks.suggestion.source.history": "history",
+    "tasks.suggestion.source.fallback": "fallback",
+    "tasks.suggestion.failed": "Duration suggestion failed",
+    "tasks.suggestion.accepted": "Duration suggestion applied",
+    "tasks.suggestion.needsTitle": "Enter a task title before requesting a suggestion",
+    "tasks.suggestion.reason.history_project_load_match": "Similar completed tasks with matching project and load",
+    "tasks.suggestion.reason.history_project_match": "Similar completed tasks with matching project",
+    "tasks.suggestion.reason.history_load_match": "Similar completed tasks with matching load",
+    "tasks.suggestion.reason.history_title_match": "Similar completed tasks",
+    "tasks.suggestion.reason.fallback_current_estimate": "Using the current estimate",
+    "tasks.suggestion.reason.fallback_low_load": "Using the low-load default",
+    "tasks.suggestion.reason.fallback_medium_load": "Using the medium-load default",
+    "tasks.suggestion.reason.fallback_high_load": "Using the high-load default",
     "tasks.filters.title": "Filters",
     "tasks.filters.status": "Status",
     "tasks.filters.project": "Project",
@@ -466,4 +538,15 @@ export function getStatusLabel(language: Language, status: TaskStatus | Executio
 
 export function getPlanTypeLabel(language: Language, planType: PlanType): string {
   return t(language, `plan.${planType}`);
+}
+
+export function getSuggestionReasonLabel(
+  language: Language,
+  reasonCode: string,
+  fallback: string,
+): string {
+  const key = `tasks.suggestion.reason.${reasonCode}` as TranslationKey;
+  return Object.prototype.hasOwnProperty.call(translations[language], key)
+    ? translations[language][key]
+    : fallback;
 }

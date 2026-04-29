@@ -76,6 +76,25 @@ export type ValidateMoveResult = {
 
 export type TaskDraft = TaskPayload;
 
+export type DurationSuggestionConfidence = "high" | "medium" | "low";
+export type DurationSuggestionSource = "history" | "fallback";
+
+export type DurationSuggestionRequest = {
+  title: string;
+  project_id?: number | null;
+  cognitive_load?: number | null;
+  estimated_minutes?: number | null;
+};
+
+export type DurationSuggestion = {
+  suggested_minutes: number;
+  confidence: DurationSuggestionConfidence;
+  sample_count: number;
+  source: DurationSuggestionSource;
+  reason_code: string;
+  reason: string;
+};
+
 export type TodayExecutionItem = ScheduleItem & {
   task: Task;
 };
@@ -249,5 +268,12 @@ export function parseTaskDraft(text: string): Promise<TaskDraft> {
   return requestJson<TaskDraft>("/ai/parse-task", {
     method: "POST",
     body: JSON.stringify({ text }),
+  });
+}
+
+export function suggestTaskDuration(payload: DurationSuggestionRequest): Promise<DurationSuggestion> {
+  return requestJson<DurationSuggestion>("/ai/suggest-duration", {
+    method: "POST",
+    body: JSON.stringify(payload),
   });
 }
