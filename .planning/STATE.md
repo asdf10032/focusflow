@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learning Duration Suggestions
-status: in_progress
-last_updated: "2026-04-30T01:15:00+08:00"
+status: phase_planned
+last_updated: "2026-04-30T01:35:00+08:00"
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 2
+  total_plans: 4
   completed_plans: 2
 ---
 
 # STATE.md
 
 - Current goal: Execute v1.2 Learning Duration Suggestions.
-- Current position: Phase 10 complete; ready to plan Phase 11.
+- Current position: Phase 11 planned; ready to execute.
 - Last completed: Phase 10 Duration Suggestion Backend on 2026-04-30.
 - Focus: task suggestion UX and parse-task integration next.
-- Next action: run `$gsd-plan-phase 11 --skip-research`.
+- Next action: run `$gsd-execute-phase 11`.
 
 ## Project Reference
 
@@ -52,9 +52,9 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 ## Current Position
 
 Phase: 11
-Plan: Not started
-Status: Ready to plan Phase 11
-Last activity: 2026-04-30 - Phase 10 completed
+Plan: 11-01 and 11-02 planned
+Status: Ready to execute Phase 11
+Last activity: 2026-04-30 - Phase 11 planned
 
 ## Verification Baseline
 
