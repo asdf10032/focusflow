@@ -13,6 +13,7 @@ from backend.app.db.base import Base
 from backend.app.db.session import get_db
 from backend.app.main import app
 from backend.app.models.blocked_time import BlockedTime
+from backend.app.models.execution_log import ExecutionLog
 from backend.app.models.schedule_plan import SchedulePlan
 from backend.app.models.task import Task
 
@@ -72,6 +73,9 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
         assert db.query(Task).count() == 5
         assert db.query(BlockedTime).filter(BlockedTime.date == target_date).count() == 1
         assert db.query(SchedulePlan).filter(SchedulePlan.date == target_date).count() == 3
+        assert first["review_date"] == target_date.isoformat()
+        assert second["execution_log_count"] == first["execution_log_count"] == 2
+        assert db.query(ExecutionLog).filter(ExecutionLog.date == target_date).count() == 2
         assert (
             db.query(SchedulePlan)
             .filter(SchedulePlan.date == target_date, SchedulePlan.selected.is_(True))
@@ -88,9 +92,39 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
     assert today["selected_plan"]["plan_type"] == "balanced"
     assert len(today["items"]) >= 1
 
+    progress = assert_success_envelope(
+        client.get(f"/api/v1/execution/progress?date={target_date.isoformat()}").json()
+    )
+    assert progress["selected_plan"]["plan_type"] == "balanced"
+    assert progress["planned_count"] >= 2
+    assert progress["completed_count"] == 1
+
+    review = assert_success_envelope(
+        client.get(f"/api/v1/execution/review?date={target_date.isoformat()}").json()
+    )
+    assert len(review["items"]) == 2
+    assert review["summary"]["actual_minutes"] > 0
+    assert review["summary"]["estimate_variance_minutes"] is not None
+    assert any(item["note"] for item in review["items"])
+
+    history = assert_success_envelope(
+        client.get(f"/api/v1/execution/history?date={target_date.isoformat()}").json()
+    )
+    assert len(history) == 2
+    assert {item["status"] for item in history} == {"done", "incomplete"}
+
+    schedule = assert_success_envelope(
+        client.post("/api/v1/schedules/generate", json={"date": target_date.isoformat()}).json()
+    )
+    assert "unplaced_reasons" in schedule
+    assert all(plan["summary"] and plan["risk_explanation"] for plan in schedule["plans"])
+
     task_id = today["items"][0]["task"]["id"]
     feedback = assert_success_envelope(
-        client.post("/api/v1/execution/feedback", json={"task_id": task_id, "status": "done"}).json()
+        client.post(
+            "/api/v1/execution/feedback",
+            json={"task_id": task_id, "status": "done", "date": target_date.isoformat()},
+        ).json()
     )
     assert feedback["status"] == "done"
 

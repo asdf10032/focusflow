@@ -1,50 +1,48 @@
-## 快速启动与本地演示
+## 快速启动与 v1.1 本地演示
 
-这是一个本地 Web MVP：录入任务，生成三套今日排期方案，选择方案，然后在今日执行页提交反馈。下面命令默认从仓库根目录运行。
+FocusFlow 是一个本地 Web MVP：录入任务，生成三套今日排期方案，选择方案，在 Today 提交反馈，并在 Daily Review 查看执行历史、进度和估算偏差。下面命令默认从仓库根目录运行。
 
-### 后端
+### 后端启动
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install fastapi uvicorn sqlalchemy alembic pydantic pydantic-settings pytest
 alembic upgrade head
-python -m backend.app.services.seeds.energy_templates
-python -m backend.app.services.seeds.demo_data
 python -m backend.app.services.seeds.demo_data --date 2026-04-27
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
 ```
 
-`demo_data` 是可重复、非破坏性的演示种子：它会补齐默认精力模板、创建/更新一个演示项目和任务、写入演示日期的 blocked time、生成三套排期，并默认选择 balanced 方案。它不会清空已有数据。
+`demo_data` 是可重复、非破坏性的演示种子：它会补齐默认精力模板、创建或更新一个演示项目和任务、写入演示日期的 blocked time、生成三套排期、默认选择 balanced 方案，并写入可复盘的执行历史。它不会清空已有数据。省略 `--date` 时默认使用今天。
 
-### 前端
+### 前端启动
 
 ```powershell
 cd frontend
 npm install
 npm.cmd run dev
-npm.cmd run build
 ```
 
 开发服务默认访问 `http://127.0.0.1:5173/`。
+
+### v1.1 演示路径
+
+1. Tasks：查看演示任务，使用状态/项目筛选，也可以用文本解析填充任务表单。
+2. Calendar：生成排期，查看 conservative / balanced / aggressive 三套方案、方案说明和风险说明。
+3. Select Plan：选择 balanced 或当前想演示的方案。
+4. Today：查看今日选中工作流和进度指标。
+5. Feedback：把一项任务标记为完成或其他状态，填写实际用时/备注后提交。
+6. Daily Review：选择同一日期，确认 seeded execution history、完成率、实际用时和估算偏差已经可见。
 
 ### 验证
 
 ```powershell
 python -m pytest tests/test_demo_flow.py -q -p no:cacheprovider
-python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_demo_flow.py tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py tests/test_scheduler_engine.py -q -p no:cacheprovider
+python -m pytest tests/test_phase1_api.py tests/test_phase4_api.py tests/test_demo_flow.py tests/test_phase6_execution_history.py tests/test_phase7_execution_review.py tests/test_phase8_explanations.py tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py tests/test_scheduler_engine.py -q -p no:cacheprovider
 python -m compileall backend alembic
 cd frontend
 npm.cmd run build
 ```
-
-### 演示路径
-
-1. Tasks：查看或添加任务，也可以用文本解析填充任务表单。
-2. Calendar：生成排期，查看 conservative / balanced / aggressive 三套方案。
-3. Select Plan：选择 balanced 或当前想演示的方案。
-4. Today：查看今日选中工作流。
-5. Feedback：把一项任务标记为完成或其他状态，确认任务状态更新。
 
 ---
 

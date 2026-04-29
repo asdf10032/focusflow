@@ -27,7 +27,7 @@
 
 - [x] **REV-01**: User can open a daily review page for a selected date.
 - [x] **REV-02**: Daily review shows completed, incomplete, skipped work, completion rate, planned duration, actual duration, and estimate variance.
-- [ ] **REV-03**: Daily review can be demonstrated from seeded/demo data and covered by a smoke test.
+- [x] **REV-03**: Daily review can be demonstrated from seeded/demo data and covered by a smoke test.
 
 ### Schedule Explanation
 
@@ -44,7 +44,7 @@
 ### Nonfunctional
 
 - [x] **NFR-01**: Existing API success envelope remains unchanged.
-- [ ] **NFR-02**: Backend API, frontend helper/i18n, build, and smoke tests cover v1.1 behavior.
+- [x] **NFR-02**: Backend API, frontend helper/i18n, build, and smoke tests cover v1.1 behavior.
 - [x] **NFR-03**: v1.1 does not introduce login, cloud sync, external LLM, or third-party calendar integration.
 
 ## Future Requirements
@@ -88,7 +88,7 @@
 | EST-03 | Phase 6 | Complete |
 | REV-01 | Phase 7 | Complete |
 | REV-02 | Phase 7 | Complete |
-| REV-03 | Phase 9 | Pending |
+| REV-03 | Phase 9 | Complete |
 | EXPL-01 | Phase 8 | Complete |
 | EXPL-02 | Phase 8 | Complete |
 | EXPL-03 | Phase 8 | Complete |
@@ -96,7 +96,7 @@
 | FILT-02 | Phase 8 | Complete |
 | FILT-03 | Phase 7 | Complete |
 | NFR-01 | Phase 6 | Complete |
-| NFR-02 | Phase 9 | Pending |
+| NFR-02 | Phase 9 | Complete |
 | NFR-03 | Phase 8 | Complete |
 
 **Coverage:**
@@ -106,4 +106,4 @@
 
 ---
 *Requirements defined: 2026-04-28*
-*Last updated: 2026-04-29 after Phase 8 completion*
+*Last updated: 2026-04-29 after Phase 9 completion*

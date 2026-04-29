@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from ...db.session import DATABASE_URL, SessionLocal
 from ...models.blocked_time import BlockedTime
+from ...models.execution_log import ExecutionLog
 from ...models.project import Project
 from ...models.schedule_plan import SchedulePlan
 from ...models.task import Task
@@ -20,6 +21,8 @@ from .energy_templates import seed_default_templates
 
 DEMO_PROJECT_NAME = "FocusFlow Demo"
 DEMO_BLOCKED_NOTE = "Demo lunch and reset"
+DEMO_DONE_NOTE = "Demo seeded completion"
+DEMO_INCOMPLETE_NOTE = "Demo seeded follow-up"
 
 
 def _at(d: dt_date, hour: int, minute: int = 0) -> datetime:
@@ -82,6 +85,70 @@ def _select_balanced_plan(db: Session, target_date: dt_date) -> None:
     for plan in plans:
         plan.selected = plan.plan_type == "balanced"
     db.commit()
+
+
+def _task_status_from_history(status: str) -> str:
+    return {
+        "done": "done",
+        "skipped": "todo",
+        "incomplete": "in_progress",
+        "canceled": "canceled",
+    }[status]
+
+
+def _upsert_execution_log(
+    db: Session,
+    task: Task,
+    target_date: dt_date,
+    status: str,
+    actual_minutes: int,
+    note: str,
+) -> ExecutionLog:
+    log = (
+        db.query(ExecutionLog)
+        .filter(
+            ExecutionLog.date == target_date,
+            ExecutionLog.task_id == task.id,
+            ExecutionLog.note == note,
+        )
+        .order_by(ExecutionLog.id.asc())
+        .first()
+    )
+    if log is None:
+        log = ExecutionLog(date=target_date, task_id=task.id, note=note)
+        db.add(log)
+
+    log.task_title_snapshot = task.title
+    log.estimated_minutes_snapshot = task.estimated_minutes
+    log.status = status
+    log.actual_minutes = actual_minutes
+    log.note = note
+    task.status = _task_status_from_history(status)
+    return log
+
+
+def _seed_execution_history(db: Session, tasks: list[Task], target_date: dt_date) -> list[ExecutionLog]:
+    by_title = {task.title: task for task in tasks}
+    logs = [
+        _upsert_execution_log(
+            db,
+            by_title["Prepare slide talking points"],
+            target_date,
+            status="done",
+            actual_minutes=35,
+            note=DEMO_DONE_NOTE,
+        ),
+        _upsert_execution_log(
+            db,
+            by_title["Polish FocusFlow README"],
+            target_date,
+            status="incomplete",
+            actual_minutes=50,
+            note=DEMO_INCOMPLETE_NOTE,
+        ),
+    ]
+    db.commit()
+    return logs
 
 
 def seed_demo_data(db: Session, target_date: dt_date | None = None) -> dict[str, Any]:
@@ -154,13 +221,16 @@ def seed_demo_data(db: Session, target_date: dt_date | None = None) -> dict[str,
     response = GenerateResponse(plans=plans, unplaced=unplaced, warnings=warnings)
     replace_persisted_plans(db, d, response)
     _select_balanced_plan(db, d)
+    execution_logs = _seed_execution_history(db, tasks, d)
 
     return {
         "date": d.isoformat(),
+        "review_date": d.isoformat(),
         "project_id": project.id,
         "task_ids": [task.id for task in tasks],
         "plan_types": [plan.plan_type for plan in plans],
         "selected_plan_type": "balanced",
+        "execution_log_count": len(execution_logs),
         "unplaced": unplaced,
         "warnings": warnings,
     }
