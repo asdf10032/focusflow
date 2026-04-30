@@ -12,6 +12,7 @@ from .api.v1.endpoints.energy import router as energy_router
 from .api.v1.endpoints.schedules import router as schedules_router
 from .api.v1.endpoints.execution import router as execution_router
 from .api.v1.endpoints.ai import router as ai_router
+from .api.v1.endpoints.exports import router as exports_router
 
 settings = get_settings()
 
@@ -38,6 +39,7 @@ app.include_router(energy_router, prefix="/api/v1")
 app.include_router(schedules_router, prefix="/api/v1")
 app.include_router(execution_router, prefix="/api/v1")
 app.include_router(ai_router, prefix="/api/v1")
+app.include_router(exports_router, prefix="/api/v1")
 
 
 # 便于 "uvicorn backend.app.main:app --reload" 启动
