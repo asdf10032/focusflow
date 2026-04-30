@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Export & Planning Utilities
-status: defining_requirements
-last_updated: "2026-04-30T22:05:00+08:00"
+status: roadmap_ready
+last_updated: "2026-04-30T22:12:00+08:00"
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -13,11 +13,11 @@ progress:
 
 # STATE.md
 
-- Current goal: define v1.3 Export & Planning Utilities.
-- Current position: milestone started; defining requirements and roadmap.
+- Current goal: execute v1.3 Export & Planning Utilities.
+- Current position: roadmap ready; Phase 13 is next.
 - Last completed: v1.2 Learning Duration Suggestions on 2026-04-30.
 - Focus: exports, partial replanning, task search, and empty-state polish.
-- Next action: create `.planning/REQUIREMENTS.md` and update `.planning/ROADMAP.md`.
+- Next action: run `$gsd-plan-phase 13 --skip-research`.
 
 ## Project Reference
 
@@ -60,10 +60,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 ## Current Position
 
-Phase: not started
-Plan: -
-Status: Defining requirements
-Last activity: 2026-04-30 - milestone v1.3 started
+Phase: 13
+Plan: not started
+Status: Ready to plan Phase 13
+Last activity: 2026-04-30 - v1.3 requirements and roadmap created
 
 ## Verification Baseline
 

@@ -27,9 +27,10 @@
 
 ### Quality
 
-- [ ] **NFR-01**: Export and partial replan APIs use the existing success envelope and are covered by focused backend tests.
-- [ ] **NFR-02**: Frontend export, partial replan, search, and empty-state copy are covered by i18n/helper tests and production build verification.
-- [ ] **NFR-03**: v1.3 demo documentation and smoke coverage show the export and partial replan loop without requiring network access.
+- [ ] **NFR-01**: Export APIs use the existing success envelope and are covered by focused backend tests.
+- [ ] **NFR-02**: Partial replan APIs use the existing success envelope and are covered by focused backend tests.
+- [ ] **NFR-03**: Frontend export, partial replan, search, and empty-state copy are covered by i18n/helper tests and production build verification.
+- [ ] **NFR-04**: v1.3 demo documentation and smoke coverage show the export and partial replan loop without requiring network access.
 
 ## Future Requirements
 
@@ -62,26 +63,27 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXP-01 | TBD | Pending |
-| EXP-02 | TBD | Pending |
-| EXP-03 | TBD | Pending |
-| EXP-04 | TBD | Pending |
-| PLAN-01 | TBD | Pending |
-| PLAN-02 | TBD | Pending |
-| PLAN-03 | TBD | Pending |
-| PLAN-04 | TBD | Pending |
-| SRCH-01 | TBD | Pending |
-| SRCH-02 | TBD | Pending |
-| ONBD-01 | TBD | Pending |
-| NFR-01 | TBD | Pending |
-| NFR-02 | TBD | Pending |
-| NFR-03 | TBD | Pending |
+| EXP-01 | Phase 13 | Pending |
+| EXP-02 | Phase 13 | Pending |
+| EXP-03 | Phase 13 | Pending |
+| EXP-04 | Phase 13 | Pending |
+| PLAN-01 | Phase 14 | Pending |
+| PLAN-02 | Phase 14 | Pending |
+| PLAN-03 | Phase 14 | Pending |
+| PLAN-04 | Phase 14 | Pending |
+| SRCH-01 | Phase 15 | Pending |
+| SRCH-02 | Phase 15 | Pending |
+| ONBD-01 | Phase 15 | Pending |
+| NFR-01 | Phase 13 | Pending |
+| NFR-02 | Phase 14 | Pending |
+| NFR-03 | Phase 15 | Pending |
+| NFR-04 | Phase 15 | Pending |
 
 **Coverage:**
-- v1.3 requirements: 14 total
-- Mapped to phases: 0
-- Unmapped: 14
+- v1.3 requirements: 15 total
+- Mapped to phases: 15
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 after milestone definition*
+*Last updated: 2026-04-30 after roadmap creation*
