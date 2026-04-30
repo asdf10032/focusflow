@@ -1,30 +1,30 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: Learning Duration Suggestions
-status: milestone_complete
-last_updated: "2026-04-30T21:50:00+08:00"
+milestone: v1.3
+milestone_name: Export & Planning Utilities
+status: defining_requirements
+last_updated: "2026-04-30T22:05:00+08:00"
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 6
-  completed_plans: 6
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # STATE.md
 
-- Current goal: v1.2 Learning Duration Suggestions shipped and archived.
-- Current position: milestone complete; ready to start the next milestone.
-- Last completed: Phase 12 Learning Demo Polish on 2026-04-30.
-- Focus: choose the next milestone direction.
-- Next action: run `$gsd-new-milestone`.
+- Current goal: define v1.3 Export & Planning Utilities.
+- Current position: milestone started; defining requirements and roadmap.
+- Last completed: v1.2 Learning Duration Suggestions on 2026-04-30.
+- Focus: exports, partial replanning, task search, and empty-state polish.
+- Next action: create `.planning/REQUIREMENTS.md` and update `.planning/ROADMAP.md`.
 
 ## Project Reference
 
 See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 **Core value:** reduce manual scheduling effort with practical, explainable daily plans and execution insight.
-**Current focus:** v1.2 Learning Duration Suggestions.
+**Current focus:** v1.3 Export & Planning Utilities.
 
 ## Recent Decisions
 
@@ -36,6 +36,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 - Phase 11 surfaces duration suggestions in Tasks and Quick Parse without automatic estimate overwrite.
 - Phase 12 adds suggestion-ready demo history, v1.2 smoke coverage, and README demo instructions.
 - Demo seeding remains repeatable and non-destructive.
+- V1.3 should improve local data portability and day-to-day usability without adding cloud sync or external integrations.
 
 ## Accumulated Context
 
@@ -59,10 +60,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 ## Current Position
 
-Phase: none
-Plan: none
-Status: Ready for next milestone
-Last activity: 2026-04-30 - v1.2 milestone archived
+Phase: not started
+Plan: -
+Status: Defining requirements
+Last activity: 2026-04-30 - milestone v1.3 started
 
 ## Verification Baseline
 

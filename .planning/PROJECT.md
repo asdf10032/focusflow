@@ -5,7 +5,16 @@
 - **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30; v1.2 Learning Duration Suggestions on 2026-04-30.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
 - **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
-- **Current focus:** Ready to choose the next milestone.
+- **Current focus:** v1.3 Export & Planning Utilities.
+
+## Current Milestone: v1.3 Export & Planning Utilities
+
+**Goal:** Make FocusFlow easier to use with real data by adding local exports, remaining-work replanning, task search, and clearer empty states.
+
+**Target features:**
+- Export tasks, execution history, and review summaries in portable local formats.
+- Replan the remaining work for a day without losing completed execution feedback.
+- Search tasks and improve first-run/empty-state guidance across key workflows.
 
 ## Last Completed Milestone: v1.2 Learning Duration Suggestions
 
@@ -62,7 +71,10 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 
 ## Active Requirements
 
-- None. Run `$gsd-new-milestone` to define the next cycle.
+- Portable export of task, history, and review data.
+- Partial replan for remaining daily work.
+- Task search that composes with existing filters.
+- Clear empty states for local/demo workflows.
 
 ## Future Candidates
 
@@ -123,4 +135,4 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 
 ---
 
-*Last updated: 2026-04-30 after archiving v1.2 milestone*
+*Last updated: 2026-04-30 after starting v1.3 milestone*
