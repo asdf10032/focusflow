@@ -16,13 +16,13 @@
 
 - [x] **LERN-01**: User duration suggestions are derived from durable execution history snapshots rather than mutable current task fields.
 - [x] **LERN-02**: User receives safe fallback behavior when there is not enough relevant execution history.
-- [ ] **LERN-03**: Demo data includes enough execution history to show both confident and fallback duration suggestions.
+- [x] **LERN-03**: Demo data includes enough execution history to show both confident and fallback duration suggestions.
 
 ### Usability And Quality
 
 - [x] **UX-01**: User can use duration suggestions from the Tasks page in both Chinese and English.
 - [x] **NFR-01**: Backend duration suggestion behavior is local, deterministic, and covered by focused tests.
-- [ ] **NFR-02**: The v1.2 demo path, README, smoke tests, compile checks, and frontend build remain repeatable.
+- [x] **NFR-02**: The v1.2 demo path, README, smoke tests, compile checks, and frontend build remain repeatable.
 
 ## Future Requirements
 
@@ -63,8 +63,8 @@
 | DSUG-03 | Phase 11 | Complete |
 | DSUG-04 | Phase 11 | Complete |
 | UX-01 | Phase 11 | Complete |
-| LERN-03 | Phase 12 | Pending |
-| NFR-02 | Phase 12 | Pending |
+| LERN-03 | Phase 12 | Complete |
+| NFR-02 | Phase 12 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 10 total
@@ -73,4 +73,4 @@
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 after Phase 11 completion*
+*Last updated: 2026-04-30 after Phase 12 completion*

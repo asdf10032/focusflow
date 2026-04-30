@@ -120,6 +120,8 @@ def _upsert_execution_log(
 
     log.task_title_snapshot = task.title
     log.estimated_minutes_snapshot = task.estimated_minutes
+    log.task_project_id_snapshot = task.project_id
+    log.cognitive_load_snapshot = task.cognitive_load
     log.status = status
     log.actual_minutes = actual_minutes
     log.note = note

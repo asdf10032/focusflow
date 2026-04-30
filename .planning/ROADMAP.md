@@ -38,7 +38,7 @@
 |-------|------|------|--------------|--------|
 | 10 | Duration Suggestion Backend | Add deterministic suggestion service/API from execution history snapshots. | DSUG-01, DSUG-02, LERN-01, LERN-02, NFR-01 | Complete |
 | 11 | Task Suggestion UX | Surface suggestions in task and parse flows with accept/manual override behavior and bilingual copy. | DSUG-03, DSUG-04, UX-01 | Complete |
-| 12 | Learning Demo Polish | Seed demonstrable history, document the v1.2 path, and verify the full loop. | LERN-03, NFR-02 | Planned |
+| 12 | Learning Demo Polish | Seed demonstrable history, document the v1.2 path, and verify the full loop. | LERN-03, NFR-02 | Complete |
 
 ## Phase Details
 
@@ -82,7 +82,7 @@
 3. README documents the v1.2 demo path and verification commands.
 4. Backend tests, compile checks, and frontend build remain clean.
 
-**Status:** Planned on 2026-04-30.
+**Status:** Complete on 2026-04-30.
 
 ## Traceability Summary
 
@@ -94,10 +94,10 @@
 | DSUG-04 | Phase 11 | Complete |
 | LERN-01 | Phase 10 | Complete |
 | LERN-02 | Phase 10 | Complete |
-| LERN-03 | Phase 12 | Pending |
+| LERN-03 | Phase 12 | Complete |
 | UX-01 | Phase 11 | Complete |
 | NFR-01 | Phase 10 | Complete |
-| NFR-02 | Phase 12 | Pending |
+| NFR-02 | Phase 12 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 10 total
@@ -107,5 +107,5 @@
 ## Next Up
 
 ```bash
-$gsd-execute-phase 12
+$gsd-verify-work
 ```

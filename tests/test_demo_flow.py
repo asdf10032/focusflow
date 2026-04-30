@@ -76,6 +76,9 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
         assert first["review_date"] == target_date.isoformat()
         assert second["execution_log_count"] == first["execution_log_count"] == 2
         assert db.query(ExecutionLog).filter(ExecutionLog.date == target_date).count() == 2
+        logs = db.query(ExecutionLog).filter(ExecutionLog.date == target_date).all()
+        assert all(log.task_project_id_snapshot == first["project_id"] for log in logs)
+        assert all(log.cognitive_load_snapshot is not None for log in logs)
         assert (
             db.query(SchedulePlan)
             .filter(SchedulePlan.date == target_date, SchedulePlan.selected.is_(True))
@@ -112,6 +115,32 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
     )
     assert len(history) == 2
     assert {item["status"] for item in history} == {"done", "incomplete"}
+
+    history_suggestion = assert_success_envelope(
+        client.post(
+            "/api/v1/ai/suggest-duration",
+            json={
+                "title": "Prepare slide talking points",
+                "project_id": first["project_id"],
+                "cognitive_load": 4,
+                "estimated_minutes": 30,
+            },
+        ).json()
+    )
+    assert history_suggestion["source"] == "history"
+    assert history_suggestion["confidence"] == "high"
+    assert history_suggestion["sample_count"] >= 1
+    assert history_suggestion["suggested_minutes"] == 35
+
+    fallback_suggestion = assert_success_envelope(
+        client.post(
+            "/api/v1/ai/suggest-duration",
+            json={"title": "Plan a new workshop", "cognitive_load": 9},
+        ).json()
+    )
+    assert fallback_suggestion["source"] == "fallback"
+    assert fallback_suggestion["sample_count"] == 0
+    assert fallback_suggestion["suggested_minutes"] == 90
 
     schedule = assert_success_envelope(
         client.post("/api/v1/schedules/generate", json={"date": target_date.isoformat()}).json()
