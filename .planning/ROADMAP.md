@@ -82,6 +82,8 @@
 3. README documents the v1.2 demo path and verification commands.
 4. Backend tests, compile checks, and frontend build remain clean.
 
+**Status:** Planned on 2026-04-30.
+
 ## Traceability Summary
 
 | Requirement | Phase | Status |
@@ -105,5 +107,5 @@
 ## Next Up
 
 ```bash
-$gsd-plan-phase 12 --skip-research
+$gsd-execute-phase 12
 ```

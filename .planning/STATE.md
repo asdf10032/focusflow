@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Learning Duration Suggestions
-status: in_progress
-last_updated: "2026-04-30T02:10:00+08:00"
+status: phase_planned
+last_updated: "2026-04-30T02:35:00+08:00"
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 4
+  total_plans: 6
   completed_plans: 4
 ---
 
 # STATE.md
 
 - Current goal: Execute v1.2 Learning Duration Suggestions.
-- Current position: Phase 11 complete; ready to plan Phase 12.
+- Current position: Phase 12 planned; ready to execute.
 - Last completed: Phase 11 Task Suggestion UX on 2026-04-30.
-- Focus: learning demo polish, seeded suggestion history, and repeatable v1.2 verification next.
-- Next action: run `$gsd-plan-phase 12 --skip-research`.
+- Focus: learning demo polish, seeded suggestion history, repeatable v1.2 verification, and README demo instructions.
+- Next action: run `$gsd-execute-phase 12`.
 
 ## Project Reference
 
@@ -46,6 +46,7 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 - Phase 9 UAT passed 4/4 with 0 issues.
 - Phase 10 backend duration suggestion tests passed.
 - Phase 11 frontend i18n/helper tests and frontend production build passed.
+- Phase 12 planned with demo seed/smoke coverage and README/final verification plans.
 
 ## Blockers
 
@@ -53,10 +54,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-30).
 
 ## Current Position
 
-Phase: 11
-Plan: 11-01 and 11-02 complete
-Status: Ready to plan Phase 12
-Last activity: 2026-04-30 - Phase 11 completed
+Phase: 12
+Plan: 12-01 and 12-02 planned
+Status: Ready to execute Phase 12
+Last activity: 2026-04-30 - Phase 12 planned
 
 ## Verification Baseline
 
