@@ -2,16 +2,16 @@
 
 ## Current State
 
-- **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30.
+- **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30; v1.2 Learning Duration Suggestions on 2026-04-30.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
 - **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
-- **Current focus:** v1.2 Learning Duration Suggestions.
+- **Current focus:** Ready to choose the next milestone.
 
-## Current Milestone: v1.2 Learning Duration Suggestions
+## Last Completed Milestone: v1.2 Learning Duration Suggestions
 
 **Goal:** Use durable execution history to suggest better task duration estimates while keeping the workflow local, deterministic, explainable, and manually overridable.
 
-**Target features:**
+**Shipped features:**
 - Backend duration suggestion service and API based on execution history snapshots.
 - Task creation/editing and parse-task flows can surface suggested minutes with confidence and explanation.
 - Demo seed, tests, and README updates show how execution history improves future estimates.
@@ -52,13 +52,17 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - Task status and project filters - v1.1
 - Repeatable v1.1 demo history and smoke coverage - v1.1
 
+### v1.2 Learning Duration Suggestions
+
+- Duration suggestions from execution history - v1.2
+- Suggestion confidence, sample count, source, and reason text - v1.2
+- Manual accept/override behavior in task workflows - v1.2
+- Parse-task integration with duration suggestions - v1.2
+- Repeatable demo and verification for learned estimates - v1.2
+
 ## Active Requirements
 
-- Duration suggestions from execution history.
-- Suggestion confidence, sample count, and reason text.
-- Manual accept/override behavior in task workflows.
-- Parse-task integration with duration suggestions.
-- Repeatable demo and verification for learned estimates.
+- None. Run `$gsd-new-milestone` to define the next cycle.
 
 ## Future Candidates
 
@@ -82,7 +86,7 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - Backend: FastAPI, SQLAlchemy, Pydantic v2, SQLite, Alembic.
 - Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, selected-plan state, and deterministic explanations.
 - Execution insights: execution logs store task snapshots, status, actual minutes, notes, and date-based review data.
-- Duration learning: v1.2 will derive local deterministic suggestions from execution history snapshots and expose explanation metadata rather than calling an external model.
+- Duration learning: local deterministic suggestions derive from execution history snapshots and expose explanation metadata rather than calling an external model.
 - Demo tooling: local seed services for energy templates, tasks, schedule plans, selected balanced plan, repeatable execution history, and v1.2 suggestion examples.
 
 ## Key Decisions
@@ -114,7 +118,9 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - v1.1 roadmap: `.planning/milestones/v1.1-ROADMAP.md`
 - v1.1 requirements: `.planning/milestones/v1.1-REQUIREMENTS.md`
 - v1.1 audit: `.planning/v1.1-MILESTONE-AUDIT.md`
+- v1.2 roadmap: `.planning/milestones/v1.2-ROADMAP.md`
+- v1.2 requirements: `.planning/milestones/v1.2-REQUIREMENTS.md`
 
 ---
 
-*Last updated: 2026-04-30 after starting v1.2 milestone*
+*Last updated: 2026-04-30 after archiving v1.2 milestone*

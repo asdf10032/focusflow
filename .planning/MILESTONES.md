@@ -60,3 +60,36 @@
 - Audit: `.planning/v1.1-MILESTONE-AUDIT.md`
 
 ---
+
+## v1.2 Learning Duration Suggestions (Shipped: 2026-04-30)
+
+**Phases completed:** 3 phases, 6 plans
+
+**Scope:** local, deterministic, explainable duration suggestions based on durable execution history snapshots.
+
+**Key accomplishments:**
+- Added execution log context snapshots for project and cognitive load.
+- Added a deterministic duration suggestion API using completed execution history with actual durations.
+- Added confidence, sample count, source, reason code, and fallback metadata for suggestions.
+- Surfaced suggestions in Tasks and Quick Parse flows with explicit accept and manual override behavior.
+- Added bilingual UI copy for suggestion controls, metadata, states, and reason codes.
+- Expanded repeatable demo seed data and smoke coverage to show both learned and fallback suggestions.
+- Updated README demo instructions for the v1.2 learning loop.
+
+**Validation:**
+- Phase 12 UAT: 6 passed, 0 issues.
+- Focused demo and suggestion tests: 7 passed.
+- v1.0-v1.2 regression suite: 46 passed.
+- `python -m compileall backend alembic` passed.
+- `npm.cmd run build` passed.
+
+**Known gaps accepted:**
+- Suggestions are advisory only and do not automatically rewrite estimates.
+- Scheduler scoring does not yet adapt from learned duration history.
+- Browser sanity remains optional after starting local services.
+
+**Archives:**
+- Roadmap: `.planning/milestones/v1.2-ROADMAP.md`
+- Requirements: `.planning/milestones/v1.2-REQUIREMENTS.md`
+
+---

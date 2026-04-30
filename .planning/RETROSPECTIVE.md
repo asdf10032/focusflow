@@ -55,15 +55,58 @@
 | Milestone | Sessions | Phases | Key Change |
 |-----------|----------|--------|------------|
 | v1.0 | 1 | 6 | Established phase-based MVP delivery with UAT before milestone archival |
+| v1.1 | 1 | 4 | Added durable execution insight and milestone audit before archival |
+| v1.2 | 1 | 3 | Converted execution history into local duration learning and demo proof |
 
 ### Cumulative Quality
 
 | Milestone | Tests | Coverage | Zero-Dep Additions |
 |-----------|-------|----------|-------------------|
 | v1.0 | 24 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic parse and non-destructive demo seed |
+| v1.1 | 39 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic review and explanation APIs |
+| v1.2 | 46 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic duration suggestions |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. Phase summaries and UAT files are essential planning artifacts, not afterthoughts.
 2. Demo-ready local data makes manual verification and presentation much less fragile.
 
+---
+
+## Milestone: v1.2 - Learning Duration Suggestions
+
+**Shipped:** 2026-04-30
+**Phases:** 3 | **Plans:** 6 | **Sessions:** 1
+
+### What Was Built
+
+- Execution log context snapshots for project and cognitive load.
+- Deterministic duration suggestion backend using done history with actual minutes.
+- Confidence, sample count, source, reason code, and reason text metadata.
+- Tasks and Quick Parse UI flows for viewing and accepting suggestions.
+- Bilingual Chinese/English suggestion copy and reason labels.
+- Repeatable v1.2 demo history and smoke coverage for learned and fallback suggestions.
+
+### What Worked
+
+- Reusing execution history snapshots kept learning deterministic and stable after task edits.
+- Keeping suggestions advisory avoided surprising estimate rewrites.
+- Demo seed coverage made the learning behavior easy to verify without external services.
+
+### What Was Inefficient
+
+- No formal v1.2 audit file was created before milestone completion; Phase 12 verification and UAT provided the completion evidence.
+- Existing unrelated dirty files required careful selective staging.
+- Roadmap analysis still reports recent phases as partial because summaries are grouped per phase rather than per plan.
+
+### Patterns Established
+
+- Learning APIs should return explainable metadata, not just a number.
+- UI suggestion flows should require explicit accept and preserve manual override.
+- Demo data should include both confident-history and sparse-history examples.
+
+### Key Lessons
+
+1. Snapshot fields are the right boundary for local learning features.
+2. Suggestion UX is safer when it stays transparent and optional.
+3. Future milestones should create a milestone audit before completion when practical.

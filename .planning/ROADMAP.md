@@ -4,7 +4,7 @@
 
 - **v1.0 MVP** - Shipped 2026-04-27. Archive: [v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - **v1.1 Execution Insights** - Shipped 2026-04-30. Archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
-- **v1.2 Learning Duration Suggestions** - Active.
+- **v1.2 Learning Duration Suggestions** - Shipped 2026-04-30. Archive: [v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 
 ## Completed
 
@@ -30,7 +30,20 @@
 
 </details>
 
-## Active Milestone: v1.2 Learning Duration Suggestions
+<details>
+<summary>v1.2 Learning Duration Suggestions (Phases 10-12) - SHIPPED 2026-04-30</summary>
+
+- [x] Phase 10: Duration Suggestion Backend - deterministic suggestion service/API from execution history snapshots
+- [x] Phase 11: Task Suggestion UX - task and parse flows with accept/manual override behavior and bilingual copy
+- [x] Phase 12: Learning Demo Polish - seeded history, smoke coverage, README demo path, and UAT
+
+</details>
+
+## Active Milestone
+
+No active milestone. Start the next cycle with `$gsd-new-milestone`.
+
+## Last Completed Milestone: v1.2 Learning Duration Suggestions
 
 **Goal:** Turn v1.1 execution history into practical duration suggestions that help users estimate new tasks more accurately while keeping the product local, deterministic, explainable, and manually overridable.
 
@@ -107,5 +120,5 @@
 ## Next Up
 
 ```bash
-$gsd-verify-work
+$gsd-new-milestone
 ```
