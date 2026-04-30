@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   createTask,
   deleteTask,
+  exportTasks,
   listProjects,
   listTasks,
   parseTaskDraft,
@@ -16,6 +17,7 @@ import {
   type TaskStatus,
   updateTask,
 } from "../lib/api";
+import { triggerExportDownload } from "../lib/exportView";
 import { getStatusLabel, getSuggestionReasonLabel, t, type TranslationKey } from "../lib/i18n";
 import { useAppStore } from "../state/store";
 
@@ -109,6 +111,7 @@ export default function Tasks() {
   const [parserText, setParserText] = useState("");
   const [suggestion, setSuggestion] = useState<DurationSuggestion | null>(null);
   const [suggestionLoading, setSuggestionLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const [projectFilter, setProjectFilter] = useState("all");
@@ -294,6 +297,20 @@ export default function Tasks() {
     setForm(EMPTY_FORM);
     setSuggestion(null);
     setMessage(null);
+  }
+
+  async function handleExportTasks() {
+    setExportLoading(true);
+    setMessage(null);
+    try {
+      const payload = await exportTasks();
+      triggerExportDownload(payload);
+      setMessage(t(language, "exports.success"));
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : t(language, "exports.failed"));
+    } finally {
+      setExportLoading(false);
+    }
   }
 
   return (
@@ -538,14 +555,24 @@ export default function Tasks() {
               {t(language, "tasks.queue.title")}
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={() => void refreshTasks()}
-            disabled={loading}
-            className="rounded border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-700 disabled:opacity-50"
-          >
-            {t(language, "tasks.action.refresh")}
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => void handleExportTasks()}
+              disabled={exportLoading}
+              className="rounded border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-700 disabled:opacity-50"
+            >
+              {exportLoading ? t(language, "common.loading") : t(language, "exports.tasksJson")}
+            </button>
+            <button
+              type="button"
+              onClick={() => void refreshTasks()}
+              disabled={loading}
+              className="rounded border border-slate-300 bg-white px-3 py-2 text-sm font-bold text-slate-700 disabled:opacity-50"
+            >
+              {t(language, "tasks.action.refresh")}
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-2 sm:grid-cols-4">

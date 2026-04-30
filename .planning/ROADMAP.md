@@ -46,7 +46,7 @@
 
 | Phase | Name | Goal | Requirements | Status |
 |-------|------|------|--------------|--------|
-| 13 | Export Data Utilities | Add local JSON/CSV exports and UI entry points for tasks, history, and review data. | EXP-01, EXP-02, EXP-03, EXP-04, NFR-01 | Planned |
+| 13 | Export Data Utilities | Add local JSON/CSV exports and UI entry points for tasks, history, and review data. | EXP-01, EXP-02, EXP-03, EXP-04, NFR-01 | Complete |
 | 14 | Partial Replan | Add remaining-work replan behavior that preserves completed feedback/history. | PLAN-01, PLAN-02, PLAN-03, PLAN-04, NFR-02 | Planned |
 | 15 | Search And Demo Polish | Add task search, empty states, final i18n/tests/docs, and v1.3 smoke coverage. | SRCH-01, SRCH-02, ONBD-01, NFR-03, NFR-04 | Planned |
 
@@ -64,7 +64,7 @@
 3. Frontend exposes localized export controls with clear filenames and error states.
 4. Backend export tests and frontend i18n/helper checks cover the new behavior.
 
-**Status:** Planned.
+**Status:** Complete on 2026-05-01.
 
 ### Phase 14: Partial Replan
 
@@ -99,10 +99,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXP-01 | Phase 13 | Pending |
-| EXP-02 | Phase 13 | Pending |
-| EXP-03 | Phase 13 | Pending |
-| EXP-04 | Phase 13 | Pending |
+| EXP-01 | Phase 13 | Complete |
+| EXP-02 | Phase 13 | Complete |
+| EXP-03 | Phase 13 | Complete |
+| EXP-04 | Phase 13 | Complete |
 | PLAN-01 | Phase 14 | Pending |
 | PLAN-02 | Phase 14 | Pending |
 | PLAN-03 | Phase 14 | Pending |
@@ -110,7 +110,7 @@
 | SRCH-01 | Phase 15 | Pending |
 | SRCH-02 | Phase 15 | Pending |
 | ONBD-01 | Phase 15 | Pending |
-| NFR-01 | Phase 13 | Pending |
+| NFR-01 | Phase 13 | Complete |
 | NFR-02 | Phase 14 | Pending |
 | NFR-03 | Phase 15 | Pending |
 | NFR-04 | Phase 15 | Pending |
@@ -123,5 +123,5 @@
 ## Next Up
 
 ```bash
-$gsd-plan-phase 13 --skip-research
+$gsd-plan-phase 14 --skip-research
 ```

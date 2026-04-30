@@ -226,3 +226,29 @@ def test_phase11_duration_suggestion_labels_are_localized():
     assert result["knownReason"] == "Similar completed tasks with matching project and load"
     assert result["unknownReason"] == "backend reason"
     assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase13_export_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase13Keys = [
+          "exports.title",
+          "exports.tasksJson",
+          "exports.historyJson",
+          "exports.reviewCsv",
+          "exports.success",
+          "exports.failed",
+          "exports.empty",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase13Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase13Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["exports.title"] == "Export"
+    assert result["en"]["exports.tasksJson"] == "Export tasks JSON"
+    assert result["en"]["exports.historyJson"] == "Export history JSON"
+    assert result["en"]["exports.reviewCsv"] == "Export review CSV"
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())

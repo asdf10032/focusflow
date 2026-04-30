@@ -7,10 +7,10 @@
 
 ### Export
 
-- [ ] **EXP-01**: User can export tasks as local JSON including project, scheduling, status, and estimate fields.
-- [ ] **EXP-02**: User can export execution history as local JSON filtered by date or date range.
-- [ ] **EXP-03**: User can export Daily Review summary data as CSV for a selected date or date range.
-- [ ] **EXP-04**: User can trigger exports from the UI with Chinese and English copy, clear filenames, and visible error states.
+- [x] **EXP-01**: User can export tasks as local JSON including project, scheduling, status, and estimate fields.
+- [x] **EXP-02**: User can export execution history as local JSON filtered by date or date range.
+- [x] **EXP-03**: User can export Daily Review summary data as CSV for a selected date or date range.
+- [x] **EXP-04**: User can trigger exports from the UI with Chinese and English copy, clear filenames, and visible error states.
 
 ### Partial Replan
 
@@ -27,7 +27,7 @@
 
 ### Quality
 
-- [ ] **NFR-01**: Export APIs use the existing success envelope and are covered by focused backend tests.
+- [x] **NFR-01**: Export APIs use the existing success envelope and are covered by focused backend tests.
 - [ ] **NFR-02**: Partial replan APIs use the existing success envelope and are covered by focused backend tests.
 - [ ] **NFR-03**: Frontend export, partial replan, search, and empty-state copy are covered by i18n/helper tests and production build verification.
 - [ ] **NFR-04**: v1.3 demo documentation and smoke coverage show the export and partial replan loop without requiring network access.
@@ -63,10 +63,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXP-01 | Phase 13 | Pending |
-| EXP-02 | Phase 13 | Pending |
-| EXP-03 | Phase 13 | Pending |
-| EXP-04 | Phase 13 | Pending |
+| EXP-01 | Phase 13 | Complete |
+| EXP-02 | Phase 13 | Complete |
+| EXP-03 | Phase 13 | Complete |
+| EXP-04 | Phase 13 | Complete |
 | PLAN-01 | Phase 14 | Pending |
 | PLAN-02 | Phase 14 | Pending |
 | PLAN-03 | Phase 14 | Pending |
@@ -74,7 +74,7 @@
 | SRCH-01 | Phase 15 | Pending |
 | SRCH-02 | Phase 15 | Pending |
 | ONBD-01 | Phase 15 | Pending |
-| NFR-01 | Phase 13 | Pending |
+| NFR-01 | Phase 13 | Complete |
 | NFR-02 | Phase 14 | Pending |
 | NFR-03 | Phase 15 | Pending |
 | NFR-04 | Phase 15 | Pending |
@@ -86,4 +86,4 @@
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 after roadmap creation*
+*Last updated: 2026-05-01 after Phase 13 completion*

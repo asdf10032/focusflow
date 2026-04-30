@@ -1,3 +1,4 @@
+import { buildExportQuery, type ExportDateRange, type ExportPayload } from "./exportView";
 import type { PlanType, ScheduleItem } from "./scheduleView";
 
 export type TaskStatus = "todo" | "in_progress" | "done" | "canceled";
@@ -94,6 +95,8 @@ export type DurationSuggestion = {
   reason_code: string;
   reason: string;
 };
+
+export type { ExportDateRange, ExportPayload };
 
 export type TodayExecutionItem = ScheduleItem & {
   task: Task;
@@ -276,4 +279,16 @@ export function suggestTaskDuration(payload: DurationSuggestionRequest): Promise
     method: "POST",
     body: JSON.stringify(payload),
   });
+}
+
+export function exportTasks(): Promise<ExportPayload> {
+  return requestJson<ExportPayload>("/exports/tasks");
+}
+
+export function exportExecutionHistory(params: ExportDateRange): Promise<ExportPayload> {
+  return requestJson<ExportPayload>(`/exports/execution-history${buildExportQuery(params)}`);
+}
+
+export function exportDailyReview(params: ExportDateRange): Promise<ExportPayload> {
+  return requestJson<ExportPayload>(`/exports/daily-review${buildExportQuery(params)}`);
 }

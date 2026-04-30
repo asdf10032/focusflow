@@ -22,6 +22,13 @@ export type TranslationKey =
   | "common.success"
   | "common.minutes"
   | "common.score"
+  | "exports.title"
+  | "exports.tasksJson"
+  | "exports.historyJson"
+  | "exports.reviewCsv"
+  | "exports.success"
+  | "exports.failed"
+  | "exports.empty"
   | "tasks.eyebrow"
   | "tasks.title"
   | "tasks.form.title"
@@ -188,6 +195,13 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "common.success": "成功",
     "common.minutes": "分钟",
     "common.score": "分数",
+    "exports.title": "导出",
+    "exports.tasksJson": "导出任务 JSON",
+    "exports.historyJson": "导出历史 JSON",
+    "exports.reviewCsv": "导出复盘 CSV",
+    "exports.success": "导出文件已准备",
+    "exports.failed": "导出失败",
+    "exports.empty": "暂无可导出的本地数据。",
     "tasks.eyebrow": "任务收集",
     "tasks.title": "先塑造任务，再安排今天。",
     "tasks.form.title": "标题",
@@ -353,6 +367,13 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "common.success": "Success",
     "common.minutes": "minutes",
     "common.score": "score",
+    "exports.title": "Export",
+    "exports.tasksJson": "Export tasks JSON",
+    "exports.historyJson": "Export history JSON",
+    "exports.reviewCsv": "Export review CSV",
+    "exports.success": "Export file is ready",
+    "exports.failed": "Export failed",
+    "exports.empty": "No local data to export yet.",
     "tasks.eyebrow": "Task Intake",
     "tasks.title": "Shape the day before it starts.",
     "tasks.form.title": "Title",

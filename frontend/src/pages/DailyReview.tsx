@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { getExecutionReview, type ExecutionReview } from "../lib/api";
+import {
+  exportDailyReview,
+  exportExecutionHistory,
+  getExecutionReview,
+  type ExecutionReview,
+} from "../lib/api";
+import { triggerExportDownload } from "../lib/exportView";
 import { getPlanTypeLabel, getStatusLabel, t } from "../lib/i18n";
 import { useAppStore } from "../state/store";
 
@@ -28,6 +34,7 @@ export default function DailyReview() {
   const [date, setDate] = useState(todayInputValue());
   const [review, setReview] = useState<ExecutionReview | null>(null);
   const [loading, setLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState<"history" | "review" | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   async function refreshReview(targetDate = date) {
@@ -49,6 +56,34 @@ export default function DailyReview() {
   }, []);
 
   const summary = review?.summary;
+
+  async function handleExportHistory() {
+    setExportLoading("history");
+    setMessage(null);
+    try {
+      const payload = await exportExecutionHistory({ date });
+      triggerExportDownload(payload);
+      setMessage(t(language, "exports.success"));
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : t(language, "exports.failed"));
+    } finally {
+      setExportLoading(null);
+    }
+  }
+
+  async function handleExportReview() {
+    setExportLoading("review");
+    setMessage(null);
+    try {
+      const payload = await exportDailyReview({ date });
+      triggerExportDownload(payload);
+      setMessage(t(language, "exports.success"));
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : t(language, "exports.failed"));
+    } finally {
+      setExportLoading(null);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -73,6 +108,22 @@ export default function DailyReview() {
               className="mt-1 rounded border border-slate-300 bg-white px-3 py-2 outline-none focus:border-amber-600"
             />
           </label>
+          <button
+            type="button"
+            onClick={() => void handleExportHistory()}
+            disabled={exportLoading !== null}
+            className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-black text-slate-700 disabled:opacity-50"
+          >
+            {exportLoading === "history" ? t(language, "common.loading") : t(language, "exports.historyJson")}
+          </button>
+          <button
+            type="button"
+            onClick={() => void handleExportReview()}
+            disabled={exportLoading !== null}
+            className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-black text-slate-700 disabled:opacity-50"
+          >
+            {exportLoading === "review" ? t(language, "common.loading") : t(language, "exports.reviewCsv")}
+          </button>
           <button
             type="button"
             onClick={() => void refreshReview(date)}
