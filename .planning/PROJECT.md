@@ -2,21 +2,22 @@
 
 ## Current State
 
-- **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30; v1.2 Learning Duration Suggestions on 2026-04-30.
+- **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30; v1.2 Learning Duration Suggestions on 2026-04-30; v1.3 Export & Planning Utilities on 2026-05-01.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
 - **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
-- **Current focus:** v1.3 Export & Planning Utilities.
+- **Current focus:** Planning the next milestone.
 
-## Current Milestone: v1.3 Export & Planning Utilities
+## Last Completed Milestone: v1.3 Export & Planning Utilities
 
 **Goal:** Make FocusFlow easier to use with real data by adding local exports, remaining-work replanning, task search, and clearer empty states.
 
-**Target features:**
+**Shipped features:**
 - Export tasks, execution history, and review summaries in portable local formats.
 - Replan the remaining work for a day without losing completed execution feedback.
-- Search tasks and improve first-run/empty-state guidance across key workflows.
+- Search tasks by title and notes while composing with existing filters.
+- Improve first-run, filtered, Today, and export empty-state guidance across key workflows.
 
-## Last Completed Milestone: v1.2 Learning Duration Suggestions
+## Previous Completed Milestone: v1.2 Learning Duration Suggestions
 
 **Goal:** Use durable execution history to suggest better task duration estimates while keeping the workflow local, deterministic, explainable, and manually overridable.
 
@@ -29,7 +30,7 @@
 
 Tasks -> Calendar -> Select Plan -> Today -> Feedback -> Daily Review
 
-The app supports task/project CRUD, default energy templates, blocked time, dependency-aware scheduling, three plan variants, selected-plan persistence, calendar viewing, bilingual UI switching, validate-move, reoptimization, Today execution, durable feedback history, progress metrics, Daily Review, deterministic task parsing, deterministic plan explanations, task filters, repeatable demo seed data, and README demo instructions.
+The app supports task/project CRUD, task notes, default energy templates, blocked time, dependency-aware scheduling, three plan variants, selected-plan persistence, calendar viewing, bilingual UI switching, validate-move, reoptimization, partial replan, Today execution, durable feedback history, progress metrics, Daily Review, deterministic task parsing, deterministic plan explanations, task filters/search, local exports, repeatable demo seed data, and README demo instructions.
 
 ## Validated Requirements
 
@@ -69,19 +70,28 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - Parse-task integration with duration suggestions - v1.2
 - Repeatable demo and verification for learned estimates - v1.2
 
+### v1.3 Export & Planning Utilities
+
+- Task, execution history, and Daily Review exports - v1.3
+- Export UI controls with localized success, failure, and empty states - v1.3
+- Selected-plan-based partial replan for remaining daily work - v1.3
+- Partial replan error states for missing selected plan, no remaining work, and no schedulable time - v1.3
+- Task notes and title/notes search - v1.3
+- Search combined with status and project filters - v1.3
+- Repeatable v1.3 demo and UAT coverage - v1.3
+
 ## Active Requirements
 
-- Portable export of task, history, and review data.
-- Partial replan for remaining daily work.
-- Task search that composes with existing filters.
-- Clear empty states for local/demo workflows.
+- Fresh requirements pending. Run `$gsd-new-milestone` to define the next milestone.
 
 ## Future Candidates
 
-- Export tasks, history, and review summaries as JSON/CSV.
-- Weekly planning and partial replan.
-- Richer task search and filtering.
-- Better onboarding and empty states.
+- Import/restore from exported local data.
+- All-data archive export.
+- Weekly planning.
+- Side-by-side comparison for original vs partial-replanned schedules.
+- Search across execution notes and Daily Review summaries.
+- Guided first-run checklist.
 - Adaptive priority or schedule scoring beyond duration estimation.
 
 ## Out Of Scope
@@ -99,7 +109,8 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - Scheduling: backend service layer with deterministic slot generation, dependency validation, scoring, placement, persistence, selected-plan state, and deterministic explanations.
 - Execution insights: execution logs store task snapshots, status, actual minutes, notes, and date-based review data.
 - Duration learning: local deterministic suggestions derive from execution history snapshots and expose explanation metadata rather than calling an external model.
-- Demo tooling: local seed services for energy templates, tasks, schedule plans, selected balanced plan, repeatable execution history, and v1.2 suggestion examples.
+- Exports and replanning: read-only export service helpers plus selected-plan-based partial replan reuse existing schedule persistence and execution history boundaries.
+- Demo tooling: local seed services for energy templates, tasks, notes, schedule plans, selected balanced plan, repeatable execution history, and suggestion/search/export examples.
 
 ## Key Decisions
 
@@ -115,13 +126,19 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 | Keep plan explanations deterministic | Matches local-first/no-network constraint |
 | Add non-destructive demo seed instead of reset-by-default | Good for protecting local user data |
 | Scope v1.2 learning to duration suggestions | Keeps learning useful, testable, and explainable before changing schedule scoring |
+| Keep v1.3 exports local JSON/CSV only | Good for portability without introducing import risk or cloud sync |
+| Use selected plan as the partial-replan source | Good for preserving user intent and avoiding surprise expansion to all open tasks |
+| Add task notes before broader cross-history search | Good incremental search surface with low schema risk |
 
 ## Known Gaps And Tech Debt
 
-- No export workflow yet.
-- No weekly planning or partial replan yet.
+- No import/restore workflow yet.
+- No all-data archive export yet.
+- No weekly planning yet.
+- No side-by-side replan comparison yet.
+- No search across execution notes or Daily Review summaries yet.
 - No adaptive scheduler scoring beyond duration suggestions yet.
-- Phase audit noted artifact naming drift: recent phases use `VALIDATION` plus summaries/UAT rather than per-phase `VERIFICATION.md`.
+- No formal v1.3 milestone audit was created; Phase 15 verification and UAT are the accepted completion evidence.
 
 ## Archives
 
@@ -132,7 +149,9 @@ The app supports task/project CRUD, default energy templates, blocked time, depe
 - v1.1 audit: `.planning/v1.1-MILESTONE-AUDIT.md`
 - v1.2 roadmap: `.planning/milestones/v1.2-ROADMAP.md`
 - v1.2 requirements: `.planning/milestones/v1.2-REQUIREMENTS.md`
+- v1.3 roadmap: `.planning/milestones/v1.3-ROADMAP.md`
+- v1.3 requirements: `.planning/milestones/v1.3-REQUIREMENTS.md`
 
 ---
 
-*Last updated: 2026-04-30 after starting v1.3 milestone*
+*Last updated: 2026-05-01 after completing v1.3 milestone*

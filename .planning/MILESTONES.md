@@ -1,5 +1,36 @@
 # Milestones
 
+## v1.3 Export & Planning Utilities (Shipped: 2026-05-01)
+
+**Phases completed:** 3 phases, 7 plans
+
+**Scope:** local data portability, remaining-work replanning, task search, and clearer empty/demo states.
+
+**Key accomplishments:**
+- Added local JSON/CSV export APIs and UI controls for tasks, execution history, and Daily Review data.
+- Added selected-plan-based partial replan that preserves execution logs and excludes already-feedbacked work.
+- Added task notes plus title/notes search that composes with status and project filters.
+- Added localized empty-state handling for filtered tasks, Today plan items, and no-data exports.
+- Expanded repeatable demo smoke coverage across seed, search, export, partial replan, Today feedback, and Daily Review.
+- Updated README and planning artifacts for the v1.3 demo path.
+
+**Validation:**
+- Phase 15 UAT: 6 passed, 0 issues.
+- Focused Phase 15 and demo flow tests: 7 passed.
+- v1.0-v1.3 regression suite: 62 passed.
+- `python -m compileall backend alembic` passed.
+- `npm.cmd run build` passed.
+
+**Known gaps accepted:**
+- No formal `v1.3-MILESTONE-AUDIT.md` was created; Phase 15 verification and UAT provided completion evidence.
+- Import/restore, all-data archive export, weekly planning, side-by-side replan comparison, and execution-note search remain future work.
+
+**Archives:**
+- Roadmap: `.planning/milestones/v1.3-ROADMAP.md`
+- Requirements: `.planning/milestones/v1.3-REQUIREMENTS.md`
+
+---
+
 ## v1.0 MVP (Shipped: 2026-04-27)
 
 **Phases completed:** 6 phases, 9 plans

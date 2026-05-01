@@ -48,6 +48,52 @@
 
 ---
 
+## Milestone: v1.3 - Export & Planning Utilities
+
+**Shipped:** 2026-05-01
+**Phases:** 3 | **Plans:** 7 | **Sessions:** 1
+
+### What Was Built
+
+- Local export APIs and UI controls for tasks, execution history, and Daily Review data.
+- Selected-plan-based partial replan that preserves execution logs and excludes already-feedbacked work.
+- Task notes and title/notes search that composes with existing project/status filters.
+- Localized empty states for filtered tasks, selected Today plans without items, and no-data exports.
+- Repeatable v1.3 demo smoke flow covering seed, search, export, partial replan, Today feedback, and Daily Review.
+
+### What Worked
+
+- Keeping exports read-only avoided risky restore/import behavior while still improving portability.
+- Basing partial replan on the selected plan kept the behavior narrow and understandable.
+- Adding task notes gave search a useful second field without opening a broader search index.
+- UAT caught the user-facing path after automated tests already covered the API and helper behavior.
+
+### What Was Inefficient
+
+- Phase 13 and 14 needed summary backfill during milestone completion before readiness reached 100%.
+- No formal v1.3 audit file was created; the milestone relied on verification files plus Phase 15 UAT.
+- The worktree still contains unrelated dirty files, so selective staging remains important.
+
+### Patterns Established
+
+- Export endpoints should be read-only and return deterministic filenames, content types, content, and record counts.
+- Replan flows should preserve execution history as the source of truth for what already happened.
+- Empty-state polish belongs in the same milestone as demo readiness, because it makes local demos easier to trust.
+
+### Key Lessons
+
+1. Every plan should get a matching SUMMARY immediately after execution.
+2. Local-first portability can ship safely as export before import.
+3. Remaining-work flows should start from the user-selected plan, not the whole task database.
+
+### Cost Observations
+
+- Model mix: not recorded.
+- Sessions: 1 visible completion session after Phase 15 implementation and UAT.
+- Notable: documentation and planning artifacts needed more manual curation than code verification.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -57,6 +103,7 @@
 | v1.0 | 1 | 6 | Established phase-based MVP delivery with UAT before milestone archival |
 | v1.1 | 1 | 4 | Added durable execution insight and milestone audit before archival |
 | v1.2 | 1 | 3 | Converted execution history into local duration learning and demo proof |
+| v1.3 | 1 | 3 | Added local portability, partial replan, task search, and demo empty-state polish |
 
 ### Cumulative Quality
 
@@ -65,11 +112,15 @@
 | v1.0 | 24 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic parse and non-destructive demo seed |
 | v1.1 | 39 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic review and explanation APIs |
 | v1.2 | 46 relevant pytest checks + frontend build + UAT | Not measured | Local deterministic duration suggestions |
+| v1.3 | 62 relevant pytest checks + frontend build + UAT | Not measured | Local exports, partial replan, and task notes/search |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. Phase summaries and UAT files are essential planning artifacts, not afterthoughts.
 2. Demo-ready local data makes manual verification and presentation much less fragile.
+3. Milestone completion is smoother when summaries, verification, and UAT are updated before archival.
+
+---
 
 ---
 
