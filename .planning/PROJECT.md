@@ -5,7 +5,17 @@
 - **Shipped versions:** v1.0 MVP on 2026-04-27; v1.1 Execution Insights on 2026-04-30; v1.2 Learning Duration Suggestions on 2026-04-30; v1.3 Export & Planning Utilities on 2026-05-01.
 - **What this is:** FocusFlow is a local web MVP for turning tasks, energy templates, blocked time, and execution feedback into explainable daily schedules and reviewable execution insight.
 - **Core value:** Reduce manual scheduling effort by producing practical daily plans and showing what actually happened after execution.
-- **Current focus:** Planning the next milestone.
+- **Current focus:** v1.4 Weekly Review Insights.
+
+## Current Milestone: v1.4 Weekly Review Insights
+
+**Goal:** Turn daily execution history into a useful weekly review view with core trend metrics inside Daily Review.
+
+**Target features:**
+- Show weekly completion rate, actual minutes, and estimate variance from existing execution history.
+- Add day-by-day weekly breakdown inside the Daily Review workflow.
+- Compare the selected week against the previous week where enough data exists.
+- Keep the feature local, deterministic, and readable in Chinese and English.
 
 ## Last Completed Milestone: v1.3 Export & Planning Utilities
 
@@ -82,7 +92,11 @@ The app supports task/project CRUD, task notes, default energy templates, blocke
 
 ## Active Requirements
 
-- Fresh requirements pending. Run `$gsd-new-milestone` to define the next milestone.
+- Weekly review summary for selected week.
+- Weekly completion rate, actual minutes, and estimate variance.
+- Daily breakdown within the selected week.
+- Previous-week comparison for core metrics.
+- Daily Review UI integration with bilingual copy.
 
 ## Future Candidates
 
@@ -129,6 +143,7 @@ The app supports task/project CRUD, task notes, default energy templates, blocke
 | Keep v1.3 exports local JSON/CSV only | Good for portability without introducing import risk or cloud sync |
 | Use selected plan as the partial-replan source | Good for preserving user intent and avoiding surprise expansion to all open tasks |
 | Add task notes before broader cross-history search | Good incremental search surface with low schema risk |
+| Scope v1.4 to weekly review metrics | Keeps insight work grounded in existing execution history before adding recommendations |
 
 ## Known Gaps And Tech Debt
 
@@ -138,6 +153,7 @@ The app supports task/project CRUD, task notes, default energy templates, blocke
 - No side-by-side replan comparison yet.
 - No search across execution notes or Daily Review summaries yet.
 - No adaptive scheduler scoring beyond duration suggestions yet.
+- No prescriptive weekly coaching yet; v1.4 starts with transparent metrics.
 - No formal v1.3 milestone audit was created; Phase 15 verification and UAT are the accepted completion evidence.
 
 ## Archives
@@ -154,4 +170,4 @@ The app supports task/project CRUD, task notes, default energy templates, blocke
 
 ---
 
-*Last updated: 2026-05-01 after completing v1.3 milestone*
+*Last updated: 2026-05-01 after starting v1.4 milestone*

@@ -6,6 +6,7 @@
 - **v1.1 Execution Insights** - Shipped 2026-04-30. Archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 - **v1.2 Learning Duration Suggestions** - Shipped 2026-04-30. Archive: [v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - **v1.3 Export & Planning Utilities** - Shipped 2026-05-01. Archive: [v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
+- **v1.4 Weekly Review Insights** - Active.
 
 ## Completed
 
@@ -49,9 +50,92 @@
 
 </details>
 
+## Active Milestone: v1.4 Weekly Review Insights
+
+**Goal:** Turn daily execution history into a useful weekly review view with core trend metrics inside Daily Review.
+
+| Phase | Name | Goal | Requirements | Status |
+|-------|------|------|--------------|--------|
+| 16 | Weekly Review Backend | Add deterministic weekly review aggregation and previous-week comparison APIs. | WREV-01, WREV-02, WREV-03, WREV-04, WREV-05, TRND-01, TRND-02, TRND-03, TRND-04, NFR-01, NFR-02 | Planned |
+| 17 | Weekly Review UI | Add a Daily Review weekly view with week controls, metric cards, daily breakdown, and bilingual copy. | DRUX-01, DRUX-02, DRUX-03, DRUX-04, NFR-03 | Planned |
+| 18 | Weekly Review Demo Polish | Seed meaningful weekly review data, extend smoke coverage, update README, and prepare UAT. | NFR-04 | Planned |
+
+## Phase Details
+
+### Phase 16: Weekly Review Backend
+
+**Goal:** Add deterministic weekly review aggregation and previous-week comparison APIs.
+
+**Requirements:** WREV-01, WREV-02, WREV-03, WREV-04, WREV-05, TRND-01, TRND-02, TRND-03, TRND-04, NFR-01, NFR-02
+
+**Success criteria:**
+1. Backend returns selected-week start/end dates and aggregated metrics from execution logs.
+2. Completion rate, actual minutes, and estimate variance are calculated deterministically.
+3. Response includes day-by-day breakdown for the selected week.
+4. Previous-week comparison is returned when data exists and clear empty metadata is returned when it does not.
+5. Focused backend tests cover aggregation, comparison, empty week, and success-envelope behavior.
+
+**Status:** Planned.
+
+### Phase 17: Weekly Review UI
+
+**Goal:** Add a Daily Review weekly view with week controls, metric cards, daily breakdown, and bilingual copy.
+
+**Requirements:** DRUX-01, DRUX-02, DRUX-03, DRUX-04, NFR-03
+
+**Success criteria:**
+1. Daily Review lets the user switch between daily and weekly views without leaving the page.
+2. Weekly view exposes previous/next week controls and loads the selected week.
+3. Weekly completion rate, actual minutes, estimate variance, previous-week deltas, and daily breakdown are visible.
+4. Existing Daily Review history and export controls still work.
+5. i18n/helper tests and frontend production build pass.
+
+**Status:** Planned.
+
+### Phase 18: Weekly Review Demo Polish
+
+**Goal:** Make v1.4 repeatable and demo-ready with seeded weekly data, smoke coverage, README updates, and UAT readiness.
+
+**Requirements:** NFR-04
+
+**Success criteria:**
+1. Demo seed creates enough history across at least two weeks to show weekly metrics and previous-week comparison.
+2. Smoke tests cover seed -> weekly review API -> Daily Review compatibility.
+3. README documents the v1.4 weekly review demo path.
+4. Phase verification and UAT artifacts are ready for milestone completion.
+
+**Status:** Planned.
+
+## Traceability Summary
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| WREV-01 | Phase 16 | Pending |
+| WREV-02 | Phase 16 | Pending |
+| WREV-03 | Phase 16 | Pending |
+| WREV-04 | Phase 16 | Pending |
+| WREV-05 | Phase 16 | Pending |
+| TRND-01 | Phase 16 | Pending |
+| TRND-02 | Phase 16 | Pending |
+| TRND-03 | Phase 16 | Pending |
+| TRND-04 | Phase 16 | Pending |
+| DRUX-01 | Phase 17 | Pending |
+| DRUX-02 | Phase 17 | Pending |
+| DRUX-03 | Phase 17 | Pending |
+| DRUX-04 | Phase 17 | Pending |
+| NFR-01 | Phase 16 | Pending |
+| NFR-02 | Phase 16 | Pending |
+| NFR-03 | Phase 17 | Pending |
+| NFR-04 | Phase 18 | Pending |
+
+**Coverage:**
+- v1.4 requirements: 17 total
+- Mapped to phases: 17
+- Unmapped: 0
+
 ## Next Up
 
 ```bash
-$gsd-new-milestone
+$gsd-plan-phase 16 --skip-research
 ```
 
