@@ -6,13 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 仓库现状
 
-- 本仓库包含规划/方案文档与最小后端骨架（FastAPI + SQLAlchemy + Alembic），前端尚未初始化。
+- 本仓库包含规划/方案文档与最小后端骨架（FastAPI + SQLAlchemy + Alembic），已新增前端最小壳（React + TypeScript + Vite + Tailwind + Router + Zustand）。
 - 根目录存在：
   - README.md（MVP 目标与分阶段任务）
   - FocusFlow技术方案与项目结构.md（技术选型、目标架构、模块边界、数据模型与接口草案、调度引擎方案）
   - backend/（后端代码）
+  - frontend/（前端代码）
   - alembic/（数据库迁移）
-- 结论：当前可启动后端与执行迁移，前端与端到端联调未就绪。
+- 结论：后端可启动与执行迁移，前端可本地启动并通过 Vite 代理联调后端。
 
 ## 重要文档入口
 
@@ -20,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - FocusFlow技术方案与项目结构.md：目标技术栈与清晰的模块边界，是未来落地实现的主参照文件。
 - .planning/*：PROJECT/REQUIREMENTS/ROADMAP/STATE/TASKS 统一规划入口。
 
-## 开发命令与运行（后端当前可用）
+## 开发命令与运行（后端）
 
 - Python 环境（建议 3.11+）：
   - 创建虚拟环境：
@@ -40,10 +41,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 可选：写入默认能量模板（幂等）
   - `python -m backend.app.services.seeds.energy_templates`
 
+## 开发命令与运行（前端）
+
+- Node.js 版本建议：18+
+- 进入 frontend 目录后：
+  - 安装依赖：`npm install`
+  - 开发启动：`npm run dev`（默认 http://localhost:5173）
+  - 构建产物：`npm run build`，预览：`npm run preview`
+- 代理联调：前端已在 `vite.config.ts` 将 `/api` 代理至 `http://localhost:8000`。
+
 ## 目标架构（规划中，非当前实现）
 
 前后端分离 + 统一后端服务层 + 调度引擎：
-- 前端（计划）：React + TypeScript + Vite，路由（React Router），状态（Zustand），UI（日历 FullCalendar、曲线 ECharts），表单（React Hook Form + Zod）。
+- 前端（已起步）：React + TypeScript + Vite，路由（React Router），状态（Zustand），UI（日历 FullCalendar、曲线 ECharts），表单（React Hook Form + Zod）。
 - 后端（已起步）：FastAPI + SQLAlchemy 2 + Pydantic v2 + SQLite（MVP）+ Alembic；图与数值工具 NetworkX/NumPy（待引入）；服务层调用调度引擎并对外提供 REST API。
 - 调度引擎（计划）：
   - 依赖图校验（建图/拓扑/环检测）

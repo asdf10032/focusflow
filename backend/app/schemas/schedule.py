@@ -60,3 +60,7 @@ class ValidateMoveRequest(BaseModel):
 
 class ReoptimizeRequest(BaseModel):
     date: dt_date
+
+
+class PartialReplanRequest(BaseModel):
+    date: dt_date

@@ -1,71 +1,82 @@
 # -*- coding: utf-8 -*-
-"""Energy/Blocked 路由。"""
 from __future__ import annotations
-from typing import List, Optional
+
+from typing import Optional
+
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy.orm import Session
 from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from ....core.errors import AppError
+from ....core.response import success
 from ....db.session import get_db
+from ....models.blocked_time import BlockedTime
 from ....models.energy_template import EnergyTemplate
 from ....models.energy_template_slot import EnergyTemplateSlot
-from ....models.blocked_time import BlockedTime
-from ....schemas.energy import (
-    EnergyTemplateOut,
-    EnergyTemplateUpdate,
-    BlockedTimeCreate,
-    BlockedTimeOut,
-)
+from ....schemas.energy import BlockedTimeCreate, BlockedTimeOut, EnergyTemplateUpdate
 
 router = APIRouter()
 
 
-@router.get("/energy/templates", response_model=List[EnergyTemplateOut], summary="读取能量模板")
+def _energy_template_data(template: EnergyTemplate) -> dict:
+    return {
+        "id": template.id,
+        "name": template.name,
+        "day_type": template.day_type,
+        "slots": [
+            {"slot_index": slot.slot_index, "energy": slot.energy}
+            for slot in sorted(template.slots, key=lambda item: item.slot_index)
+        ],
+    }
+
+
+def _blocked_time_data(blocked_time: BlockedTime) -> dict:
+    return BlockedTimeOut.model_validate(blocked_time).model_dump(mode="json")
+
+
+@router.get("/energy/templates", summary="List energy templates")
 def list_energy_templates(db: Session = Depends(get_db)):
     rows = db.execute(select(EnergyTemplate).order_by(EnergyTemplate.id.desc())).scalars().all()
-    # 触发加载 slots（如未配置 lazy）
-    for t in rows:
-        _ = [EnergyTemplateSlot(slot_index=s.slot_index, energy=s.energy) for s in t.slots]
-    return rows
+    return success([_energy_template_data(row) for row in rows])
 
 
-@router.put("/energy/templates/{template_id}", response_model=EnergyTemplateOut, summary="更新模板槽位")
+@router.put("/energy/templates/{template_id}", summary="Update energy template slots")
 def update_energy_template(template_id: int, payload: EnergyTemplateUpdate, db: Session = Depends(get_db)):
-    tpl = db.get(EnergyTemplate, template_id)
-    if not tpl:
-        from ....core.errors import AppError
-        raise AppError(code="not_found", message="模板不存在", status_code=404)
-    # 全量替换 48 槽
-    tpl.slots.clear()
-    for s in payload.slots:
-        tpl.slots.append(EnergyTemplateSlot(slot_index=s.slot_index, energy=s.energy))
+    template = db.get(EnergyTemplate, template_id)
+    if not template:
+        raise AppError(code="not_found", message="Energy template not found", status_code=404)
+
+    template.slots.clear()
+    for slot in payload.slots:
+        template.slots.append(EnergyTemplateSlot(slot_index=slot.slot_index, energy=slot.energy))
     db.commit()
-    db.refresh(tpl)
-    return tpl
+    db.refresh(template)
+    return success(_energy_template_data(template))
 
 
-@router.get("/blocked-times", response_model=List[BlockedTimeOut], summary="读取当天 blocked time")
+@router.get("/blocked-times", summary="List blocked times")
 def list_blocked_times(date: Optional[str] = Query(default=None), db: Session = Depends(get_db)):
     stmt = select(BlockedTime)
-    # 可按需扩展：按日期过滤
-    rows = db.execute(stmt).scalars().all()
-    return rows
+    if date:
+        stmt = stmt.where(BlockedTime.date == date)
+    rows = db.execute(stmt.order_by(BlockedTime.id.asc())).scalars().all()
+    return success([_blocked_time_data(row) for row in rows])
 
 
-@router.post("/blocked-times", response_model=BlockedTimeOut, summary="创建 blocked time")
+@router.post("/blocked-times", summary="Create blocked time")
 def create_blocked_time(payload: BlockedTimeCreate, db: Session = Depends(get_db)):
-    obj = BlockedTime(**payload.dict())
+    obj = BlockedTime(**payload.model_dump())
     db.add(obj)
     db.commit()
     db.refresh(obj)
-    return obj
+    return success(_blocked_time_data(obj))
 
 
-@router.delete("/blocked-times/{bt_id}", summary="删除 blocked time")
+@router.delete("/blocked-times/{bt_id}", summary="Delete blocked time")
 def delete_blocked_time(bt_id: int, db: Session = Depends(get_db)):
     obj = db.get(BlockedTime, bt_id)
     if not obj:
-        from ....core.errors import AppError
-        raise AppError(code="not_found", message="记录不存在", status_code=404)
+        raise AppError(code="not_found", message="Blocked time not found", status_code=404)
     db.delete(obj)
     db.commit()
-    return {"status": "success", "data": True, "error": None, "meta": None}
+    return success(True)

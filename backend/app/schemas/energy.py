@@ -3,7 +3,7 @@
 from __future__ import annotations
 from typing import List
 from datetime import date
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class EnergyTemplateSlotIn(BaseModel):
@@ -12,13 +12,12 @@ class EnergyTemplateSlotIn(BaseModel):
 
 
 class EnergyTemplateOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     name: str
     day_type: str
     slots: List[EnergyTemplateSlotIn]
-
-    class Config:
-        from_attributes = True
 
 
 class EnergyTemplateUpdate(BaseModel):
@@ -34,12 +33,11 @@ class BlockedTimeCreate(BaseModel):
 
 
 class BlockedTimeOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     date: date
     start_minute_of_day: int
     end_minute_of_day: int
     category: str
     note: str | None
-
-    class Config:
-        from_attributes = True

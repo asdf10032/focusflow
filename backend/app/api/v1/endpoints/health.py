@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """健康检查端点。"""
 from fastapi import APIRouter
-from ...core.response import success
+from ....core.response import success
 
 router = APIRouter()
 

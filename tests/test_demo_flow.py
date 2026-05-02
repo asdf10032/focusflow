@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
+import json
 from typing import Iterator
 
 import pytest
@@ -116,6 +117,48 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
     assert len(history) == 2
     assert {item["status"] for item in history} == {"done", "incomplete"}
 
+    searched_tasks = assert_success_envelope(client.get("/api/v1/tasks?q=advisor").json())
+    assert [task["title"] for task in searched_tasks] == ["Review thesis outline"]
+    assert searched_tasks[0]["notes"]
+
+    task_export = assert_success_envelope(client.get("/api/v1/exports/tasks").json())
+    exported_tasks = json.loads(task_export["content"])
+    assert task_export["record_count"] == 5
+    assert any(task["notes"] and "Searchable demo note" in task["notes"] for task in exported_tasks)
+
+    history_export = assert_success_envelope(
+        client.get(f"/api/v1/exports/execution-history?date={target_date.isoformat()}").json()
+    )
+    assert history_export["record_count"] == 2
+
+    review_export = assert_success_envelope(
+        client.get(f"/api/v1/exports/daily-review?date={target_date.isoformat()}").json()
+    )
+    assert review_export["record_count"] == 2
+
+    feedbacked_task_ids = {item["task_id"] for item in history}
+    partial_replan = assert_success_envelope(
+        client.post("/api/v1/schedules/partial-replan", json={"date": target_date.isoformat()}).json()
+    )
+    balanced_replan = next(plan for plan in partial_replan["plans"] if plan["plan_type"] == "balanced")
+    replanned_task_ids = {item["task_id"] for item in balanced_replan["items"]}
+    assert replanned_task_ids
+    assert replanned_task_ids.isdisjoint(feedbacked_task_ids)
+
+    selected_replan = assert_success_envelope(
+        client.post(
+            "/api/v1/schedules/select",
+            json={"date": target_date.isoformat(), "plan_type": "balanced"},
+        ).json()
+    )
+    assert selected_replan["selected"] is True
+
+    today_after_replan = assert_success_envelope(
+        client.get(f"/api/v1/execution/today?date={target_date.isoformat()}").json()
+    )
+    assert today_after_replan["selected_plan"]["plan_type"] == "balanced"
+    assert len(today_after_replan["items"]) >= 1
+
     history_suggestion = assert_success_envelope(
         client.post(
             "/api/v1/ai/suggest-duration",
@@ -148,7 +191,7 @@ def test_demo_seed_builds_repeatable_end_to_end_flow(client: TestClient) -> None
     assert "unplaced_reasons" in schedule
     assert all(plan["summary"] and plan["risk_explanation"] for plan in schedule["plans"])
 
-    task_id = today["items"][0]["task"]["id"]
+    task_id = today_after_replan["items"][0]["task"]["id"]
     feedback = assert_success_envelope(
         client.post(
             "/api/v1/execution/feedback",

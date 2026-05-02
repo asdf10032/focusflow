@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+  ApiError,
   generateSchedule,
   listTasks,
+  partialReplanSchedule,
   reoptimizeSchedule,
   selectSchedulePlan,
   validateScheduleMove,
   type SchedulePlan,
   type ValidateMoveResult,
 } from "../lib/api";
-import { getPlanTypeLabel, t, type TranslationKey } from "../lib/i18n";
+import { getPlanTypeLabel, t, type Language, type TranslationKey } from "../lib/i18n";
 import {
   formatTimeRange,
   PLAN_TYPES,
@@ -41,6 +43,23 @@ function riskKey(plan: SchedulePlan | undefined): TranslationKey {
     return "risk.medium";
   }
   return "risk.low";
+}
+
+function partialReplanErrorMessage(language: Language, error: unknown): string {
+  if (error instanceof ApiError) {
+    if (error.code === "missing_selected_plan") {
+      return t(language, "calendar.message.partialReplanMissingSelected");
+    }
+    if (error.code === "no_remaining_work") {
+      return t(language, "calendar.message.partialReplanNoRemaining");
+    }
+    if (error.code === "no_schedulable_time") {
+      return t(language, "calendar.message.partialReplanNoSchedulableTime");
+    }
+  }
+  return error instanceof Error
+    ? error.message
+    : t(language, "calendar.message.partialReplanFailed");
 }
 
 export default function Calendar() {
@@ -167,6 +186,26 @@ export default function Calendar() {
     }
   }
 
+  async function handlePartialReplan() {
+    setLoading(true);
+    setMessage(null);
+    setValidationResult(null);
+    try {
+      const result = await partialReplanSchedule(date);
+      const defaultPlanType = result.plans.some((plan) => plan.plan_type === "balanced")
+        ? "balanced"
+        : result.plans[0]?.plan_type ?? "balanced";
+      setSchedule(result);
+      setActivePlanType(defaultPlanType);
+      setSelectedPlanType(null);
+      setMessage(t(language, "calendar.message.partialReplanned"));
+    } catch (error) {
+      setMessage(partialReplanErrorMessage(language, error));
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleValidateMove() {
     if (!activePlan || !validateTaskId || !validateStart || !validateEnd) {
       setMessage(t(language, "calendar.validate.noItems"));
@@ -230,6 +269,14 @@ export default function Calendar() {
             className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-black text-slate-800 disabled:opacity-50"
           >
             {t(language, "calendar.action.reoptimize")}
+          </button>
+          <button
+            type="button"
+            onClick={() => void handlePartialReplan()}
+            disabled={loading}
+            className="rounded border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-black text-amber-900 disabled:opacity-50"
+          >
+            {t(language, "calendar.action.partialReplan")}
           </button>
         </div>
       </section>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """任务模型（tasks）。"""
 from __future__ import annotations
-from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, CheckConstraint, Index, func
+from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, CheckConstraint, Index, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ..db.base import Base
 
@@ -12,6 +12,7 @@ class Task(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(String(300), nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     estimated_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
     cognitive_load: Mapped[int] = mapped_column(Integer, nullable=False)
     due_at: Mapped[DateTime | None] = mapped_column(DateTime(timezone=False), nullable=True)
@@ -34,6 +35,6 @@ class Task(Base):
     )
 
     # 关系
-    project: Mapped["Project" | None] = relationship(back_populates="tasks")
+    project: Mapped["Project | None"] = relationship(back_populates="tasks")
     dependencies: Mapped[list["TaskDependency"]] = relationship(back_populates="task", cascade="all,delete-orphan", foreign_keys="TaskDependency.task_id")
     dependents: Mapped[list["TaskDependency"]] = relationship(back_populates="depends_on", cascade="all,delete-orphan", foreign_keys="TaskDependency.depends_on_task_id")

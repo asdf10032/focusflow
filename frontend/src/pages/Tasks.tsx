@@ -19,12 +19,14 @@ import {
 } from "../lib/api";
 import { triggerExportDownload } from "../lib/exportView";
 import { getStatusLabel, getSuggestionReasonLabel, t, type TranslationKey } from "../lib/i18n";
+import { filterTasks } from "../lib/taskView";
 import { useAppStore } from "../state/store";
 
 const STATUS_OPTIONS: TaskStatus[] = ["todo", "in_progress", "done", "canceled"];
 
 type TaskForm = {
   title: string;
+  notes: string;
   estimated_minutes: string;
   cognitive_load: string;
   due_at: string;
@@ -35,6 +37,7 @@ type TaskForm = {
 
 const EMPTY_FORM: TaskForm = {
   title: "",
+  notes: "",
   estimated_minutes: "60",
   cognitive_load: "5",
   due_at: "",
@@ -46,6 +49,7 @@ const EMPTY_FORM: TaskForm = {
 function taskToForm(task: Task): TaskForm {
   return {
     title: task.title,
+    notes: task.notes ?? "",
     estimated_minutes: String(task.estimated_minutes),
     cognitive_load: String(task.cognitive_load),
     due_at: task.due_at ? task.due_at.slice(0, 16) : "",
@@ -58,6 +62,7 @@ function taskToForm(task: Task): TaskForm {
 function formToPayload(form: TaskForm): TaskPayload {
   return {
     title: form.title.trim(),
+    notes: form.notes.trim() ? form.notes.trim() : null,
     estimated_minutes: Number(form.estimated_minutes),
     cognitive_load: Number(form.cognitive_load),
     due_at: form.due_at ? form.due_at : null,
@@ -113,6 +118,7 @@ export default function Tasks() {
   const [suggestionLoading, setSuggestionLoading] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const [projectFilter, setProjectFilter] = useState("all");
 
@@ -151,15 +157,12 @@ export default function Tasks() {
 
   const filteredTasks = useMemo(
     () =>
-      tasks.filter((task) => {
-        const statusMatches = statusFilter === "all" || task.status === statusFilter;
-        const projectMatches =
-          projectFilter === "all" ||
-          (projectFilter === "none" && task.project_id === null) ||
-          String(task.project_id) === projectFilter;
-        return statusMatches && projectMatches;
+      filterTasks(tasks, {
+        search: searchText,
+        status: statusFilter,
+        project: projectFilter,
       }),
-    [projectFilter, statusFilter, tasks],
+    [projectFilter, searchText, statusFilter, tasks],
   );
 
   function updateForm(changes: Partial<TaskForm>) {
@@ -246,6 +249,7 @@ export default function Tasks() {
       const draft = await parseTaskDraft(text);
       const nextForm = {
         title: draft.title,
+        notes: "",
         estimated_minutes: String(draft.estimated_minutes),
         cognitive_load: String(draft.cognitive_load),
         due_at: draft.due_at ? draft.due_at.slice(0, 16) : "",
@@ -304,6 +308,10 @@ export default function Tasks() {
     setMessage(null);
     try {
       const payload = await exportTasks();
+      if (payload.record_count === 0) {
+        setMessage(t(language, "exports.emptyNoDownload"));
+        return;
+      }
       triggerExportDownload(payload);
       setMessage(t(language, "exports.success"));
     } catch (error) {
@@ -471,6 +479,19 @@ export default function Tasks() {
             />
           </label>
 
+          <label className="block">
+            <span className="text-sm font-bold text-slate-700">
+              {t(language, "tasks.form.notes")}
+            </span>
+            <textarea
+              value={form.notes}
+              onChange={(event) => updateForm({ notes: event.target.value })}
+              rows={3}
+              className="mt-1 w-full resize-none rounded border border-slate-300 px-3 py-2 outline-none focus:border-amber-600"
+              placeholder={t(language, "tasks.form.notesPlaceholder")}
+            />
+          </label>
+
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
               <span className="text-sm font-bold text-slate-700">
@@ -590,7 +611,18 @@ export default function Tasks() {
           <div className="text-sm font-black text-slate-950">
             {t(language, "tasks.filters.title")}
           </div>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div className="mt-3 grid gap-3 lg:grid-cols-3">
+            <label className="block">
+              <span className="text-sm font-bold text-slate-700">
+                {t(language, "tasks.filters.search")}
+              </span>
+              <input
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 outline-none focus:border-amber-600"
+                placeholder={t(language, "tasks.filters.searchPlaceholder")}
+              />
+            </label>
             <label className="block">
               <span className="text-sm font-bold text-slate-700">
                 {t(language, "tasks.filters.status")}
@@ -647,6 +679,9 @@ export default function Tasks() {
                     {t(language, "tasks.meta.load")} {task.cognitive_load} ·{" "}
                     {formatDue(task.due_at, t(language, "tasks.noDueDate"))}
                   </p>
+                  {task.notes && (
+                    <p className="mt-2 text-sm font-semibold text-slate-500">{task.notes}</p>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -671,7 +706,7 @@ export default function Tasks() {
 
         {filteredTasks.length === 0 && (
           <div className="rounded border border-dashed border-slate-300 bg-white p-8 text-center text-sm font-semibold text-slate-500">
-            {t(language, "tasks.empty")}
+            {tasks.length > 0 ? t(language, "tasks.emptyFiltered") : t(language, "tasks.empty")}
           </div>
         )}
       </section>

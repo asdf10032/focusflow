@@ -159,8 +159,9 @@ export default function Today() {
             </span>
           </div>
 
-          <ol className="space-y-3">
-            {execution.items.map((item) => (
+          {execution.items.length > 0 ? (
+            <ol className="space-y-3">
+              {execution.items.map((item) => (
               <li
                 key={`${item.task_id}-${item.start_datetime}-${item.segment_index ?? 0}`}
                 className="grid gap-4 rounded border border-slate-300 bg-white p-4 shadow-sm lg:grid-cols-[140px_1fr_auto]"
@@ -205,8 +206,15 @@ export default function Today() {
                   </button>
                 </div>
               </li>
-            ))}
-          </ol>
+              ))}
+            </ol>
+          ) : (
+            <div className="rounded border border-dashed border-slate-300 bg-white p-10 text-center">
+              <h2 className="text-xl font-black text-slate-950">
+                {t(language, "today.emptyPlanItems")}
+              </h2>
+            </div>
+          )}
         </section>
       ) : (
         <div className="rounded border border-dashed border-slate-300 bg-white p-10 text-center">

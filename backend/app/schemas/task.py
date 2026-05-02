@@ -2,11 +2,12 @@
 """Task 的请求/响应模型。"""
 from __future__ import annotations
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=300)
+    notes: str | None = Field(default=None, max_length=2000)
     estimated_minutes: int = Field(ge=1, le=8*60)
     cognitive_load: int = Field(ge=1, le=10)
     due_at: datetime | None = None
@@ -20,6 +21,7 @@ class TaskCreate(BaseModel):
 
 class TaskUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=300)
+    notes: str | None = Field(default=None, max_length=2000)
     estimated_minutes: int | None = Field(default=None, ge=1, le=8*60)
     cognitive_load: int | None = Field(default=None, ge=1, le=10)
     due_at: datetime | None = None
@@ -32,8 +34,11 @@ class TaskUpdate(BaseModel):
 
 
 class TaskOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
+    notes: str | None
     estimated_minutes: int
     cognitive_load: int
     due_at: datetime | None
@@ -43,6 +48,3 @@ class TaskOut(BaseModel):
     max_split_count: int
     status: str
     project_id: int | None
-
-    class Config:
-        from_attributes = True

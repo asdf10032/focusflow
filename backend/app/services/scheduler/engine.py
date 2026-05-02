@@ -211,9 +211,13 @@ def _risk_explanation(risk_level: str, unplaced: List[int]) -> str:
     return "Risk is low because all candidate tasks fit into available time."
 
 
-def generate_plans(db: Session, d: dt_date) -> Tuple[List[SchedulePlanOut], List[int], List[str]]:
+def generate_plans(
+    db: Session,
+    d: dt_date,
+    candidate_tasks: List[Task] | None = None,
+) -> Tuple[List[SchedulePlanOut], List[int], List[str]]:
     available = _available_slots(db, d)
-    tasks = _query_candidate_tasks(db)
+    tasks = _query_candidate_tasks(db) if candidate_tasks is None else candidate_tasks
 
     plans: list[SchedulePlanOut] = []
     all_unplaced: set[int] = set()

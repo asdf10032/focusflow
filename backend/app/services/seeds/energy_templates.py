@@ -16,9 +16,9 @@ import os
 
 from sqlalchemy.orm import Session
 
-from ....db.session import SessionLocal, DATABASE_URL
-from ....models.energy_template import EnergyTemplate
-from ....models.energy_template_slot import EnergyTemplateSlot
+from ...db.session import SessionLocal, DATABASE_URL
+from ...models.energy_template import EnergyTemplate
+from ...models.energy_template_slot import EnergyTemplateSlot
 
 
 def _curve_early_bird(day_type: str) -> List[int]:
