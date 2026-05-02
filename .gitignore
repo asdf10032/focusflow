@@ -20,3 +20,12 @@ frontend/tsconfig.tsbuildinfo
 .omc/
 .omx/
 
+# AI 工具内部配置（不上传）
+.claude/
+.planning/
+
+# 运行时日志文件
+*.err
+*.log
+.phase*
+
