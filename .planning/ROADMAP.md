@@ -56,7 +56,7 @@
 
 | Phase | Name | Goal | Requirements | Status |
 |-------|------|------|--------------|--------|
-| 16 | Weekly Review Backend | Add deterministic weekly review aggregation and previous-week comparison APIs. | WREV-01, WREV-02, WREV-03, WREV-04, WREV-05, TRND-01, TRND-02, TRND-03, TRND-04, NFR-01, NFR-02 | Planned |
+| 16 | Weekly Review Backend | Add deterministic weekly review aggregation and previous-week comparison APIs. | WREV-01, WREV-02, WREV-03, WREV-04, WREV-05, TRND-01, TRND-02, TRND-03, TRND-04, NFR-01, NFR-02 | Complete |
 | 17 | Weekly Review UI | Add a Daily Review weekly view with week controls, metric cards, daily breakdown, and bilingual copy. | DRUX-01, DRUX-02, DRUX-03, DRUX-04, NFR-03 | Planned |
 | 18 | Weekly Review Demo Polish | Seed meaningful weekly review data, extend smoke coverage, update README, and prepare UAT. | NFR-04 | Planned |
 
@@ -75,7 +75,7 @@
 4. Previous-week comparison is returned when data exists and clear empty metadata is returned when it does not.
 5. Focused backend tests cover aggregation, comparison, empty week, and success-envelope behavior.
 
-**Status:** Planned.
+**Status:** Complete.
 
 ### Phase 17: Weekly Review UI
 
@@ -110,21 +110,21 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WREV-01 | Phase 16 | Pending |
-| WREV-02 | Phase 16 | Pending |
-| WREV-03 | Phase 16 | Pending |
-| WREV-04 | Phase 16 | Pending |
-| WREV-05 | Phase 16 | Pending |
-| TRND-01 | Phase 16 | Pending |
-| TRND-02 | Phase 16 | Pending |
-| TRND-03 | Phase 16 | Pending |
-| TRND-04 | Phase 16 | Pending |
+| WREV-01 | Phase 16 | Complete |
+| WREV-02 | Phase 16 | Complete |
+| WREV-03 | Phase 16 | Complete |
+| WREV-04 | Phase 16 | Complete |
+| WREV-05 | Phase 16 | Complete |
+| TRND-01 | Phase 16 | Complete |
+| TRND-02 | Phase 16 | Complete |
+| TRND-03 | Phase 16 | Complete |
+| TRND-04 | Phase 16 | Complete |
 | DRUX-01 | Phase 17 | Pending |
 | DRUX-02 | Phase 17 | Pending |
 | DRUX-03 | Phase 17 | Pending |
 | DRUX-04 | Phase 17 | Pending |
-| NFR-01 | Phase 16 | Pending |
-| NFR-02 | Phase 16 | Pending |
+| NFR-01 | Phase 16 | Complete |
+| NFR-02 | Phase 16 | Complete |
 | NFR-03 | Phase 17 | Pending |
 | NFR-04 | Phase 18 | Pending |
 
@@ -136,6 +136,5 @@
 ## Next Up
 
 ```bash
-$gsd-plan-phase 16 --skip-research
+$gsd-plan-phase 17 --skip-research
 ```
-

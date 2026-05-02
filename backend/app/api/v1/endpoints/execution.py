@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from datetime import date as dt_date
+from datetime import date as dt_date, timedelta
 from typing import Any, Dict
 
 from fastapi import APIRouter, Depends, Query
@@ -20,6 +20,11 @@ from ....schemas.execution import (
     ExecutionReviewOut,
     ExecutionReviewSummaryOut,
     FeedbackRequest,
+    WeeklyReviewComparisonDeltasOut,
+    WeeklyReviewComparisonOut,
+    WeeklyReviewDayOut,
+    WeeklyReviewOut,
+    WeeklyReviewSummaryOut,
 )
 from ....schemas.task import TaskOut
 
@@ -75,6 +80,15 @@ def _logs_for_date(db: Session, date: dt_date) -> list[ExecutionLog]:
         db.query(ExecutionLog)
         .filter(ExecutionLog.date == date)
         .order_by(ExecutionLog.created_at.asc(), ExecutionLog.id.asc())
+        .all()
+    )
+
+
+def _logs_for_range(db: Session, start_date: dt_date, end_date: dt_date) -> list[ExecutionLog]:
+    return (
+        db.query(ExecutionLog)
+        .filter(ExecutionLog.date >= start_date, ExecutionLog.date <= end_date)
+        .order_by(ExecutionLog.date.asc(), ExecutionLog.created_at.asc(), ExecutionLog.id.asc())
         .all()
     )
 
@@ -169,6 +183,97 @@ def _review_payload(date: dt_date, plan: SchedulePlan | None, logs: list[Executi
     ).model_dump(mode="json")
 
 
+def _week_start_for_date(date: dt_date) -> dt_date:
+    return date - timedelta(days=date.weekday())
+
+
+def _weekly_summary_payload(logs: list[ExecutionLog]) -> dict[str, Any]:
+    logged_count = len(logs)
+    completed_count = sum(1 for log in logs if log.status == "done")
+    skipped_incomplete_count = logged_count - completed_count
+    completion_rate = completed_count / logged_count if logged_count else 0.0
+    planned_minutes = sum(log.estimated_minutes_snapshot for log in logs)
+    actual_minutes = sum(log.actual_minutes for log in logs if log.actual_minutes is not None)
+    estimate_variance = actual_minutes - planned_minutes if logs else None
+    return WeeklyReviewSummaryOut(
+        logged_count=logged_count,
+        completed_count=completed_count,
+        skipped_incomplete_count=skipped_incomplete_count,
+        completion_rate=completion_rate,
+        planned_minutes=planned_minutes,
+        actual_minutes=actual_minutes,
+        estimate_variance_minutes=estimate_variance,
+    ).model_dump(mode="json")
+
+
+def _weekly_day_payload(date: dt_date, logs: list[ExecutionLog]) -> dict[str, Any]:
+    return WeeklyReviewDayOut(
+        date=date,
+        summary=_weekly_summary_payload(logs),
+        items=[_review_item_payload(log) for log in logs],
+    ).model_dump(mode="json")
+
+
+def _weekly_comparison_payload(
+    week_start: dt_date,
+    current_summary: dict[str, Any],
+    previous_logs: list[ExecutionLog],
+) -> dict[str, Any]:
+    previous_week_start = week_start - timedelta(days=7)
+    previous_week_end = week_start - timedelta(days=1)
+    if not previous_logs:
+        return WeeklyReviewComparisonOut(
+            available=False,
+            previous_week_start=previous_week_start,
+            previous_week_end=previous_week_end,
+            previous_summary=None,
+            deltas=None,
+            message_code="previous_week_unavailable",
+        ).model_dump(mode="json")
+
+    previous_summary = _weekly_summary_payload(previous_logs)
+    current_variance = current_summary["estimate_variance_minutes"]
+    previous_variance = previous_summary["estimate_variance_minutes"]
+    variance_delta = None
+    if current_variance is not None and previous_variance is not None:
+        variance_delta = current_variance - previous_variance
+
+    deltas = WeeklyReviewComparisonDeltasOut(
+        completion_rate=current_summary["completion_rate"] - previous_summary["completion_rate"],
+        actual_minutes=current_summary["actual_minutes"] - previous_summary["actual_minutes"],
+        estimate_variance_minutes=variance_delta,
+    )
+    return WeeklyReviewComparisonOut(
+        available=True,
+        previous_week_start=previous_week_start,
+        previous_week_end=previous_week_end,
+        previous_summary=previous_summary,
+        deltas=deltas,
+        message_code=None,
+    ).model_dump(mode="json")
+
+
+def _weekly_review_payload(date: dt_date, logs: list[ExecutionLog], previous_logs: list[ExecutionLog]) -> dict[str, Any]:
+    week_start = _week_start_for_date(date)
+    week_end = week_start + timedelta(days=6)
+    logs_by_date: dict[dt_date, list[ExecutionLog]] = {}
+    for log in logs:
+        logs_by_date.setdefault(log.date, []).append(log)
+
+    summary = _weekly_summary_payload(logs)
+    days = [
+        _weekly_day_payload(day, logs_by_date.get(day, []))
+        for day in (week_start + timedelta(days=offset) for offset in range(7))
+    ]
+    return WeeklyReviewOut(
+        week_start=week_start,
+        week_end=week_end,
+        summary=summary,
+        days=days,
+        comparison=_weekly_comparison_payload(week_start, summary, previous_logs),
+    ).model_dump(mode="json")
+
+
 @router.get("/execution/today", summary="Get selected work for a day")
 def execution_today(date: dt_date = Query(...), db: Session = Depends(get_db)) -> Dict[str, Any]:
     plan = _selected_plan_for_date(db, date)
@@ -240,3 +345,14 @@ def execution_review(date: dt_date = Query(...), db: Session = Depends(get_db)) 
     plan = _selected_plan_for_date(db, date)
     logs = _logs_for_date(db, date)
     return success(_review_payload(date, plan, logs))
+
+
+@router.get("/execution/weekly-review", summary="Get weekly execution review")
+def execution_weekly_review(date: dt_date = Query(...), db: Session = Depends(get_db)) -> Dict[str, Any]:
+    week_start = _week_start_for_date(date)
+    week_end = week_start + timedelta(days=6)
+    previous_week_start = week_start - timedelta(days=7)
+    previous_week_end = week_start - timedelta(days=1)
+    logs = _logs_for_range(db, week_start, week_end)
+    previous_logs = _logs_for_range(db, previous_week_start, previous_week_end)
+    return success(_weekly_review_payload(date, logs, previous_logs))

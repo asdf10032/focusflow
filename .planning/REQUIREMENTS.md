@@ -7,18 +7,18 @@
 
 ### Weekly Review
 
-- [ ] **WREV-01**: User can view a weekly review for the selected week from the Daily Review workflow.
-- [ ] **WREV-02**: User can see weekly completion rate based on execution history statuses.
-- [ ] **WREV-03**: User can see total actual minutes for the selected week.
-- [ ] **WREV-04**: User can see weekly estimate variance using estimated-minute snapshots and actual minutes.
-- [ ] **WREV-05**: User can see a day-by-day breakdown for the selected week.
+- [x] **WREV-01**: User can view a weekly review for the selected week from the Daily Review workflow.
+- [x] **WREV-02**: User can see weekly completion rate based on execution history statuses.
+- [x] **WREV-03**: User can see total actual minutes for the selected week.
+- [x] **WREV-04**: User can see weekly estimate variance using estimated-minute snapshots and actual minutes.
+- [x] **WREV-05**: User can see a day-by-day breakdown for the selected week.
 
 ### Trend Comparison
 
-- [ ] **TRND-01**: User can compare the selected week's completion rate with the previous week when previous-week data exists.
-- [ ] **TRND-02**: User can compare the selected week's actual minutes with the previous week when previous-week data exists.
-- [ ] **TRND-03**: User can compare the selected week's estimate variance with the previous week when previous-week data exists.
-- [ ] **TRND-04**: User sees a clear empty or insufficient-data state when comparison data is unavailable.
+- [x] **TRND-01**: User can compare the selected week's completion rate with the previous week when previous-week data exists.
+- [x] **TRND-02**: User can compare the selected week's actual minutes with the previous week when previous-week data exists.
+- [x] **TRND-03**: User can compare the selected week's estimate variance with the previous week when previous-week data exists.
+- [x] **TRND-04**: User sees a clear empty or insufficient-data state when comparison data is unavailable.
 
 ### Daily Review UX
 
@@ -29,8 +29,8 @@
 
 ### Quality
 
-- [ ] **NFR-01**: Weekly review APIs use the existing success envelope and deterministic local calculations.
-- [ ] **NFR-02**: Weekly review backend behavior is covered by focused tests for aggregation, comparison, and empty states.
+- [x] **NFR-01**: Weekly review APIs use the existing success envelope and deterministic local calculations.
+- [x] **NFR-02**: Weekly review backend behavior is covered by focused tests for aggregation, comparison, and empty states.
 - [ ] **NFR-03**: Weekly review UI helpers and i18n copy are covered by frontend helper/i18n tests and production build verification.
 - [ ] **NFR-04**: Demo seed and smoke coverage show a selected week with meaningful completion, minutes, and variance data.
 
@@ -67,21 +67,21 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WREV-01 | Phase 16 | Pending |
-| WREV-02 | Phase 16 | Pending |
-| WREV-03 | Phase 16 | Pending |
-| WREV-04 | Phase 16 | Pending |
-| WREV-05 | Phase 16 | Pending |
-| TRND-01 | Phase 16 | Pending |
-| TRND-02 | Phase 16 | Pending |
-| TRND-03 | Phase 16 | Pending |
-| TRND-04 | Phase 16 | Pending |
+| WREV-01 | Phase 16 | Complete |
+| WREV-02 | Phase 16 | Complete |
+| WREV-03 | Phase 16 | Complete |
+| WREV-04 | Phase 16 | Complete |
+| WREV-05 | Phase 16 | Complete |
+| TRND-01 | Phase 16 | Complete |
+| TRND-02 | Phase 16 | Complete |
+| TRND-03 | Phase 16 | Complete |
+| TRND-04 | Phase 16 | Complete |
 | DRUX-01 | Phase 17 | Pending |
 | DRUX-02 | Phase 17 | Pending |
 | DRUX-03 | Phase 17 | Pending |
 | DRUX-04 | Phase 17 | Pending |
-| NFR-01 | Phase 16 | Pending |
-| NFR-02 | Phase 16 | Pending |
+| NFR-01 | Phase 16 | Complete |
+| NFR-02 | Phase 16 | Complete |
 | NFR-03 | Phase 17 | Pending |
 | NFR-04 | Phase 18 | Pending |
 
@@ -92,5 +92,4 @@
 
 ---
 *Requirements defined: 2026-05-01*
-*Last updated: 2026-05-01 after v1.4 roadmap creation*
-
+*Last updated: 2026-05-02 after Phase 16 backend completion*

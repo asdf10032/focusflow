@@ -73,3 +73,42 @@ class ExecutionReviewOut(BaseModel):
     summary: ExecutionReviewSummaryOut
     items: list[ExecutionReviewItemOut]
 
+
+class WeeklyReviewSummaryOut(BaseModel):
+    logged_count: int
+    completed_count: int
+    skipped_incomplete_count: int
+    completion_rate: float
+    planned_minutes: int
+    actual_minutes: int
+    estimate_variance_minutes: int | None
+
+
+class WeeklyReviewDayOut(BaseModel):
+    date: dt_date
+    summary: WeeklyReviewSummaryOut
+    items: list[ExecutionReviewItemOut]
+
+
+class WeeklyReviewComparisonDeltasOut(BaseModel):
+    completion_rate: float | None
+    actual_minutes: int | None
+    estimate_variance_minutes: int | None
+
+
+class WeeklyReviewComparisonOut(BaseModel):
+    available: bool
+    previous_week_start: dt_date
+    previous_week_end: dt_date
+    previous_summary: WeeklyReviewSummaryOut | None
+    deltas: WeeklyReviewComparisonDeltasOut | None
+    message_code: str | None
+
+
+class WeeklyReviewOut(BaseModel):
+    week_start: dt_date
+    week_end: dt_date
+    summary: WeeklyReviewSummaryOut
+    days: list[WeeklyReviewDayOut]
+    comparison: WeeklyReviewComparisonOut
+
