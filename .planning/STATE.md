@@ -2,22 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Weekly Review Insights
-status: phase_17_planned
-last_updated: "2026-05-02T17:20:21+08:00"
+status: phase_17_complete
+last_updated: "2026-05-02T17:32:22+08:00"
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 4
 ---
 
 # STATE.md
 
 - Current goal: execute v1.4 Weekly Review Insights.
-- Current position: Phase 17 planned; ready to execute weekly review UI.
+- Current position: Phase 17 complete; ready to plan Phase 18 demo polish.
 - Last completed: v1.3 Export & Planning Utilities on 2026-05-01.
 - Focus: weekly review metrics inside Daily Review.
-- Next action: run `$gsd-plan-phase 17 --skip-research`.
+- Next action: run `$gsd-plan-phase 18 --skip-research`.
 
 ## Project Reference
 
@@ -35,6 +35,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-01).
 - Research is skipped for v1.4 because the work extends existing local execution history and Daily Review surfaces.
 - Phase 16 added backend weekly review aggregation, seven-day breakdowns, and previous-week comparison metadata from execution logs.
 - Phase 17 planning splits weekly review UI into API/helper groundwork followed by Daily Review UI, i18n, and build verification.
+- Phase 17 added Daily Review daily/weekly switching, week navigation, weekly metrics, comparison states, and bilingual copy.
 
 ## Accumulated Context
 
@@ -54,10 +55,10 @@ See: `.planning/PROJECT.md` (updated 2026-05-01).
 
 ## Current Position
 
-Phase: 17
-Plan: 17-01, 17-02
-Status: Ready for `$gsd-execute-phase 17`
-Last activity: 2026-05-02 - Phase 17 planned
+Phase: 18
+Plan: not planned
+Status: Ready for `$gsd-plan-phase 18 --skip-research`
+Last activity: 2026-05-02 - Phase 17 completed
 
 ## Verification Baseline
 

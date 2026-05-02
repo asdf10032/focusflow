@@ -252,3 +252,85 @@ def test_phase13_export_labels_are_localized():
     assert result["en"]["exports.historyJson"] == "Export history JSON"
     assert result["en"]["exports.reviewCsv"] == "Export review CSV"
     assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase14_partial_replan_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase14Keys = [
+          "calendar.action.partialReplan",
+          "calendar.message.partialReplanned",
+          "calendar.message.partialReplanFailed",
+          "calendar.message.partialReplanMissingSelected",
+          "calendar.message.partialReplanNoRemaining",
+          "calendar.message.partialReplanNoSchedulableTime",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase14Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase14Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["calendar.action.partialReplan"] == "Partial Replan"
+    assert result["en"]["calendar.message.partialReplanNoRemaining"] == (
+        "There is no remaining work to replan for this date."
+    )
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase15_search_and_empty_state_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase15Keys = [
+          "tasks.form.notes",
+          "tasks.form.notesPlaceholder",
+          "tasks.filters.search",
+          "tasks.filters.searchPlaceholder",
+          "tasks.emptyFiltered",
+          "today.emptyPlanItems",
+          "exports.emptyNoDownload",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase15Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase15Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["tasks.form.notes"] == "Notes"
+    assert result["en"]["tasks.filters.search"] == "Search"
+    assert result["en"]["exports.emptyNoDownload"] == "No local data to export yet."
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())
+
+
+def test_phase17_weekly_review_labels_are_localized():
+    result = run_i18n_script(
+        """
+        const phase17Keys = [
+          "review.view.daily",
+          "review.view.weekly",
+          "review.action.previousWeek",
+          "review.action.nextWeek",
+          "review.week.range",
+          "review.week.summaryTitle",
+          "review.week.logged",
+          "review.week.comparisonTitle",
+          "review.week.comparisonUnavailable",
+          "review.week.breakdownTitle",
+          "review.week.emptyTitle",
+          "review.week.emptyDescription",
+          "review.week.emptyDay",
+        ];
+        console.log(JSON.stringify({
+          zh: Object.fromEntries(phase17Keys.map((key) => [key, i18n.t("zh-CN", key)])),
+          en: Object.fromEntries(phase17Keys.map((key) => [key, i18n.t("en", key)])),
+        }));
+        """
+    )
+
+    assert result["en"]["review.view.daily"] == "Daily"
+    assert result["en"]["review.view.weekly"] == "Weekly"
+    assert result["en"]["review.action.previousWeek"] == "Previous week"
+    assert result["en"]["review.week.comparisonUnavailable"] == "No previous-week data yet."
+    assert all(value and not value.startswith("missing:") for value in result["zh"].values())

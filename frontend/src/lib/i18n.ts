@@ -29,10 +29,13 @@ export type TranslationKey =
   | "exports.success"
   | "exports.failed"
   | "exports.empty"
+  | "exports.emptyNoDownload"
   | "tasks.eyebrow"
   | "tasks.title"
   | "tasks.form.title"
   | "tasks.form.titlePlaceholder"
+  | "tasks.form.notes"
+  | "tasks.form.notesPlaceholder"
   | "tasks.form.minutes"
   | "tasks.form.load"
   | "tasks.form.due"
@@ -76,6 +79,8 @@ export type TranslationKey =
   | "tasks.suggestion.reason.fallback_medium_load"
   | "tasks.suggestion.reason.fallback_high_load"
   | "tasks.filters.title"
+  | "tasks.filters.search"
+  | "tasks.filters.searchPlaceholder"
   | "tasks.filters.status"
   | "tasks.filters.project"
   | "tasks.filters.allStatuses"
@@ -84,6 +89,7 @@ export type TranslationKey =
   | "tasks.queue.eyebrow"
   | "tasks.queue.title"
   | "tasks.empty"
+  | "tasks.emptyFiltered"
   | "tasks.noDueDate"
   | "tasks.message.titleRequired"
   | "tasks.message.loadFailed"
@@ -99,6 +105,7 @@ export type TranslationKey =
   | "calendar.action.generate"
   | "calendar.action.select"
   | "calendar.action.reoptimize"
+  | "calendar.action.partialReplan"
   | "calendar.message.generatedPrefix"
   | "calendar.message.generatedSuffix"
   | "calendar.message.generateFailed"
@@ -106,6 +113,11 @@ export type TranslationKey =
   | "calendar.message.selectionFailed"
   | "calendar.message.reoptimized"
   | "calendar.message.reoptimizeFailed"
+  | "calendar.message.partialReplanned"
+  | "calendar.message.partialReplanFailed"
+  | "calendar.message.partialReplanMissingSelected"
+  | "calendar.message.partialReplanNoRemaining"
+  | "calendar.message.partialReplanNoSchedulableTime"
   | "calendar.message.validateFailed"
   | "calendar.metric.items"
   | "calendar.metric.score"
@@ -136,6 +148,7 @@ export type TranslationKey =
   | "today.action.saveFeedback"
   | "today.emptyTitle"
   | "today.emptyDescription"
+  | "today.emptyPlanItems"
   | "today.status"
   | "today.message.loadFailed"
   | "today.message.feedbackSaved"
@@ -148,7 +161,11 @@ export type TranslationKey =
   | "review.eyebrow"
   | "review.title"
   | "review.date"
+  | "review.view.daily"
+  | "review.view.weekly"
   | "review.action.refresh"
+  | "review.action.previousWeek"
+  | "review.action.nextWeek"
   | "review.emptyTitle"
   | "review.emptyDescription"
   | "review.message.loadFailed"
@@ -166,6 +183,15 @@ export type TranslationKey =
   | "review.table.actual"
   | "review.table.variance"
   | "review.table.note"
+  | "review.week.range"
+  | "review.week.summaryTitle"
+  | "review.week.logged"
+  | "review.week.comparisonTitle"
+  | "review.week.comparisonUnavailable"
+  | "review.week.breakdownTitle"
+  | "review.week.emptyTitle"
+  | "review.week.emptyDescription"
+  | "review.week.emptyDay"
   | "status.todo"
   | "status.in_progress"
   | "status.done"
@@ -202,10 +228,13 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "exports.success": "导出文件已准备",
     "exports.failed": "导出失败",
     "exports.empty": "暂无可导出的本地数据。",
+    "exports.emptyNoDownload": "暂无可导出的本地数据。",
     "tasks.eyebrow": "任务收集",
     "tasks.title": "先塑造任务，再安排今天。",
     "tasks.form.title": "标题",
     "tasks.form.titlePlaceholder": "撰写产品简报",
+    "tasks.form.notes": "备注",
+    "tasks.form.notesPlaceholder": "补充背景、链接或验收要点",
     "tasks.form.minutes": "分钟",
     "tasks.form.load": "负荷",
     "tasks.form.due": "截止时间",
@@ -249,6 +278,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.suggestion.reason.fallback_medium_load": "基于中等负荷默认值",
     "tasks.suggestion.reason.fallback_high_load": "基于高负荷默认值",
     "tasks.filters.title": "筛选",
+    "tasks.filters.search": "搜索",
+    "tasks.filters.searchPlaceholder": "搜索标题或备注",
     "tasks.filters.status": "状态",
     "tasks.filters.project": "项目",
     "tasks.filters.allStatuses": "全部状态",
@@ -257,6 +288,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.queue.eyebrow": "队列",
     "tasks.queue.title": "任务",
     "tasks.empty": "还没有任务。",
+    "tasks.emptyFiltered": "没有匹配当前搜索和筛选条件的任务。",
     "tasks.noDueDate": "无截止时间",
     "tasks.message.titleRequired": "请输入任务标题",
     "tasks.message.loadFailed": "加载任务失败",
@@ -272,6 +304,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.action.generate": "生成方案",
     "calendar.action.select": "选择方案",
     "calendar.action.reoptimize": "重新优化",
+    "calendar.action.partialReplan": "重排剩余工作",
     "calendar.message.generatedPrefix": "已生成",
     "calendar.message.generatedSuffix": "个方案",
     "calendar.message.generateFailed": "生成排期失败",
@@ -279,6 +312,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.message.selectionFailed": "选择方案失败",
     "calendar.message.reoptimized": "已重新优化",
     "calendar.message.reoptimizeFailed": "重新优化失败",
+    "calendar.message.partialReplanned": "已重排剩余工作，请重新选择方案",
+    "calendar.message.partialReplanFailed": "重排剩余工作失败",
+    "calendar.message.partialReplanMissingSelected": "请先选择一个当天方案，再重排剩余工作。",
+    "calendar.message.partialReplanNoRemaining": "当天没有剩余工作需要重排。",
+    "calendar.message.partialReplanNoSchedulableTime": "当天没有可用于剩余工作的可排时间。",
     "calendar.message.validateFailed": "校验移动失败",
     "calendar.metric.items": "项",
     "calendar.metric.score": "分数",
@@ -309,6 +347,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "today.action.saveFeedback": "提交反馈",
     "today.emptyTitle": "还没有选择今日方案",
     "today.emptyDescription": "先到日历中生成并选择一个方案。",
+    "today.emptyPlanItems": "已选择方案，但当前没有可执行的任务项。",
     "today.status": "状态",
     "today.message.loadFailed": "加载今日任务失败",
     "today.message.feedbackSaved": "反馈已提交",
@@ -321,7 +360,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "review.eyebrow": "每日复盘",
     "review.title": "查看一天的执行结果",
     "review.date": "日期",
+    "review.view.daily": "每日",
+    "review.view.weekly": "每周",
     "review.action.refresh": "刷新复盘",
+    "review.action.previousWeek": "上一周",
+    "review.action.nextWeek": "下一周",
     "review.emptyTitle": "这一天还没有执行记录",
     "review.emptyDescription": "先在今日页提交反馈，或选择已有历史的日期。",
     "review.message.loadFailed": "加载复盘失败",
@@ -339,6 +382,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "review.table.actual": "实际",
     "review.table.variance": "偏差",
     "review.table.note": "备注",
+    "review.week.range": "周范围",
+    "review.week.summaryTitle": "周复盘摘要",
+    "review.week.logged": "记录",
+    "review.week.comparisonTitle": "与上一周对比",
+    "review.week.comparisonUnavailable": "还没有上一周数据。",
+    "review.week.breakdownTitle": "每日拆分",
+    "review.week.emptyTitle": "这一周还没有执行记录",
+    "review.week.emptyDescription": "在今日页提交反馈后，这里会显示周复盘。",
+    "review.week.emptyDay": "这一天没有记录。",
     "status.todo": "待办",
     "status.in_progress": "进行中",
     "status.done": "完成",
@@ -374,10 +426,13 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "exports.success": "Export file is ready",
     "exports.failed": "Export failed",
     "exports.empty": "No local data to export yet.",
+    "exports.emptyNoDownload": "No local data to export yet.",
     "tasks.eyebrow": "Task Intake",
     "tasks.title": "Shape the day before it starts.",
     "tasks.form.title": "Title",
     "tasks.form.titlePlaceholder": "Write product brief",
+    "tasks.form.notes": "Notes",
+    "tasks.form.notesPlaceholder": "Add context, links, or acceptance notes",
     "tasks.form.minutes": "Minutes",
     "tasks.form.load": "Load",
     "tasks.form.due": "Due",
@@ -421,6 +476,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.suggestion.reason.fallback_medium_load": "Using the medium-load default",
     "tasks.suggestion.reason.fallback_high_load": "Using the high-load default",
     "tasks.filters.title": "Filters",
+    "tasks.filters.search": "Search",
+    "tasks.filters.searchPlaceholder": "Search titles or notes",
     "tasks.filters.status": "Status",
     "tasks.filters.project": "Project",
     "tasks.filters.allStatuses": "All statuses",
@@ -429,6 +486,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "tasks.queue.eyebrow": "Queue",
     "tasks.queue.title": "Tasks",
     "tasks.empty": "No tasks yet.",
+    "tasks.emptyFiltered": "No tasks match the current search and filters.",
     "tasks.noDueDate": "No due date",
     "tasks.message.titleRequired": "Title is required",
     "tasks.message.loadFailed": "Failed to load tasks",
@@ -444,6 +502,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.action.generate": "Generate Plans",
     "calendar.action.select": "Select Plan",
     "calendar.action.reoptimize": "Reoptimize",
+    "calendar.action.partialReplan": "Partial Replan",
     "calendar.message.generatedPrefix": "Generated",
     "calendar.message.generatedSuffix": "plans",
     "calendar.message.generateFailed": "Schedule generation failed",
@@ -451,6 +510,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "calendar.message.selectionFailed": "Plan selection failed",
     "calendar.message.reoptimized": "Reoptimized",
     "calendar.message.reoptimizeFailed": "Reoptimization failed",
+    "calendar.message.partialReplanned": "Remaining work replanned. Select a new plan to continue.",
+    "calendar.message.partialReplanFailed": "Partial replan failed",
+    "calendar.message.partialReplanMissingSelected": "Select a plan for this date before replanning remaining work.",
+    "calendar.message.partialReplanNoRemaining": "There is no remaining work to replan for this date.",
+    "calendar.message.partialReplanNoSchedulableTime": "There is no schedulable time left for the remaining work.",
     "calendar.message.validateFailed": "Move validation failed",
     "calendar.metric.items": "items",
     "calendar.metric.score": "score",
@@ -481,6 +545,7 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "today.action.saveFeedback": "Submit Feedback",
     "today.emptyTitle": "No selected plan for today",
     "today.emptyDescription": "Generate and select a plan from the calendar first.",
+    "today.emptyPlanItems": "A plan is selected, but it has no work items left.",
     "today.status": "Status",
     "today.message.loadFailed": "Failed to load today",
     "today.message.feedbackSaved": "Feedback saved",
@@ -493,7 +558,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "review.eyebrow": "Daily Review",
     "review.title": "Review a day of execution",
     "review.date": "Date",
+    "review.view.daily": "Daily",
+    "review.view.weekly": "Weekly",
     "review.action.refresh": "Refresh Review",
+    "review.action.previousWeek": "Previous week",
+    "review.action.nextWeek": "Next week",
     "review.emptyTitle": "No execution records for this day",
     "review.emptyDescription": "Submit feedback on Today, or choose a date with history.",
     "review.message.loadFailed": "Failed to load review",
@@ -511,6 +580,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     "review.table.actual": "Actual",
     "review.table.variance": "Variance",
     "review.table.note": "Note",
+    "review.week.range": "Week range",
+    "review.week.summaryTitle": "Weekly summary",
+    "review.week.logged": "Logged",
+    "review.week.comparisonTitle": "Compared with previous week",
+    "review.week.comparisonUnavailable": "No previous-week data yet.",
+    "review.week.breakdownTitle": "Daily breakdown",
+    "review.week.emptyTitle": "No execution records for this week",
+    "review.week.emptyDescription": "Submit feedback on Today to see weekly review data here.",
+    "review.week.emptyDay": "No records for this day.",
     "status.todo": "Todo",
     "status.in_progress": "In progress",
     "status.done": "Done",

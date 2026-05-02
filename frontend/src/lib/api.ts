@@ -8,6 +8,7 @@ export type ExecutionHistoryStatus = "done" | "skipped" | "incomplete" | "cancel
 export type Task = {
   id: number;
   title: string;
+  notes: string | null;
   estimated_minutes: number;
   cognitive_load: number;
   due_at: string | null;
@@ -27,6 +28,7 @@ export type Project = {
 
 export type TaskPayload = {
   title: string;
+  notes?: string | null;
   estimated_minutes: number;
   cognitive_load: number;
   due_at?: string | null;
@@ -150,12 +152,63 @@ export type ExecutionReview = {
   items: ExecutionReviewItem[];
 };
 
+export type WeeklyReviewSummary = {
+  logged_count: number;
+  completed_count: number;
+  skipped_incomplete_count: number;
+  completion_rate: number;
+  planned_minutes: number;
+  actual_minutes: number;
+  estimate_variance_minutes: number | null;
+};
+
+export type WeeklyReviewDay = {
+  date: string;
+  summary: WeeklyReviewSummary;
+  items: ExecutionReviewItem[];
+};
+
+export type WeeklyReviewComparisonDeltas = {
+  completion_rate: number | null;
+  actual_minutes: number | null;
+  estimate_variance_minutes: number | null;
+};
+
+export type WeeklyReviewComparison = {
+  available: boolean;
+  previous_week_start: string;
+  previous_week_end: string;
+  previous_summary: WeeklyReviewSummary | null;
+  deltas: WeeklyReviewComparisonDeltas | null;
+  message_code: string | null;
+};
+
+export type WeeklyReview = {
+  week_start: string;
+  week_end: string;
+  summary: WeeklyReviewSummary;
+  days: WeeklyReviewDay[];
+  comparison: WeeklyReviewComparison;
+};
+
 type ApiEnvelope<T> = {
   status: "success" | "error";
   data: T | null;
   error: { code: string; message: string; details?: unknown } | null;
   meta: unknown;
 };
+
+export class ApiError extends Error {
+  code: string;
+  details?: unknown;
+
+  constructor(code: string, message: string, details?: unknown) {
+    super(message);
+    this.name = "ApiError";
+    this.code = code;
+    this.details = details;
+  }
+}
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/v1${path}`, {
@@ -168,7 +221,11 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const payload = (await response.json()) as ApiEnvelope<T>;
 
   if (!response.ok || payload.status === "error") {
-    throw new Error(payload.error?.message ?? `Request failed: ${response.status}`);
+    throw new ApiError(
+      payload.error?.code ?? "request_failed",
+      payload.error?.message ?? `Request failed: ${response.status}`,
+      payload.error?.details,
+    );
   }
 
   if (payload.data === null) {
@@ -178,8 +235,23 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   return payload.data;
 }
 
-export function listTasks(): Promise<Task[]> {
-  return requestJson<Task[]>("/tasks");
+export function listTasks(params?: {
+  q?: string;
+  status?: TaskStatus | "all";
+  project_id?: number | null;
+}): Promise<Task[]> {
+  const query = new URLSearchParams();
+  if (params?.q?.trim()) {
+    query.set("q", params.q.trim());
+  }
+  if (params?.status && params.status !== "all") {
+    query.set("status", params.status);
+  }
+  if (typeof params?.project_id === "number") {
+    query.set("project_id", String(params.project_id));
+  }
+  const suffix = query.toString() ? `?${query.toString()}` : "";
+  return requestJson<Task[]>(`/tasks${suffix}`);
 }
 
 export function listProjects(): Promise<Project[]> {
@@ -244,6 +316,13 @@ export function reoptimizeSchedule(date: string): Promise<GenerateScheduleResult
   });
 }
 
+export function partialReplanSchedule(date: string): Promise<GenerateScheduleResult> {
+  return requestJson<GenerateScheduleResult>("/schedules/partial-replan", {
+    method: "POST",
+    body: JSON.stringify({ date }),
+  });
+}
+
 export function getTodayExecution(date: string): Promise<TodayExecution> {
   return requestJson<TodayExecution>(`/execution/today?date=${encodeURIComponent(date)}`);
 }
@@ -254,6 +333,10 @@ export function getExecutionProgress(date: string): Promise<ExecutionProgress> {
 
 export function getExecutionReview(date: string): Promise<ExecutionReview> {
   return requestJson<ExecutionReview>(`/execution/review?date=${encodeURIComponent(date)}`);
+}
+
+export function getWeeklyExecutionReview(date: string): Promise<WeeklyReview> {
+  return requestJson<WeeklyReview>(`/execution/weekly-review?date=${encodeURIComponent(date)}`);
 }
 
 export function submitExecutionFeedback(

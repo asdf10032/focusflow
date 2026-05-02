@@ -57,7 +57,7 @@
 | Phase | Name | Goal | Requirements | Status |
 |-------|------|------|--------------|--------|
 | 16 | Weekly Review Backend | Add deterministic weekly review aggregation and previous-week comparison APIs. | WREV-01, WREV-02, WREV-03, WREV-04, WREV-05, TRND-01, TRND-02, TRND-03, TRND-04, NFR-01, NFR-02 | Complete |
-| 17 | Weekly Review UI | Add a Daily Review weekly view with week controls, metric cards, daily breakdown, and bilingual copy. | DRUX-01, DRUX-02, DRUX-03, DRUX-04, NFR-03 | Planned |
+| 17 | Weekly Review UI | Add a Daily Review weekly view with week controls, metric cards, daily breakdown, and bilingual copy. | DRUX-01, DRUX-02, DRUX-03, DRUX-04, NFR-03 | Complete |
 | 18 | Weekly Review Demo Polish | Seed meaningful weekly review data, extend smoke coverage, update README, and prepare UAT. | NFR-04 | Planned |
 
 ## Phase Details
@@ -90,7 +90,7 @@
 4. Existing Daily Review history and export controls still work.
 5. i18n/helper tests and frontend production build pass.
 
-**Status:** Planned.
+**Status:** Complete.
 
 ### Phase 18: Weekly Review Demo Polish
 
@@ -119,13 +119,13 @@
 | TRND-02 | Phase 16 | Complete |
 | TRND-03 | Phase 16 | Complete |
 | TRND-04 | Phase 16 | Complete |
-| DRUX-01 | Phase 17 | Pending |
-| DRUX-02 | Phase 17 | Pending |
-| DRUX-03 | Phase 17 | Pending |
-| DRUX-04 | Phase 17 | Pending |
+| DRUX-01 | Phase 17 | Complete |
+| DRUX-02 | Phase 17 | Complete |
+| DRUX-03 | Phase 17 | Complete |
+| DRUX-04 | Phase 17 | Complete |
 | NFR-01 | Phase 16 | Complete |
 | NFR-02 | Phase 16 | Complete |
-| NFR-03 | Phase 17 | Pending |
+| NFR-03 | Phase 17 | Complete |
 | NFR-04 | Phase 18 | Pending |
 
 **Coverage:**
@@ -136,5 +136,5 @@
 ## Next Up
 
 ```bash
-$gsd-plan-phase 17 --skip-research
+$gsd-plan-phase 18 --skip-research
 ```

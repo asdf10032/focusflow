@@ -22,16 +22,16 @@
 
 ### Daily Review UX
 
-- [ ] **DRUX-01**: User can switch between daily review and weekly review views without leaving Daily Review.
-- [ ] **DRUX-02**: User can change the selected week using simple previous/next week controls.
-- [ ] **DRUX-03**: User sees Chinese and English copy for all weekly review labels, messages, and empty states.
-- [ ] **DRUX-04**: User can still use existing Daily Review history and export flows after weekly review is added.
+- [x] **DRUX-01**: User can switch between daily review and weekly review views without leaving Daily Review.
+- [x] **DRUX-02**: User can change the selected week using simple previous/next week controls.
+- [x] **DRUX-03**: User sees Chinese and English copy for all weekly review labels, messages, and empty states.
+- [x] **DRUX-04**: User can still use existing Daily Review history and export flows after weekly review is added.
 
 ### Quality
 
 - [x] **NFR-01**: Weekly review APIs use the existing success envelope and deterministic local calculations.
 - [x] **NFR-02**: Weekly review backend behavior is covered by focused tests for aggregation, comparison, and empty states.
-- [ ] **NFR-03**: Weekly review UI helpers and i18n copy are covered by frontend helper/i18n tests and production build verification.
+- [x] **NFR-03**: Weekly review UI helpers and i18n copy are covered by frontend helper/i18n tests and production build verification.
 - [ ] **NFR-04**: Demo seed and smoke coverage show a selected week with meaningful completion, minutes, and variance data.
 
 ## Future Requirements
@@ -76,13 +76,13 @@
 | TRND-02 | Phase 16 | Complete |
 | TRND-03 | Phase 16 | Complete |
 | TRND-04 | Phase 16 | Complete |
-| DRUX-01 | Phase 17 | Pending |
-| DRUX-02 | Phase 17 | Pending |
-| DRUX-03 | Phase 17 | Pending |
-| DRUX-04 | Phase 17 | Pending |
+| DRUX-01 | Phase 17 | Complete |
+| DRUX-02 | Phase 17 | Complete |
+| DRUX-03 | Phase 17 | Complete |
+| DRUX-04 | Phase 17 | Complete |
 | NFR-01 | Phase 16 | Complete |
 | NFR-02 | Phase 16 | Complete |
-| NFR-03 | Phase 17 | Pending |
+| NFR-03 | Phase 17 | Complete |
 | NFR-04 | Phase 18 | Pending |
 
 **Coverage:**
@@ -92,4 +92,4 @@
 
 ---
 *Requirements defined: 2026-05-01*
-*Last updated: 2026-05-02 after Phase 16 backend completion*
+*Last updated: 2026-05-02 after Phase 17 weekly review UI completion*
