@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Weekly Review Insights
-status: roadmap_created
-last_updated: "2026-05-02T12:00:43+08:00"
+status: phase_17_planned
+last_updated: "2026-05-02T17:20:21+08:00"
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 2
+  total_plans: 4
   completed_plans: 2
 ---
 
 # STATE.md
 
 - Current goal: execute v1.4 Weekly Review Insights.
-- Current position: Phase 16 complete; ready to plan Phase 17.
+- Current position: Phase 17 planned; ready to execute weekly review UI.
 - Last completed: v1.3 Export & Planning Utilities on 2026-05-01.
 - Focus: weekly review metrics inside Daily Review.
 - Next action: run `$gsd-plan-phase 17 --skip-research`.
@@ -34,6 +34,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-01).
 - Initial weekly metrics should be completion rate, actual minutes, and estimate variance.
 - Research is skipped for v1.4 because the work extends existing local execution history and Daily Review surfaces.
 - Phase 16 added backend weekly review aggregation, seven-day breakdowns, and previous-week comparison metadata from execution logs.
+- Phase 17 planning splits weekly review UI into API/helper groundwork followed by Daily Review UI, i18n, and build verification.
 
 ## Accumulated Context
 
@@ -54,12 +55,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-01).
 ## Current Position
 
 Phase: 17
-Plan: not planned
-Status: Ready for `$gsd-plan-phase 17 --skip-research`
-Last activity: 2026-05-02 - Phase 16 backend completed
+Plan: 17-01, 17-02
+Status: Ready for `$gsd-execute-phase 17`
+Last activity: 2026-05-02 - Phase 17 planned
 
 ## Verification Baseline
 
-- `python -m pytest tests/test_phase7_execution_review.py tests/test_phase16_weekly_review.py -q -p no:cacheprovider`
-- `python -m pytest tests/test_phase1_api.py tests/test_phase6_execution_history.py tests/test_phase7_execution_review.py tests/test_phase13_exports.py tests/test_phase16_weekly_review.py -q -p no:cacheprovider`
-- `python -m compileall backend alembic`
+- `python -m pytest tests/test_frontend_i18n.py tests/test_frontend_view_helpers.py -q -p no:cacheprovider`
+- `npm.cmd run build` from `frontend/`
